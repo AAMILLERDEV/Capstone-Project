@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "prs_5SAudits.api", "prs.5SAudits.api\prs_5SAudits.api.csproj", "{872E1C60-FF92-434B-9BEC-57E0C9FFBAE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "prs_5SAudits.lib", "prs.5SAudits.lib\prs_5SAudits.lib.csproj", "{D0165BC7-E781-4BF1-A2DB-9C0D0C6C5FA0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{872E1C60-FF92-434B-9BEC-57E0C9FFBAE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{872E1C60-FF92-434B-9BEC-57E0C9FFBAE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{872E1C60-FF92-434B-9BEC-57E0C9FFBAE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{872E1C60-FF92-434B-9BEC-57E0C9FFBAE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0165BC7-E781-4BF1-A2DB-9C0D0C6C5FA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0165BC7-E781-4BF1-A2DB-9C0D0C6C5FA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0165BC7-E781-4BF1-A2DB-9C0D0C6C5FA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0165BC7-E781-4BF1-A2DB-9C0D0C6C5FA0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3F621DB9-88C0-4091-A94F-83C19113C92E}
+	EndGlobalSection
+EndGlobal
