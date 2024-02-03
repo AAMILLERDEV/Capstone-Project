@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -6,10 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  private title = 'prs.5SAudits.web';
 
-  constructor() {
-
+  constructor(private title: Title) {
+    title.setTitle("PRS | 5S Audits")
   }
   ngOnInit() {
     

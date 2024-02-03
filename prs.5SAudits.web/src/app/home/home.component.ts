@@ -12,12 +12,13 @@ export class HomeComponent implements OnInit {
   public settings: Settings[] = [];
 
   constructor(private settingsService: SettingsService) {
-  
 
   }
+
   async ngOnInit() {
 
     this.settings = await this.settingsService.getSettings();
+
   }
 
 }
