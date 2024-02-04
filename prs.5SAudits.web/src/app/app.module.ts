@@ -12,6 +12,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuditFormComponent } from './audits/audit-form/audit-form.component';
 import { NewAuditFormComponent } from './audits/new-audit-form/new-audit-form.component';
 import { EditAuditFormComponent } from './audits/edit-audit-form/edit-audit-form.component';
+import { SupportComponent } from './support/support.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { EditAuditFormComponent } from './audits/edit-audit-form/edit-audit-form
     NavbarComponent,
     AuditFormComponent,
     NewAuditFormComponent,
-    EditAuditFormComponent
+    EditAuditFormComponent,
+    SupportComponent
   ],
   imports: [
     BrowserModule,
