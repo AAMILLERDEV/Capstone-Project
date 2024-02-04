@@ -1,24 +1,62 @@
 <ng-container>
-    <div  class="container">
+    <div  class="container" *ngIf="viewReady">
         <div class="card text-center">
             <div class="card-header">
               <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="true" >Form</a>
+                  <button class="nav-link" (click)="currentTab = 'form'" [class.active]="currentTab === 'form'" aria-current="true">Form</button>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" >Photos</a>
+                  <button class="nav-link" (click)="currentTab = 'photos'" [class.active]="currentTab === 'photos'" aria-current="true">Photos</button>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link">Criteria Details</a>
+                  <button class="nav-link" (click)="currentTab = 'criteria'" [class.active]="currentTab === 'criteria'" aria-current="true">Audit Criteria Details</button>
                 </li>
               </ul>
+              
             </div>
+
+ 
     
+
             <div class="card-body">
-              <h5 class="card-title">Special title treatment</h5>
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            </div>
+                <div class="tab-content mt-2">
+                  <div *ngIf="currentTab === 'form'">
+                    <div [formGroup]="parentFormGroup">
+                        <!--Add Form Here-->
+                        <div class="form-group">
+                            <h3 class="card-title">Form Content</h3>
+                            <div class="input-group has-validation">
+                                <span class="input-group-text">Audit Number</span>
+                                <div class="form-floating is-invalid">
+                                  <input type="text" class="form-control is-invalid" id="auditNumber" formControlName="auditNumberControl" placeholder="Audit Number" required>
+                                  <label for="auditNumber">Audit Number</label>
+                                </div>
+                                <div class="invalid-feedback">
+                                  Audit Number is Required
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                  </div>
+                  
+                  <div *ngIf="currentTab === 'photos'">
+                    <div>
+                      <h3 class="card-title">Photo Content</h3>
+                      <p class="card-text">This is the content for Tab 2.</p>
+                    </div>
+                  </div>
+
+                  <div *ngIf="currentTab === 'criteria'">
+                    <div>
+                      <h3 class="card-title">Criteria Content</h3>
+                      <p class="card-text">This is the content for Tab 3.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
           </div>
     </div>
 </ng-container>

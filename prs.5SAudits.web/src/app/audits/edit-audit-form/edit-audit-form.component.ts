@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { AuditForm } from 'src/form-models/AuditForm';
 
 @Component({
   selector: 'app-edit-audit-form',
@@ -7,11 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditAuditFormComponent implements OnInit {
 
-  constructor(){
+  public auditForm: FormGroup;
 
+  constructor(){
+    this.auditForm = AuditForm;
+  }
+  
+  async ngOnInit() {
+    
   }
 
-  async ngOnInit() {
+  public async getData(){
     
   }
 
