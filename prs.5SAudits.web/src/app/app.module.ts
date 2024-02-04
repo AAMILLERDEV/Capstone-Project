@@ -13,6 +13,7 @@ import { AuditFormComponent } from './audits/audit-form/audit-form.component';
 import { NewAuditFormComponent } from './audits/new-audit-form/new-audit-form.component';
 import { EditAuditFormComponent } from './audits/edit-audit-form/edit-audit-form.component';
 import { SupportComponent } from './support/support.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { SupportComponent } from './support/support.component';
     AuditFormComponent,
     NewAuditFormComponent,
     EditAuditFormComponent,
+    AdminComponent,
     SupportComponent
   ],
   imports: [
