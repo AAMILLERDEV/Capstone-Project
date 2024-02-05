@@ -1,5 +1,5 @@
 export interface AuditLog {
     id: number;
-    employeeId: number;
-    previousAuditId: number;
+    employee_ID: number;
+    previousAudit_ID: number;
 }

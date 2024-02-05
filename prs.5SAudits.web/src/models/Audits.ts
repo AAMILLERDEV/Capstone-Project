@@ -3,8 +3,8 @@ export interface Audits {
     dateStarted: Date;
     employeeId: number;
     dateCompleted: Date;
-    departmentId: number;
+    department_ID: number;
     overallScore: number;
-    auditStatusId: number;
+    auditStatus_ID: number;
     notes: string;
 }

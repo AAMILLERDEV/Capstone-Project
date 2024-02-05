@@ -1,6 +1,6 @@
 export interface Actions {
     id: number;
-    auditId: number;
-    scoreId: number;
+    audit_ID: number;
+    score_ID: number;
     message: string;
 }

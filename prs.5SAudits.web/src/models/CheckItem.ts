@@ -1,6 +1,6 @@
 export interface CheckItem {
     id: number;
     itemName: string;
-    categoryId: number;
+    category_ID: number;
     question: string;
 }

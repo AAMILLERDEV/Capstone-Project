@@ -1,6 +1,6 @@
 export interface Resources {
     id: number;
-    auditId: number;
+    audit_ID: number;
     dateAdded: Date;
-    scoreId: number;
+    score_ID: number;
 }
