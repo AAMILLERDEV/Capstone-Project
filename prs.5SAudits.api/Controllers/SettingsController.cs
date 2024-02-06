@@ -18,5 +18,9 @@ namespace prs_5SAudits.api.Controllers
         [HttpGet]
         [Route("[controller]/GetSettings")]
         public Task<IEnumerable<Settings>> GetSettings() => db.GetSettings();
+
+        [HttpPost]
+        [Route("[controller]/UpsertSettings")]
+        public Task<int?> UpsertSettings(Settings settings) => db.UpsertSettings(settings);
     }
 }
