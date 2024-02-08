@@ -13,8 +13,8 @@ export class AuditFormComponent implements OnInit {
 
   public currentTab: string = 'form';
   public viewReady: boolean = false;
-  @Input() public formReady: boolean = true;
-  @Input() public auditStarted: boolean = false;
+  @Input() public formReady: boolean = false;
+  @Input() public auditStarted: boolean = true;
   public parentFormGroup!: FormGroup;
   public settings: Settings[] = [];
   public date: Date = new Date();
@@ -41,8 +41,20 @@ export class AuditFormComponent implements OnInit {
 
   }
 
-  public collectionManager(){
-    
+  public collectionManager(input: String){
+    if (input == "prev") {
+      if (this.index > 0) {
+        this.index--;
+      }
+    }
+    else if (input == "next") {
+      if (this.index < 4) {
+        this.index++;
+      }
+    }
+
+    this.currentSetting = this.settings[this.index];
+    console.log(this.index);
   }
 
 

@@ -18,6 +18,7 @@ export class NewAuditFormComponent implements OnInit {
   async ngOnInit() {
 
     this.auditForm.controls['auditNumberControl'].disable();
+    this.auditForm.controls['employeeNameControl'].disable();
     
   }
 

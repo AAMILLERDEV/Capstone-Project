@@ -9,38 +9,34 @@
         <div class="input-group m-2">
             <span class="input-group-text">Employee Name</span>
             <div class="form-floating">
-              <input type="text" class="form-control" id="auditNumber" formControlName="auditNumberControl" required>
-              <label for="auditNumber">Audit Number</label>
+              <input type="text" class="form-control" id="employeeName" formControlName="employeeNameControl">
             </div>
         </div>
         <!--Audit Number-->
         <div class="input-group m-2">
-          <span class="input-group-text">Employee Name</span>
+          <span class="input-group-text">Audit Number</span>
           <div class="form-floating">
-            <input type="text" class="form-control" id="auditNumber" formControlName="auditNumberControl" required>
-            <label for="auditNumber">Audit Number</label>
+            <input type="text" class="form-control" id="auditNumber" formControlName="auditNumberControl">
           </div>
         </div>
         <!--Zone Category-->
         <div class="input-group has-validation m-2">
-          <span class="input-group-text">Audit Number</span>
+          <span class="input-group-text">Zone Category</span>
           <div class="form-floating is-invalid">
-            <input type="text" class="form-control is-invalid" id="auditNumber" formControlName="auditNumberControl" placeholder="Audit Number" required>
-            <label for="auditNumber">Audit Number</label>
+            <input type="text" class="form-control is-invalid" id="zoneCategory" formControlName="zoneCategoryControl" required>
           </div>
           <div class="invalid-feedback">
-            Audit Number is Required
+            Zone Category is Required
           </div>
         </div>
         <!--Zone-->
         <div class="input-group has-validation m-2">
-          <span class="input-group-text">Audit Number</span>
+          <span class="input-group-text">Zone</span>
           <div class="form-floating is-invalid">
-            <input type="text" class="form-control is-invalid" id="auditNumber" formControlName="auditNumberControl" placeholder="Audit Number" required>
-            <label for="auditNumber">Audit Number</label>
+            <input type="text" class="form-control is-invalid" id="zone" formControlName="zoneControl" required>
           </div>
           <div class="invalid-feedback">
-            Audit Number is Required
+            Zone is Required
           </div>
         </div>
       <div class="text-center">
@@ -71,32 +67,44 @@
               <div>
                 <!--Add Form Here-->
                 <div class="form-group">
-                    <h3 class="card-title">{{currentSetting.settingKey}}</h3>
-                    <div *ngFor="let set of settings; index as i">
-                      <div>
-                        <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample{{i}}" role="button" aria-expanded="false" [attr.aria-controls]="'multiCollapseExample{{i}}'">Toggle first element</a>
-                        <div class="collapse multi-collapse" id="multiCollapseExample{{i}}">
-                          <div class="card card-body">
-                            {{set.settingValue}}
+                    <h3 class="">{{currentSetting.settingKey}}</h3>
+                    <div *ngFor="let set of settings; index as i" class="m-2 card">
+                        <a class="" style="text-decoration:none; color:black;" data-bs-toggle="collapse" href="#multiCollapseExample{{i}}" role="button" aria-expanded="false" [attr.aria-controls]="'multiCollapseExample{{i}}'">
+                          <div class="card-header h5">
+                            Toggle first element
                           </div>
-                        </div>
-                      </div>
+                          <div class="collapse multi-collapse" id="multiCollapseExample{{i}}">
+                            <div class="p-3 card-body">
+                              {{set.settingValue}}
+                            </div>
+                          </div>
+                        </a>
                     </div>
                     <!--Score-->
                     <div class="input-group has-validation">
-                        <span class="input-group-text">Audit Number</span>
                         <div class="form-floating is-invalid">
-                          <input type="number" class="form-control is-invalid" id="auditNumber" formControlName="auditNumberControl" placeholder="Audit Number" required>
-                          <label for="auditNumber">Audit Number</label>
+                          <input type="number" class="form-control is-invalid" id="score" formControlName="scoreControl" placeholder="Score" required>
+                          <label for="auditScore">Score</label>
                         </div>
                         <div class="invalid-feedback">
-                          Audit Number is Required
+                          Score is Required
                         </div>
                     </div>
                     <!--Comments-->
                     <div class="is-invalid">
-                      <textarea type="text" rows="3" class="form-control" id="auditNumber" formControlName="commentsControl" placeholder="Comments"></textarea>
+                      <textarea type="text" rows="3" class="form-control" id="comments" formControlName="commentsControl" placeholder="Comments"></textarea>
                     </div>
+                </div>
+                <div class="">
+                  <div class="float-start mt-2" *ngIf="index > 0">
+                    <button class="btn btn-primary" id="btnPrevious" (click)="collectionManager('prev')">Previous</button>
+                  </div>
+                  <div class="float-end mt-2" *ngIf="index < 4">
+                    <button class="btn btn-primary" id="btnNext" (click)="collectionManager('next')">Next</button>
+                  </div>
+                  <div class="float-end mt-2" *ngIf="index == 4">
+                    <button class="btn btn-primary" id="btnSubmit">Submit</button>
+                  </div>
                 </div>
               </div>
             </div>
