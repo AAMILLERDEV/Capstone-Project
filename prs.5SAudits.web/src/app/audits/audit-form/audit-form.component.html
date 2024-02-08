@@ -1,62 +1,123 @@
 <ng-container>
-    <div  class="container" *ngIf="viewReady">
-        <div class="card text-center">
-            <div class="card-header">
-              <ul class="nav nav-tabs card-header-tabs">
-                <li class="nav-item">
-                  <button class="nav-link" (click)="currentTab = 'form'" [class.active]="currentTab === 'form'" aria-current="true">Form</button>
-                </li>
-                <li class="nav-item">
-                  <button class="nav-link" (click)="currentTab = 'photos'" [class.active]="currentTab === 'photos'" aria-current="true">Photos</button>
-                </li>
-                <li class="nav-item">
-                  <button class="nav-link" (click)="currentTab = 'criteria'" [class.active]="currentTab === 'criteria'" aria-current="true">Audit Criteria Details</button>
-                </li>
-              </ul>
-              
+  <div  class="container" *ngIf="viewReady">
+    <div [formGroup]="parentFormGroup">
+      <!--Main Audit Form-->
+      <div class="form-group" *ngIf="auditStarted">
+        <h3 class="card-title text-center">5S Audit Form</h3>
+        <label class="display-6 fs-6 fst-italic">Date Started: {{date}}</label>
+        <!--Auditor Name-->
+        <div class="input-group m-2">
+            <span class="input-group-text">Employee Name</span>
+            <div class="form-floating">
+              <input type="text" class="form-control" id="auditNumber" formControlName="auditNumberControl" required>
+              <label for="auditNumber">Audit Number</label>
             </div>
+        </div>
+        <!--Audit Number-->
+        <div class="input-group m-2">
+          <span class="input-group-text">Employee Name</span>
+          <div class="form-floating">
+            <input type="text" class="form-control" id="auditNumber" formControlName="auditNumberControl" required>
+            <label for="auditNumber">Audit Number</label>
+          </div>
+        </div>
+        <!--Zone Category-->
+        <div class="input-group has-validation m-2">
+          <span class="input-group-text">Audit Number</span>
+          <div class="form-floating is-invalid">
+            <input type="text" class="form-control is-invalid" id="auditNumber" formControlName="auditNumberControl" placeholder="Audit Number" required>
+            <label for="auditNumber">Audit Number</label>
+          </div>
+          <div class="invalid-feedback">
+            Audit Number is Required
+          </div>
+        </div>
+        <!--Zone-->
+        <div class="input-group has-validation m-2">
+          <span class="input-group-text">Audit Number</span>
+          <div class="form-floating is-invalid">
+            <input type="text" class="form-control is-invalid" id="auditNumber" formControlName="auditNumberControl" placeholder="Audit Number" required>
+            <label for="auditNumber">Audit Number</label>
+          </div>
+          <div class="invalid-feedback">
+            Audit Number is Required
+          </div>
+        </div>
+      <div class="text-center">
+        <button class="btn btn-primary" (click)="startAudit()">Start Audit</button>
+      </div>
+    </div>
 
- 
-    
 
-            <div class="card-body">
-                <div class="tab-content mt-2">
-                  <div *ngIf="currentTab === 'form'">
-                    <div [formGroup]="parentFormGroup">
-                        <!--Add Form Here-->
-                        <div class="form-group">
-                            <h3 class="card-title">Form Content</h3>
-                            <div class="input-group has-validation">
-                                <span class="input-group-text">Audit Number</span>
-                                <div class="form-floating is-invalid">
-                                  <input type="text" class="form-control is-invalid" id="auditNumber" formControlName="auditNumberControl" placeholder="Audit Number" required>
-                                  <label for="auditNumber">Audit Number</label>
-                                </div>
-                                <div class="invalid-feedback">
-                                  Audit Number is Required
-                                </div>
-                            </div>
+    <!--Main Scoring Form-->
+    <div class="card text-center" *ngIf="formReady">
+      <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+          <li class="nav-item">
+            <button class="nav-link" (click)="currentTab = 'form'" [class.active]="currentTab === 'form'" aria-current="true">Form</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" (click)="currentTab = 'photos'" [class.active]="currentTab === 'photos'" aria-current="true">Photos</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" (click)="currentTab = 'criteria'" [class.active]="currentTab === 'criteria'" aria-current="true">Audit Criteria Details</button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card-body">
+          <div class="tab-content mt-2">
+            <div *ngIf="currentTab === 'form'">
+              <div>
+                <!--Add Form Here-->
+                <div class="form-group">
+                    <h3 class="card-title">{{currentSetting.settingKey}}</h3>
+                    <div *ngFor="let set of settings; index as i">
+                      <div>
+                        <a class="btn btn-primary" data-bs-toggle="collapse" href="#multiCollapseExample{{i}}" role="button" aria-expanded="false" [attr.aria-controls]="'multiCollapseExample{{i}}'">Toggle first element</a>
+                        <div class="collapse multi-collapse" id="multiCollapseExample{{i}}">
+                          <div class="card card-body">
+                            {{set.settingValue}}
+                          </div>
                         </div>
-
+                      </div>
                     </div>
-                  </div>
-                  
-                  <div *ngIf="currentTab === 'photos'">
-                    <div>
-                      <h3 class="card-title">Photo Content</h3>
-                      <p class="card-text">This is the content for Tab 2.</p>
+                    <!--Score-->
+                    <div class="input-group has-validation">
+                        <span class="input-group-text">Audit Number</span>
+                        <div class="form-floating is-invalid">
+                          <input type="number" class="form-control is-invalid" id="auditNumber" formControlName="auditNumberControl" placeholder="Audit Number" required>
+                          <label for="auditNumber">Audit Number</label>
+                        </div>
+                        <div class="invalid-feedback">
+                          Audit Number is Required
+                        </div>
                     </div>
-                  </div>
-
-                  <div *ngIf="currentTab === 'criteria'">
-                    <div>
-                      <h3 class="card-title">Criteria Content</h3>
-                      <p class="card-text">This is the content for Tab 3.</p>
+                    <!--Comments-->
+                    <div class="is-invalid">
+                      <textarea type="text" rows="3" class="form-control" id="auditNumber" formControlName="commentsControl" placeholder="Comments"></textarea>
                     </div>
-                  </div>
                 </div>
               </div>
+            </div>
+            
+            <div *ngIf="currentTab === 'photos'">
+              <div>
+                <h3 class="card-title">Photo Content</h3>
+                <p class="card-text">This is the content for Tab 2.</p>
+              </div>
+            </div>
 
+            <div *ngIf="currentTab === 'criteria'">
+              <div>
+                <h3 class="card-title">Criteria Content</h3>
+                <p class="card-text">This is the content for Tab 3.</p>
+              </div>
+            </div>
           </div>
+        </div>
+
+      </div>
     </div>
+  </div>
 </ng-container>

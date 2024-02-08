@@ -4,8 +4,12 @@ export const AuditForm = new FormGroup ({
   auditNumberControl: new FormControl(),
   dateStartedControl: new FormControl(),
   dateCompletedControl: new FormControl(),
-  departmentControl: new FormControl(),
+  zoneControl: new FormControl(),
+  zoneCategoryControl: new FormControl(),
   scoreControl: new FormControl(),
+  targetScoreControl: new FormControl(),
   employeeNameControl: new FormControl(),
-  notesControl: new FormControl()
+  commentsControl: new FormControl()
 })
+
+
