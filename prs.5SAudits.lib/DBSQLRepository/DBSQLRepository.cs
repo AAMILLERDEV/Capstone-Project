@@ -81,8 +81,8 @@ public class DBSQLRepository : IDBSQLRepository
 		var parameters = new DynamicParameters(new Dictionary<string, object>
 		{
 			{ "@id", ins.ID },
-			{ "@audit_ID", ins.AuditID },
-			{ "@score_ID", ins.ScoreID },
+			{ "@audit_ID", ins.Audit_ID },
+			{ "@score_ID", ins.Score_ID },
 			{ "@message", ins.Message }
 		});
 
@@ -124,8 +124,8 @@ public class DBSQLRepository : IDBSQLRepository
 		var parameters = new DynamicParameters(new Dictionary<string, object>
 		{
 			{ "@id", ins.ID },
-			{ "@employee_ID", ins.EmployeeID },
-			{ "@previousAudit_ID", ins.PreviousAuditID }
+			{ "@employee_ID", ins.Employee_ID },
+			{ "@previousAudit_ID", ins.PreviousAudit_ID }
 		});
 
 		parameters.Add("@insertedID", 0, direction: ParameterDirection.Output);
@@ -167,11 +167,11 @@ public class DBSQLRepository : IDBSQLRepository
 		{
 			{ "@id", ins.ID },
 			{ "@dateStarted", ins.DateStarted },
-			{ "@employee_ID", ins.EmployeeID },
+			{ "@employee_ID", ins.Employee_ID },
 			{ "@dateCompleted", ins.DateCompleted },
-			{ "@department_ID", ins.DepartmentID },
+			{ "@department_ID", ins.Department_ID },
 			{ "@overallScore", ins.OverallScore },
-			{ "@auditStatus_ID", ins.AuditStatusID },
+			{ "@auditStatus_ID", ins.AuditStatus_ID },
 			{ "@notes", ins.Notes }
 		});
 
@@ -255,7 +255,7 @@ public class DBSQLRepository : IDBSQLRepository
 		{
 			{ "@id", ins.ID },
 			{ "@itemName", ins.ItemName },
-			{ "@category_ID", ins.CategoryID },
+			{ "@category_ID", ins.ScoringCategory_ID },
 			{ "@question", ins.Question }
 		});
 
@@ -316,13 +316,13 @@ public class DBSQLRepository : IDBSQLRepository
 		return insertedID ?? ins.ID;
 	}
 
-	// DB methods for the Departments object
-	public async Task<IEnumerable<Departments>> GetDepartments()
+    // DB methods for the Zones object
+    public async Task<IEnumerable<Zones>> GetZones()
 	{
 		try
 		{
 			using IDbConnection connection = new SqlConnection(connectionString);
-			return await connection.QueryAsync<Departments>("ref.departments_GET", commandType: CommandType.StoredProcedure);
+			return await connection.QueryAsync<Zones>("ref.Zones_GET", commandType: CommandType.StoredProcedure);
 
 		}
 		catch (Exception ex)
@@ -331,14 +331,15 @@ public class DBSQLRepository : IDBSQLRepository
 		}
 	}
 
-	public async Task<int?> UpsertDepartments(Departments ins)
+	public async Task<int?> UpsertZones(Zones ins)
 	{
 		int? insertedID = 0;
 
 		var parameters = new DynamicParameters(new Dictionary<string, object>
 		{
 			{ "@id", ins.ID },
-			{ "@departmentName", ins.DepartmentName }
+			{ "@departmentName", ins.ZoneName },
+			{ "@zoneCategory_ID", ins.ZoneCategory_ID }
 		});
 
 		parameters.Add("@insertedID", 0, direction: ParameterDirection.Output);
@@ -346,7 +347,7 @@ public class DBSQLRepository : IDBSQLRepository
 		try
 		{
 			using IDbConnection connection = new SqlConnection(connectionString);
-			await connection.ExecuteAsync("ref.departments_UPSERT", parameters, commandType: CommandType.StoredProcedure);
+			await connection.ExecuteAsync("ref.zones_UPSERT", parameters, commandType: CommandType.StoredProcedure);
 			insertedID = parameters.Get<int?>("@insertedID");
 		}
 		catch (Exception ex)
@@ -357,8 +358,51 @@ public class DBSQLRepository : IDBSQLRepository
 		return insertedID ?? ins.ID;
 	}
 
-	// DB methods for the Resources object
-	public async Task<IEnumerable<Resources>> GetResources()
+    //Zone Categories
+
+    public async Task<IEnumerable<ZoneCategories>> GetZoneCategories()
+    {
+        try
+        {
+            using IDbConnection connection = new SqlConnection(connectionString);
+            return await connection.QueryAsync<ZoneCategories>("ref.zoneCategories_GET", commandType: CommandType.StoredProcedure);
+
+        }
+        catch (Exception ex)
+        {
+            return default;
+        }
+    }
+
+    public async Task<int?> UpsertZoneCategories(ZoneCategories ins)
+    {
+        int? insertedID = 0;
+
+        var parameters = new DynamicParameters(new Dictionary<string, object>
+        {
+            { "@id", ins.ID },
+            { "@CategoryName", ins.CategoryName },
+			{ "@target", ins.Target }
+        });
+
+        parameters.Add("@insertedID", 0, direction: ParameterDirection.Output);
+
+        try
+        {
+            using IDbConnection connection = new SqlConnection(connectionString);
+            await connection.ExecuteAsync("ref.zoneCategories_UPSERT", parameters, commandType: CommandType.StoredProcedure);
+            insertedID = parameters.Get<int?>("@insertedID");
+        }
+        catch (Exception ex)
+        {
+            return default;
+        }
+
+        return insertedID ?? ins.ID;
+    }
+
+    // DB methods for the Resources object
+    public async Task<IEnumerable<Resources>> GetResources()
 	{
 		try
 		{
@@ -379,9 +423,9 @@ public class DBSQLRepository : IDBSQLRepository
 		var parameters = new DynamicParameters(new Dictionary<string, object>
 		{
 			{ "@id", ins.ID },
-			{ "@audit_ID", ins.AuditID },
+			{ "@audit_ID", ins.Audit_ID },
 			{ "@dateAdded", ins.DateAdded },
-			{ "@score_ID", ins.ScoreID }
+			{ "@score_ID", ins.Score_ID }
 		});
 
 		parameters.Add("@insertedID", 0, direction: ParameterDirection.Output);
@@ -424,7 +468,8 @@ public class DBSQLRepository : IDBSQLRepository
 			{ "@id", ins.ID },
 			{ "@checkItem", ins.CheckItem },
 			{ "@comments", ins.Comments },
-			{ "@audit_ID", ins.AuditID }
+			{ "@audit_ID", ins.Audit_ID },
+			{ "@score", ins.Score }
 		});
 
 		parameters.Add("@insertedID", 0, direction: ParameterDirection.Output);
@@ -483,4 +528,46 @@ public class DBSQLRepository : IDBSQLRepository
 
 		return insertedID ?? ins.ID;
 	}
+
+    //Scoring Categories
+
+    public async Task<IEnumerable<ScoringCategories>> GetScoringCategories()
+    {
+        try
+        {
+            using IDbConnection connection = new SqlConnection(connectionString);
+            return await connection.QueryAsync<ScoringCategories>("ref.scoringCategory_GET", commandType: CommandType.StoredProcedure);
+
+        }
+        catch (Exception ex)
+        {
+            return default;
+        }
+    }
+
+    public async Task<int?> UpsertScoringCategories(ScoringCategories ins)
+    {
+        int? insertedID = 0;
+
+        var parameters = new DynamicParameters(new Dictionary<string, object>
+        {
+            { "@id", ins.ID },
+            { "@CategoryName", ins.CategoryName }
+        });
+
+        parameters.Add("@insertedID", 0, direction: ParameterDirection.Output);
+
+        try
+        {
+            using IDbConnection connection = new SqlConnection(connectionString);
+            await connection.ExecuteAsync("ref.scoringCategory_UPSERT", parameters, commandType: CommandType.StoredProcedure);
+            insertedID = parameters.Get<int?>("@insertedID");
+        }
+        catch (Exception ex)
+        {
+            return default;
+        }
+
+        return insertedID ?? ins.ID;
+    }
 }

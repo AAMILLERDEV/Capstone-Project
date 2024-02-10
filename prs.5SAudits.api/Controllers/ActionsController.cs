@@ -15,11 +15,6 @@ namespace prs_5SAudits.api.Controllers
             this.db = db;
         }
 
-
-       
-
-        
-     
         [HttpGet]
         [Route("[controller]/GetActions")]
         public Task<IEnumerable<Actions>> GetActions() => db.GetActions();

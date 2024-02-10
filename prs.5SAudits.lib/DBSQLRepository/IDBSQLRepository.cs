@@ -30,12 +30,16 @@
 		public Task<IEnumerable<Deductions>> GetDeductions();
 		public Task<int?> UpsertDeductions(Deductions deductions);
 
-		//Departments Methods
-		public Task<IEnumerable<Departments>> GetDepartments();
-		public Task<int?> UpsertDepartments(Departments departments);
+		//Zones Methods
+		public Task<IEnumerable<Zones>> GetZones();
+		public Task<int?> UpsertZones(Zones ins);
 
-		//Resources Methods
-		public Task<IEnumerable<Resources>> GetResources();
+        //Zone Categories
+        public Task<IEnumerable<ZoneCategories>> GetZoneCategories();
+        public Task<int?> UpsertZoneCategories(ZoneCategories ins);
+
+        //Resources Methods
+        public Task<IEnumerable<Resources>> GetResources();
 		public Task<int?> UpsertResources(Resources resources);
 
 		//Scores Methods
@@ -45,5 +49,9 @@
 		//ScoringCriteria Methods
 		public Task<IEnumerable<ScoringCriteria>> GetScoringCriteria();
 		public Task<int?> UpsertScoringCriteria(ScoringCriteria scoringCriteria);
-	}
+
+        //Scoring Categories
+        public Task<IEnumerable<ScoringCategories>> GetScoringCategories();
+        public Task<int?> UpsertScoringCategories(ScoringCategories ins);
+    }
 }

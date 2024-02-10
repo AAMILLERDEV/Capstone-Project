@@ -4,11 +4,11 @@
 	{
 		public int ID { set; get; }
 		public DateTime DateStarted { set; get; }
-		public int EmployeeID { set; get; }
+		public int Employee_ID { set; get; }
 		public DateTime DateCompleted { set; get; }
-		public int DepartmentID { set; get; }
-		public int OverallScore { set; get; }
-		public int AuditStatusID { set; get; }
+		public int Department_ID { set; get; }
+		public double OverallScore { set; get; }
+		public int AuditStatus_ID { set; get; }
 		public string Notes { set; get; }
 	}
 }

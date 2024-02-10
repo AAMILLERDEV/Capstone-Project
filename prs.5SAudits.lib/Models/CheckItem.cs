@@ -4,7 +4,7 @@
 	{
 		public int ID { set; get; }
 		public string ItemName { set; get; }
-		public int CategoryID { set; get; }
+		public int ScoringCategory_ID { set; get; }
 		public string Question { set; get; }
 	}
 }
