@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "prs_5SAudits.api", "prs.5SA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "prs_5SAudits.lib", "prs.5SAudits.lib\prs_5SAudits.lib.csproj", "{D0165BC7-E781-4BF1-A2DB-9C0D0C6C5FA0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "prs.5SAudits.UnitTests", "prs.5SAudits.UnitTests\prs.5SAudits.UnitTests.csproj", "{F7D1328E-F195-45C0-A3B8-AA601A0675AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,14 @@ Global
 		{D0165BC7-E781-4BF1-A2DB-9C0D0C6C5FA0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D0165BC7-E781-4BF1-A2DB-9C0D0C6C5FA0}.Release|x64.ActiveCfg = Release|x64
 		{D0165BC7-E781-4BF1-A2DB-9C0D0C6C5FA0}.Release|x64.Build.0 = Release|x64
+		{F7D1328E-F195-45C0-A3B8-AA601A0675AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7D1328E-F195-45C0-A3B8-AA601A0675AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7D1328E-F195-45C0-A3B8-AA601A0675AD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F7D1328E-F195-45C0-A3B8-AA601A0675AD}.Debug|x64.Build.0 = Debug|Any CPU
+		{F7D1328E-F195-45C0-A3B8-AA601A0675AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7D1328E-F195-45C0-A3B8-AA601A0675AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7D1328E-F195-45C0-A3B8-AA601A0675AD}.Release|x64.ActiveCfg = Release|Any CPU
+		{F7D1328E-F195-45C0-A3B8-AA601A0675AD}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

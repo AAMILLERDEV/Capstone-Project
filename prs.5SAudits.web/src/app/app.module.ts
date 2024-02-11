@@ -14,6 +14,7 @@ import { NewAuditFormComponent } from './audits/new-audit-form/new-audit-form.co
 import { EditAuditFormComponent } from './audits/edit-audit-form/edit-audit-form.component';
 import { SupportComponent } from './support/support.component';
 import { AdminComponent } from './admin/admin.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { AdminComponent } from './admin/admin.component';
     FormsModule,
     BrowserAnimationsModule,
     TooltipModule.forRoot(),
+    ToastrModule.forRoot(),
     NgbModule
   ],
   providers: [],

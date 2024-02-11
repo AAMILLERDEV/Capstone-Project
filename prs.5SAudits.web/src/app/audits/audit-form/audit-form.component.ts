@@ -5,6 +5,7 @@ import { ScoringCategories } from 'src/models/ScoringCategories';
 import { ScoringCategoriesService } from 'src/services/scoringCategories.service'
 import { CheckItem } from 'src/models/CheckItem';
 import { CheckItemService } from 'src/services/checkItem.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-audit-form',
@@ -28,7 +29,8 @@ export class AuditFormComponent implements OnInit {
 
   constructor(private controlContainer: ControlContainer,
     private scoringCategoriesService: ScoringCategoriesService,
-    private checkItemService: CheckItemService
+    private checkItemService: CheckItemService,
+    private toastr: ToastrService
     ){
   }
 
@@ -43,6 +45,8 @@ export class AuditFormComponent implements OnInit {
     console.log(this.checkItem);
 
     this.viewReady = true;
+
+    this.toastr.success("Item Saved!")
 
   }
 
