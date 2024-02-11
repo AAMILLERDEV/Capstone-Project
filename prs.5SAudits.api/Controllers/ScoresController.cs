@@ -16,6 +16,10 @@ namespace prs_5SAudits.api.Controllers
         }
 
         [HttpGet]
+        [Route("[controller]/GetScoresByAuditID/${audit_ID}")]
+        public Task<IEnumerable<Scores>> GetScoresByAuditID(int audit_ID) => db.GetScoresByAuditID(audit_ID);
+
+        [HttpGet]
         [Route("[controller]/GetScores")]
         public Task<IEnumerable<Scores>> GetScores() => db.GetScores();
         

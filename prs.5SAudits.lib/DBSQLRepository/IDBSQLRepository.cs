@@ -16,7 +16,8 @@
 
 		//Audits Methods
 		public Task<IEnumerable<Audits>> GetAudits();
-		public Task<int?> UpsertAudits(Audits audits);
+        public Task<Audits> GetAuditByID(int id);
+        public Task<int?> UpsertAudits(Audits audits);
 
 		//AuditStatus Methods
 		public Task<IEnumerable<AuditStatus>> GetAuditStatus();
@@ -44,7 +45,8 @@
 
 		//Scores Methods
 		public Task<IEnumerable<Scores>> GetScores();
-		public Task<int?> UpsertScores(Scores scores);
+        public Task<IEnumerable<Scores>> GetScoresByAuditID(int audit_ID);
+        public Task<int?> UpsertScores(Scores scores);
 
 		//ScoringCriteria Methods
 		public Task<IEnumerable<ScoringCriteria>> GetScoringCriteria();

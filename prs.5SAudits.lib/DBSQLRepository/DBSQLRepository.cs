@@ -151,7 +151,6 @@ public class DBSQLRepository : IDBSQLRepository
 		{
 			using IDbConnection connection = new SqlConnection(connectionString);
 			return await connection.QueryAsync<Audits>("hist.audits_GET", commandType: CommandType.StoredProcedure);
-
 		}
 		catch (Exception ex)
 		{
@@ -159,7 +158,20 @@ public class DBSQLRepository : IDBSQLRepository
 		}
 	}
 
-	public async Task<int?> UpsertAudits(Audits ins)
+    public async Task<Audits> GetAuditByID(int id)
+    {
+        try
+        {
+            using IDbConnection connection = new SqlConnection(connectionString);
+            return await connection.QueryFirstOrDefaultAsync<Audits>("hist.auditByID_GET", new { id }, commandType: CommandType.StoredProcedure);
+        }
+        catch (Exception ex)
+        {
+            return default;
+        }
+    }
+
+    public async Task<int?> UpsertAudits(Audits ins)
 	{
 		int? insertedID = 0;
 
@@ -444,8 +456,23 @@ public class DBSQLRepository : IDBSQLRepository
 		return insertedID ?? ins.ID;
 	}
 
-	// DB methods for the Scores object
-	public async Task<IEnumerable<Scores>> GetScores()
+    // DB methods for the Scores object
+
+    public async Task<IEnumerable<Scores>> GetScoresByAuditID(int audit_ID)
+    {
+        try
+        {
+            using IDbConnection connection = new SqlConnection(connectionString);
+            return await connection.QueryAsync<Scores>("hist.scoresByAudit_GET", new { audit_ID }, commandType: CommandType.StoredProcedure);
+
+        }
+        catch (Exception ex)
+        {
+            return default;
+        }
+    }
+
+    public async Task<IEnumerable<Scores>> GetScores()
 	{
 		try
 		{
