@@ -3,8 +3,6 @@ import { ControlContainer, FormGroup } from '@angular/forms';
 import { Audits } from 'src/models/Audits';
 import { ScoringCategories } from 'src/models/ScoringCategories';
 import { ScoringCategoriesService } from 'src/services/scoringCategories.service'
-import { Settings } from 'src/models/Settings';
-import { SettingsService } from 'src/services/settings.service';
 import { CheckItem } from 'src/models/CheckItem';
 import { CheckItemService } from 'src/services/checkItem.service';
 
@@ -20,15 +18,15 @@ export class AuditFormComponent implements OnInit {
   @Input() public formReady: boolean = true;
   @Input() public auditStarted: boolean = false;
   public parentFormGroup!: FormGroup;
-  public settings: Settings[] = [];
   public scoringCategories: ScoringCategories[] = [];
   public checkItem: CheckItem[] = [];
   public date: Date = new Date();
   public index: number = 0;
   public currentCategory!: ScoringCategories;
+  public scores: number[] = [];
+  public comments: string[] = [];
 
   constructor(private controlContainer: ControlContainer,
-    private settingsService: SettingsService,
     private scoringCategoriesService: ScoringCategoriesService,
     private checkItemService: CheckItemService
     ){
@@ -36,8 +34,6 @@ export class AuditFormComponent implements OnInit {
 
   async ngOnInit() {
     this.parentFormGroup = this.controlContainer.control as FormGroup;
-
-    this.settings = await this.settingsService.getSettings();
 
     this.scoringCategories = await this.scoringCategoriesService.getScoringCategories();
     console.log(this.scoringCategories);
@@ -51,16 +47,28 @@ export class AuditFormComponent implements OnInit {
   }
 
   public collectionManager(input: String){
+
+    this.comments[this.index] = this.parentFormGroup.controls['commentsControl'].value;
+    this.scores[this.index] = this.parentFormGroup.controls['scoreControl'].value;
+
+    //Probably wanna push up the comments and score for the current index to the DB here?
+    //
+    //
+
     if (input == "prev") {
       if (this.index > 0) {
         this.index--;
       }
     }
     else if (input == "next") {
-      if (this.index < 4) {
+      if (this.index < 4 //&& this.parentFormGroup.valid
+      ) {
         this.index++;
       }
     }
+
+    this.parentFormGroup.controls['commentsControl'].setValue(this.comments[this.index]);
+    this.parentFormGroup.controls['scoreControl'].setValue(this.scores[this.index]);
 
     this.currentCategory = this.scoringCategories[this.index];
     console.log(this.index);

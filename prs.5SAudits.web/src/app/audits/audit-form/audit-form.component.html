@@ -69,7 +69,7 @@
                 <div class="form-group">
                     <h3 class="">{{currentCategory.categoryName}}</h3>
                     <div *ngFor="let item of checkItem; index as i">
-                      <div  *ngIf="item.category_ID== currentCategory.id" class="m-2 card">
+                      <div  *ngIf="item.category_ID == currentCategory.id" class="m-2 card">
                         <a class="" style="text-decoration:none; color:black;" data-bs-toggle="collapse" href="#multiCollapseExample{{i}}" role="button" aria-expanded="false" [attr.aria-controls]="'multiCollapseExample{{i}}'">
                           <div class="card-header h5">
                             {{item.itemName}}
