@@ -17,7 +17,7 @@ namespace prs_5SAudits.api.Controllers
 
         [HttpGet]
         [Route("[controller]/GetAuditByID/{id}")]
-        public Task<IEnumerable<Audits>> GetAuditByID(int id) => db.GetAuditByID(id);
+        public Task<Audits> GetAuditByID(int id) => db.GetAuditByID(id);
 
         [HttpGet]
         [Route("[controller]/GetAudits")]

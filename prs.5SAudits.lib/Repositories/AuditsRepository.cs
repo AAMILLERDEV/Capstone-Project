@@ -14,6 +14,7 @@ namespace prs_5SAudits.lib.Repositories
         }
         
         public Task<IEnumerable<Audits>> GetAudits() => db.GetAudits();
+        public Task<Audits> GetAuditByID(int id) => db.GetAuditByID(id);
         public Task<int?> UpsertAudits(Audits audits) => db.UpsertAudits(audits);
     }
 }

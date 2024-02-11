@@ -14,6 +14,7 @@ namespace prs_5SAudits.lib.Repositories
         }
         
         public Task<IEnumerable<Scores>> GetScores() => db.GetScores();
+        public Task<IEnumerable<Scores>> GetScoresByAuditID(int audit_ID) => db.GetScoresByAuditID(audit_ID);
         public Task<int?> UpsertScores(Scores scores) => db.UpsertScores(scores);
     }
 }
