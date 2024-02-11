@@ -16,7 +16,7 @@ namespace prs_5SAudits.api.Controllers
         }
 
         [HttpGet]
-        [Route("[controller]/GetScores")]
+        [Route("[controller]/GetScoringCategories")]
         public Task<IEnumerable<ScoringCategories>> GetScoringCategories() => db.GetScoringCategories();
         
         [HttpPost]

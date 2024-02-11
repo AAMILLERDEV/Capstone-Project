@@ -67,18 +67,20 @@
               <div>
                 <!--Add Form Here-->
                 <div class="form-group">
-                    <h3 class="">{{currentSetting.settingKey}}</h3>
-                    <div *ngFor="let set of settings; index as i" class="m-2 card">
+                    <h3 class="">{{currentCategory.categoryName}}</h3>
+                    <div *ngFor="let item of checkItem; index as i">
+                      <div  *ngIf="item.category_ID== currentCategory.id" class="m-2 card">
                         <a class="" style="text-decoration:none; color:black;" data-bs-toggle="collapse" href="#multiCollapseExample{{i}}" role="button" aria-expanded="false" [attr.aria-controls]="'multiCollapseExample{{i}}'">
                           <div class="card-header h5">
-                            Toggle first element
+                            {{item.itemName}}
                           </div>
                           <div class="collapse multi-collapse" id="multiCollapseExample{{i}}">
                             <div class="p-3 card-body">
-                              {{set.settingValue}}
+                              {{item.question}}
                             </div>
                           </div>
                         </a>
+                      </div>
                     </div>
                     <!--Score-->
                     <div class="input-group has-validation">

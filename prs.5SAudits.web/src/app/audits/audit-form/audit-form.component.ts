@@ -1,8 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ControlContainer, FormGroup } from '@angular/forms';
 import { Audits } from 'src/models/Audits';
+import { ScoringCategories } from 'src/models/ScoringCategories';
+import { ScoringCategoriesService } from 'src/services/scoringCategories.service'
 import { Settings } from 'src/models/Settings';
 import { SettingsService } from 'src/services/settings.service';
+import { CheckItem } from 'src/models/CheckItem';
+import { CheckItemService } from 'src/services/checkItem.service';
 
 @Component({
   selector: 'app-audit-form',
@@ -13,30 +17,35 @@ export class AuditFormComponent implements OnInit {
 
   public currentTab: string = 'form';
   public viewReady: boolean = false;
-  @Input() public formReady: boolean = false;
-  @Input() public auditStarted: boolean = true;
+  @Input() public formReady: boolean = true;
+  @Input() public auditStarted: boolean = false;
   public parentFormGroup!: FormGroup;
   public settings: Settings[] = [];
+  public scoringCategories: ScoringCategories[] = [];
+  public checkItem: CheckItem[] = [];
   public date: Date = new Date();
   public index: number = 0;
-  public currentSetting!: Settings;
+  public currentCategory!: ScoringCategories;
 
   constructor(private controlContainer: ControlContainer,
-    private settingsService: SettingsService){
-
+    private settingsService: SettingsService,
+    private scoringCategoriesService: ScoringCategoriesService,
+    private checkItemService: CheckItemService
+    ){
   }
 
   async ngOnInit() {
     this.parentFormGroup = this.controlContainer.control as FormGroup;
 
     this.settings = await this.settingsService.getSettings();
-    this.currentSetting = this.settings[this.index];
-    for (let i = 0; i < 5; i++){
-      let originalSettings = this.settings[0];
-      let copy = {...originalSettings};
-      this.settings.push(copy)
-      console.log(i)
-    }
+
+    this.scoringCategories = await this.scoringCategoriesService.getScoringCategories();
+    console.log(this.scoringCategories);
+    this.currentCategory = this.scoringCategories[this.index];
+
+    this.checkItem = await this.checkItemService.getCheckItem();
+    console.log(this.checkItem);
+
     this.viewReady = true;
 
   }
@@ -53,7 +62,7 @@ export class AuditFormComponent implements OnInit {
       }
     }
 
-    this.currentSetting = this.settings[this.index];
+    this.currentCategory = this.scoringCategories[this.index];
     console.log(this.index);
   }
 

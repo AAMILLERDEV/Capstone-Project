@@ -255,7 +255,7 @@ public class DBSQLRepository : IDBSQLRepository
 		{
 			{ "@id", ins.ID },
 			{ "@itemName", ins.ItemName },
-			{ "@category_ID", ins.ScoringCategory_ID },
+			{ "@category_ID", ins.Category_ID },
 			{ "@question", ins.Question }
 		});
 
@@ -536,7 +536,7 @@ public class DBSQLRepository : IDBSQLRepository
         try
         {
             using IDbConnection connection = new SqlConnection(connectionString);
-            return await connection.QueryAsync<ScoringCategories>("ref.scoringCategory_GET", commandType: CommandType.StoredProcedure);
+            return await connection.QueryAsync<ScoringCategories>("ref.scoringCategories_GET", commandType: CommandType.StoredProcedure);
 
         }
         catch (Exception ex)
@@ -560,7 +560,7 @@ public class DBSQLRepository : IDBSQLRepository
         try
         {
             using IDbConnection connection = new SqlConnection(connectionString);
-            await connection.ExecuteAsync("ref.scoringCategory_UPSERT", parameters, commandType: CommandType.StoredProcedure);
+            await connection.ExecuteAsync("ref.scoringCategories_UPSERT", parameters, commandType: CommandType.StoredProcedure);
             insertedID = parameters.Get<int?>("@insertedID");
         }
         catch (Exception ex)
