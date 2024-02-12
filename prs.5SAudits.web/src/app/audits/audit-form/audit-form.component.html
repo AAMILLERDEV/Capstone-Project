@@ -23,7 +23,9 @@
         <div class="input-group has-validation m-2">
           <span class="input-group-text">Zone Category</span>
           <div class="form-floating is-invalid">
-            <input type="text" class="form-control is-invalid" id="zoneCategory" formControlName="zoneCategoryControl" required>
+            <select class="form-select for-select-lg" id="zoneCategory" formControlName="zoneCategoryControl" (change)="updateZoneCategory()" required>
+              <option *ngFor="let category of zoneCategories; index as i" [value]="category.id">{{category.categoryName}}</option>
+            </select>
           </div>
           <div class="invalid-feedback">
             Zone Category is Required
@@ -33,7 +35,9 @@
         <div class="input-group has-validation m-2">
           <span class="input-group-text">Zone</span>
           <div class="form-floating is-invalid">
-            <input type="text" class="form-control is-invalid" id="zone" formControlName="zoneControl" required>
+            <select class="form-select form-select-lg" id="zone" formControlName="zoneControl" required>
+              <option *ngFor="let zone of matchingZones" [value]="zone.id">{{zone.zoneName}}</option>
+            </select>
           </div>
           <div class="invalid-feedback">
             Zone is Required
@@ -99,10 +103,10 @@
                 </div>
                 <div class="">
                   <div class="float-start mt-2" *ngIf="index > 0">
-                    <button class="btn btn-primary" id="btnPrevious" (click)="collectionManager('prev')">Previous</button>
+                    <button class="btn btn-primary" id="btnPrevious" (click)="collectionManager(true)">Previous</button>
                   </div>
                   <div class="float-end mt-2" *ngIf="index < 4">
-                    <button class="btn btn-primary" id="btnNext" (click)="collectionManager('next')">Next</button>
+                    <button class="btn btn-primary" id="btnNext" (click)="collectionManager(false)">Next</button>
                   </div>
                   <div class="float-end mt-2" *ngIf="index == 4">
                     <button class="btn btn-primary" id="btnSubmit">Submit</button>
