@@ -20,7 +20,7 @@ export class ScoresService {
     return this.sharedService.get(`Scores/GetScoresByAudit/${audit_ID}`);
   }
 
-  public Upsert(scores: Scores){
+  public UpsertScores(scores: Scores){
     return this.sharedService.upsert(`Scores/UpsertScores`, scores);
   }
   

@@ -1,10 +1,10 @@
 export interface Audits {
-    id: number;
+    id: number | null;
     dateStarted: Date;
     employeeId: number;
-    dateCompleted: Date;
+    dateCompleted: Date | null;
     department_ID: number;
     overallScore: number;
     auditStatus_ID: number;
-    notes: string;
+    notes: string | null;
 }

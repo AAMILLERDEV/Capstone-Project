@@ -493,7 +493,7 @@ public class DBSQLRepository : IDBSQLRepository
 		var parameters = new DynamicParameters(new Dictionary<string, object>
 		{
 			{ "@id", ins.ID },
-			{ "@checkItem", ins.CheckItem },
+			{ "@scoreCategory_ID", ins.ScoreCategory_ID },
 			{ "@comments", ins.Comments },
 			{ "@audit_ID", ins.Audit_ID },
 			{ "@score", ins.Score }

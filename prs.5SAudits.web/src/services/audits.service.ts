@@ -13,15 +13,15 @@ export class AuditService {
   }
 
   public GetAudits(){
-    return this.sharedService.get(`Audit/GetAudits`);
+    return this.sharedService.get(`Audits/GetAudits`);
   }
 
   public GetAuditByID(audit_ID: number){
-    return this.sharedService.get(`Audit/GetAuditByID/${audit_ID}`);
+    return this.sharedService.get(`Audits/GetAuditByID/${audit_ID}`);
   }
 
-  public UpsertAudit(audit: Audits){
-    return this.sharedService.upsert(`Audit/UpsertAudit`, audit);
+  public UpsertAudits(audit: Audits){
+    return this.sharedService.upsert(`Audits/UpsertAudits`, audit);
   }
   
 }
