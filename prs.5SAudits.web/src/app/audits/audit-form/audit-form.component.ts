@@ -42,43 +42,72 @@ export class AuditFormComponent implements OnInit {
   async ngOnInit() {
     this.parentFormGroup = this.controlContainer.control as FormGroup;
 
-    console.log("cateogires in form: " + this.scoringCategories);
+    console.log("categories in form: " + this.scoringCategories);
     if (this.scoringCategories.length > 0) {
       this.currentCategory = this.scoringCategories[this.index];
     }
 
     this.viewReady = true;
 
-    this.toastr.success("Item Saved!")
+    this.parentFormGroup.controls['zoneControl'].disable();
+    this.parentFormGroup.controls['zoneControl'].setValue(null);
+    this.parentFormGroup.controls['zoneCategoryControl'].setValue(null);
 
   }
 
   public collectionManager(input: boolean){
 
-    this.comments[this.index] = this.parentFormGroup.controls['commentsControl'].value;
-    this.scores[this.index] = this.parentFormGroup.controls['scoreControl'].value;
-
-    //Probably wanna push up the comments and score for the current index to the DB here?
-    //
-    //
-
     if (input == true) {
       if (this.index > 0) {
+        if (this.validateScore()) {
+          this.saveScores();
+          this.toastr.success("Item Saved!");
+        }
         this.index--;
+        this.updateScoreControls();
       }
     }
     else if (input == false) {
       if (this.index < 4 //&& this.parentFormGroup.valid
       ) {
-        this.index++;
+        if (this.validateScore()) {
+          this.saveScores();
+          this.index++;
+          this.updateScoreControls()
+          this.toastr.success("Item Saved!");
+        }
       }
     }
 
-    this.parentFormGroup.controls['commentsControl'].setValue(this.comments[this.index]);
-    this.parentFormGroup.controls['scoreControl'].setValue(this.scores[this.index]);
-
     this.currentCategory = this.scoringCategories[this.index];
     console.log(this.index);
+  }
+
+  public updateScoreControls() {
+    this.parentFormGroup.controls['commentsControl'].setValue(this.comments[this.index]);
+    this.parentFormGroup.controls['scoreControl'].setValue(this.scores[this.index]);
+  }
+
+  public saveScores() {
+    this.comments[this.index] = this.parentFormGroup.controls['commentsControl'].value;
+    this.scores[this.index] = this.parentFormGroup.controls['scoreControl'].value;
+  }
+
+  public validateScore() {
+    let score = this.parentFormGroup.controls['scoreControl'].value
+    if (score == null) {
+      return false;
+    }
+
+    if (isNaN(score)) {
+      return false;
+    }
+
+    if (score < 0 || score > 5) {
+      return false;
+    }
+
+    return true;
   }
 
   public updateZoneCategory(){
@@ -86,6 +115,7 @@ export class AuditFormComponent implements OnInit {
     console.log(this.selectedZoneCategoryId);
 
     this.matchingZones = this.zones.filter(zone => zone.zoneCategory_ID == this.selectedZoneCategoryId);
+    this.parentFormGroup.controls['zoneControl'].enable();
   }
 
 
@@ -97,8 +127,12 @@ export class AuditFormComponent implements OnInit {
 
     // }
 
-    this.auditStarted = false;
-    this.formReady = true;
+    if (this.parentFormGroup.controls['zoneControl'].value) {
+      this.auditStarted = false;
+      this.formReady = true;
+      this.toastr.success("Item Saved!");
+    }
+
   }
 
 }
