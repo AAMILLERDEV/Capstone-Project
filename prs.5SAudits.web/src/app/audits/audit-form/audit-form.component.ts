@@ -62,6 +62,7 @@ export class AuditFormComponent implements OnInit {
     this.viewReady = true;
   }
 
+  //Manager for navigating different scoring categories using a class index and boolean param
   public async collectionManager(input: boolean){
     await this.saveScores();
     if (input) {
@@ -74,8 +75,8 @@ export class AuditFormComponent implements OnInit {
     this.updateScoreFields();
   }
 
+  //Save scores method that creates a new score if needed, else grabs the existing one and updates it
   public async saveScores() {
-    console.log(this.parentFormGroup.controls['scoreControl'].value)
     if (this.parentFormGroup.controls['scoreControl'].value == null){
       return;
     }
@@ -100,10 +101,11 @@ export class AuditFormComponent implements OnInit {
         score.id = res;
         this.scores.push(score)
       }
-      console.log(res);
     }
   }
 
+
+  //Method that updates the scores fields if the score exists, else clears it for new entries
   public updateScoreFields(){
     if (this.scores.find(x => x.scoreCategory_ID == this.scoringCategories[this.index].id) != null){
       this.parentFormGroup.controls['commentsControl'].setValue(this.scores.find(x => x.scoreCategory_ID == this.scoringCategories[this.index].id)?.comments)
@@ -113,16 +115,19 @@ export class AuditFormComponent implements OnInit {
     clearScoreForm(this.parentFormGroup)
   }
 
+  //Styling removing method (may or may not be kept)
   public removeSelectionStyle(id: string){
     let selection = document.getElementById(id);
     selection.classList.remove("is-invalid")
   }
 
+  //Zone updating method for zone categories based on form zone cat input
   public updateZoneCategory(){
     this.matchingZones = this.zones.filter(x => x.zoneCategory_ID == this.parentFormGroup.controls['zoneCategoryControl'].value);
     this.parentFormGroup.controls['zoneControl'].enable();
   }
 
+  //Method to create and return a new score object
   public initializeNewScore(): Scores{
     let score: Scores = {
       audit_ID: this.audit.id!,
@@ -134,7 +139,7 @@ export class AuditFormComponent implements OnInit {
     return score
   }
 
-
+  //method to create new audit record and navigate to scoring form
   public async startAudit() {
     console.log(this.parentFormGroup.controls['zoneControl'].value)
     if (this.parentFormGroup.controls['zoneControl'].value != '') {
@@ -148,15 +153,12 @@ export class AuditFormComponent implements OnInit {
         notes: null,
         overallScore: 0
       }
-
-      console.log(audit)
-
+      
       try {
         const response = await this.auditService.UpsertAudits(audit);
         audit.id = response;
         this.audit = audit;
-        this.auditStarted = false;
-        this.formReady = true;
+        this.proceedToScores();
         this.toastr.success("Audit Started");
         return;
       } catch (error) {
@@ -168,15 +170,15 @@ export class AuditFormComponent implements OnInit {
     this.toastr.error("Please select a zone to proceed")
   }
 
+  //simple method to flip forms
   public proceedToScores(){
     this.auditStarted = false;
     this.formReady = true;
   }
 
+  //Simple audit score submission, notifier and navigator
   public async submitAudit() {
     await this.saveScores();
-
-
     this.toastr.success("Audit successfully updated");
     this.router.navigate(['home']);
   }
