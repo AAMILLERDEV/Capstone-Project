@@ -1,50 +1,52 @@
 <ng-container>
-  <div  class="container" *ngIf="viewReady">
+  <div class="container" *ngIf="viewReady">
     <div [formGroup]="parentFormGroup">
       <!--Main Audit Form-->
-      <div class="form-group" *ngIf="auditStarted">
-        <h3 class="card-title text-center">5S Audit Form</h3>
+      <div class="form-group text-center customBorder2 p-2" *ngIf="auditStarted">
+        <h3 class="card-title ">5S Audit Form</h3>
         <label class="display-6 fs-6 fst-italic">Date Started: {{date}}</label>
         <!--Auditor Name-->
-        <div class="input-group m-2">
+        <div class="input-group p-3">
             <span class="input-group-text">Employee Name</span>
             <div class="form-floating">
               <input type="text" class="form-control" id="employeeName" formControlName="employeeNameControl">
             </div>
         </div>
         <!--Audit Number-->
-        <div class="input-group m-2">
+        <div class="input-group p-3">
           <span class="input-group-text">Audit Number</span>
           <div class="form-floating">
             <input type="text" class="form-control" id="auditNumber" formControlName="auditNumberControl">
           </div>
         </div>
         <!--Zone Category-->
-        <div class="input-group has-validation m-2">
+        <div class="input-group has-validation p-3">
           <span class="input-group-text">Zone Category</span>
           <div class="form-floating is-invalid">
-            <select class="form-select for-select-lg" id="zoneCategory" formControlName="zoneCategoryControl" (change)="updateZoneCategory()" required>
+            <select class="form-select for-select-lg" id="zoneCategory" #zoneCategoryVal formControlName="zoneCategoryControl" (change)="updateZoneCategory()" required>
+              <option selected [value]="" disabled>Select a Zone Category</option>
               <option *ngFor="let category of zoneCategories; index as i" [value]="category.id">{{category.categoryName}}</option>
             </select>
           </div>
-          <div class="invalid-feedback">
+          <div class="invalid-feedback" *ngIf="!editMode && zoneCategoryVal.value == ''">
             Zone Category is Required
           </div>
         </div>
         <!--Zone-->
-        <div class="input-group has-validation m-2">
+        <div class="input-group has-validation p-3">
           <span class="input-group-text">Zone</span>
           <div class="form-floating is-invalid">
-            <select class="form-select form-select-lg" id="zone" formControlName="zoneControl" required>
-              <option *ngFor="let zone of matchingZones" [value]="zone.id">{{zone.zoneName}}</option>
+            <select class="form-select form-select-sm" formControlName="zoneControl" #zoneVal required>
+              <option *ngFor="let zone of matchingZones" value="{{zone.id}}">{{zone.zoneName}}</option>
             </select>
           </div>
-          <div class="invalid-feedback">
+          <div class="invalid-feedback" *ngIf="!editMode && zoneVal.value == ''">
             Zone is Required
           </div>
         </div>
       <div class="text-center">
-        <button class="btn btn-primary" (click)="startAudit()">Start Audit</button>
+        <button class="btn btn-primary" *ngIf="!editMode" (click)="startAudit()">Start Audit</button>
+        <button class="btn btn-primary" *ngIf="editMode" (click)="proceedToScores()">Proceed</button>
       </div>
     </div>
 
@@ -54,13 +56,13 @@
       <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
           <li class="nav-item">
-            <button class="nav-link" (click)="currentTab = 'form'" [class.active]="currentTab === 'form'" aria-current="true">Form</button>
+            <button class="nav-link" (click)="currentTab='form'" [class.active]="currentTab==='form'" aria-current="true">Form</button>
           </li>
           <li class="nav-item">
-            <button class="nav-link" (click)="currentTab = 'photos'" [class.active]="currentTab === 'photos'" aria-current="true">Photos</button>
+            <button class="nav-link" (click)="currentTab='photos'" [class.active]="currentTab==='photos'" aria-current="true">Photos</button>
           </li>
           <li class="nav-item">
-            <button class="nav-link" (click)="currentTab = 'criteria'" [class.active]="currentTab === 'criteria'" aria-current="true">Audit Criteria Details</button>
+            <button class="nav-link" (click)="currentTab='criteria'" [class.active]="currentTab==='criteria'" aria-current="true">Audit Criteria Details</button>
           </li>
         </ul>
       </div>
@@ -71,11 +73,11 @@
               <div>
                 <!--Add Form Here-->
                 <div class="form-group">
-                    <h3 class="">{{currentCategory.categoryName}}</h3>
+                    <h3 class="display-6 fs-4 fst-italic p-2">{{scoringCategories[index].categoryName}}</h3>
                     <div *ngFor="let item of checkItem; index as i">
-                      <div  *ngIf="item.category_ID == currentCategory.id" class="m-2 card">
-                        <a class="" style="text-decoration:none; color:black;" data-bs-toggle="collapse" href="#multiCollapseExample{{i}}" role="button" aria-expanded="false" [attr.aria-controls]="'multiCollapseExample{{i}}'">
-                          <div class="card-header h5">
+                      <div  *ngIf="item.category_ID == scoringCategories[index].id" class="m-2 card border-secondary">
+                        <a class="text-decoration-none text-dark" data-bs-toggle="collapse" href="#multiCollapseExample{{i}}" role="button" aria-expanded="false" [attr.aria-controls]="'multiCollapseExample{{i}}'">
+                          <div class="card-header display-6 fs-5">
                             {{item.itemName}}
                           </div>
                           <div class="collapse multi-collapse" id="multiCollapseExample{{i}}">
@@ -87,21 +89,23 @@
                       </div>
                     </div>
                     <!--Score-->
-                    <div class="input-group has-validation">
+                    <div class="input-group has-validation p-2">
                         <div class="form-floating is-invalid">
-                          <input type="number" class="form-control is-invalid" id="score" formControlName="scoreControl" placeholder="Score" required>
-                          <label for="auditScore">Score</label>
+                          <select class="form-select form-select-lg" [class]="val.value == null ? 'is-invalid' : ''" id="score" #val id="scoreSelection" (change)="removeSelectionStyle(val.id)"  formControlName="scoreControl" required>
+                            <option *ngFor="let num of numberArray" selected [value]="num">{{num}}</option>
+                          </select>
+                          <label for="auditScore p-2">Score</label>
                         </div>
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback" *ngIf="val.classList.contains('is-invalid')">
                           Score is Required
                         </div>
                     </div>
                     <!--Comments-->
-                    <div class="is-invalid">
+                    <div class="is-invalid p-2">
                       <textarea type="text" rows="3" class="form-control" id="comments" formControlName="commentsControl" placeholder="Comments"></textarea>
                     </div>
                 </div>
-                <div class="">
+                <div>
                   <div class="float-start mt-2" *ngIf="index > 0">
                     <button class="btn btn-primary" id="btnPrevious" (click)="collectionManager(true)">Previous</button>
                   </div>
@@ -109,7 +113,7 @@
                     <button class="btn btn-primary" id="btnNext" (click)="collectionManager(false)">Next</button>
                   </div>
                   <div class="float-end mt-2" *ngIf="index == 4">
-                    <button class="btn btn-primary" id="btnSubmit" (click)="submitAudit()">Submit</button>
+                    <button class="btn btn-success" id="btnSubmit" (click)="submitAudit()">Complete Audit</button>
                   </div>
                 </div>
               </div>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { clearAuditForm, clearScoreForm, setFormForNewAudit } from 'src/app/sharedUtils';
 import { AuditForm } from 'src/form-models/AuditForm';
 import { CheckItem } from 'src/models/CheckItem';
 import { ScoringCategories } from 'src/models/ScoringCategories';
@@ -23,35 +25,41 @@ export class NewAuditFormComponent implements OnInit {
   public zoneCategories: ZoneCategories[] = [];
 
   public auditForm: FormGroup;
+  public viewReady: boolean = false;
 
   constructor(private scoringCategoriesService: ScoringCategoriesService,
     private checkItemService: CheckItemService,
     private zonesService: ZonesService,
-    private zoneCategoriesService: ZoneCategoriesService){
+    private zoneCategoriesService: ZoneCategoriesService,
+    private router: Router){
     this.auditForm = AuditForm;
   }
 
   async ngOnInit() {
+    try {
+      this.setForm();
+      await this.getData();
+      this.viewReady = true;
+    } catch (error){
+      console.log(error)
+      this.router.navigateByUrl('home')
+    }
 
-    this.auditForm.controls['auditNumberControl'].disable();
-    this.auditForm.controls['employeeNameControl'].disable();
-
-    this.scoringCategories = await this.scoringCategoriesService.getScoringCategories();
-    console.log(this.scoringCategories);
-
-    this.checkItem = await this.checkItemService.getCheckItem();
-    console.log(this.checkItem);
-
-    this.zones = await this.zonesService.GetZones();
-    console.log(this.zones);
-
-    this.zoneCategories = await this.zoneCategoriesService.GetZoneCategories();
-    console.log(this.zoneCategories);
-    
   }
 
   public async getData(){
-    
+    this.scoringCategories = await this.scoringCategoriesService.getScoringCategories();
+    this.checkItem = await this.checkItemService.getCheckItem();
+    this.zones = await this.zonesService.GetZones();
+    this.zoneCategories = await this.zoneCategoriesService.GetZoneCategories();
+  }
+
+  public setForm(){
+    clearScoreForm(this.auditForm)
+    clearAuditForm(this.auditForm)
+    setFormForNewAudit(this.auditForm)
+    this.auditForm.controls['auditNumberControl'].setValue("TEST")
+    this.auditForm.controls['employeeNameControl'].setValue("Miller, Aaron")
   }
 
 }

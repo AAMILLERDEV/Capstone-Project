@@ -17,7 +17,7 @@ export class ScoresService {
   }
 
   public GetScoresByAudit(audit_ID: number){
-    return this.sharedService.get(`Scores/GetScoresByAudit/${audit_ID}`);
+    return this.sharedService.get(`Scores/GetScoresByAuditID/${audit_ID}`);
   }
 
   public UpsertScores(scores: Scores){

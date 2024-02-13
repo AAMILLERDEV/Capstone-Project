@@ -1,4 +1,7 @@
+import { Scores } from "./Scores";
+
 export interface ScoringCategories {
     id: number,
-    categoryName: string
+    categoryName: string,
+    score?: Scores
 }

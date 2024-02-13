@@ -15,6 +15,8 @@ import { AuditService } from 'src/services/audits.service';
 import { audit } from 'rxjs';
 import { ScoresService } from 'src/services/scores.service';
 import { Scores } from 'src/models/Scores';
+import { clearScoreForm, returnNumArray } from 'src/app/sharedUtils';
+import { document } from 'ngx-bootstrap/utils';
 
 @Component({
   selector: 'app-audit-form',
@@ -25,165 +27,157 @@ export class AuditFormComponent implements OnInit {
 
   public currentTab: string = 'form';
   public viewReady: boolean = false;
+  public parentFormGroup!: FormGroup;
+
   @Input() public formReady: boolean = false;
   @Input() public auditStarted: boolean = true;
-  public parentFormGroup!: FormGroup;
+  @Input() public audit!: Audits;
   @Input() public scoringCategories: ScoringCategories[] = [];
   @Input() public checkItem: CheckItem[] = [];
   @Input() public zones: Zones[] = [];
   @Input() public zoneCategories: ZoneCategories[] = [];
-  //@Input() public scores: Scores[] = []; Couldn't get this working for right now, saving for later since it's not super needed just yet
-  public scores: number[] = [];
-  public date: Date = new Date();
+  @Input() public scores: Scores[] = [];
+  @Input() public editMode: boolean = false;
+  @Input() public matchingZones: Zones[] = [];
+
+  public numberArray: Number[] = returnNumArray()
+
+  public date: Date | string = new Date().toLocaleString();
   public index: number = 0;
-  public currentCategory!: ScoringCategories;
   public comments: string[] = [];
-  public selectedZoneCategoryId!: number;
-  public matchingZones: Zones[] = [];
-  public currentAuditId!: number;
+  public selectedZoneCategory_ID!: number;
+
 
   constructor(private controlContainer: ControlContainer,
     private auditService: AuditService,
     private scoreService: ScoresService,
-    //private commentService: CommentService,
     private toastr: ToastrService,
     private router: Router
-    ){
+  ) {
+    console.log(this.scoringCategories)
   }
 
   async ngOnInit() {
     this.parentFormGroup = this.controlContainer.control as FormGroup;
-
-    console.log("categories in form: " + this.scoringCategories);
-    if (this.scoringCategories.length > 0) {
-      this.currentCategory = this.scoringCategories[this.index];
-    }
-
     this.viewReady = true;
-
-    this.parentFormGroup.controls['zoneControl'].disable();
-    this.parentFormGroup.controls['zoneControl'].setValue(null);
-    this.parentFormGroup.controls['zoneCategoryControl'].setValue(null);
-
   }
 
-  public collectionManager(input: boolean){
+  public async collectionManager(input: boolean){
+    await this.saveScores();
+    if (input) {
+      this.index--;
+      this.updateScoreFields();
+      return;
+    }
+    this.index++;
+    this.scores.find(x => x.scoreCategory_ID == this.scoringCategories[this.index].id)?.comments
+    this.updateScoreFields();
+  }
 
-    if (input == true) {
-      if (this.index > 0) {
-        if (this.validateScore()) {
-          this.saveScores();
-          this.toastr.success("Item Saved!");
-        }
-        this.index--;
-        this.currentCategory = this.scoringCategories[this.index];
-        this.updateScoreControls();
+  public async saveScores() {
+    console.log(this.parentFormGroup.controls['scoreControl'].value)
+    if (this.parentFormGroup.controls['scoreControl'].value == null){
+      return;
+    }
+
+    let score = this.initializeNewScore();
+
+    if (this.scores.find(x => x.scoreCategory_ID == this.scoringCategories[this.index].id) != null){
+      score = this.scores.find(x => x.scoreCategory_ID == this.scoringCategories[this.index].id)!
+    } 
+
+    if (this.parentFormGroup.controls['scoreControl'].value != null){
+      score.score = this.parentFormGroup.controls['scoreControl'].value
+    }
+
+    if (this.parentFormGroup.controls['commentsControl'].value != null && this.parentFormGroup.controls['commentsControl'].value.trim() != ''){
+      score.comments = this.parentFormGroup.controls['commentsControl'].value
+    }
+
+    if (score.score != null){
+      let res = await this.scoreService.UpsertScores(score);
+      if (res > 0){
+        score.id = res;
+        this.scores.push(score)
       }
-    }
-    else if (input == false) {
-      if (this.index < 4 //&& this.parentFormGroup.valid
-      ) {
-        if (this.validateScore()) {
-          this.saveScores();
-          this.index++;
-          this.currentCategory = this.scoringCategories[this.index];
-          this.updateScoreControls()
-          this.toastr.success("Item Saved!");
-        }
-      }
+      console.log(res);
     }
   }
 
-  public updateScoreControls() {
-    this.parentFormGroup.controls['commentsControl'].setValue(this.comments[this.index]);
-    this.parentFormGroup.controls['scoreControl'].setValue(this.scores[this.index]);
+  public updateScoreFields(){
+    if (this.scores.find(x => x.scoreCategory_ID == this.scoringCategories[this.index].id) != null){
+      this.parentFormGroup.controls['commentsControl'].setValue(this.scores.find(x => x.scoreCategory_ID == this.scoringCategories[this.index].id)?.comments)
+      this.parentFormGroup.controls['scoreControl'].setValue(this.scores.find(x => x.scoreCategory_ID == this.scoringCategories[this.index].id)?.score)
+      return;
+    }
+    clearScoreForm(this.parentFormGroup)
   }
 
-  public saveScores() {
-    this.comments[this.index] = this.parentFormGroup.controls['commentsControl'].value;
-    this.scores[this.index] = this.parentFormGroup.controls['scoreControl'].value;
-    let newScore: Scores = {
-      id: Number(`${this.currentAuditId}${this.currentCategory.id}`), //Generate a unique ID for each score that is based on audit:category for easy sorting
-      scoreCategory_ID: this.currentCategory.id,
-      score: this.scores[this.index],
-      comments: this.parentFormGroup.controls['commentsControl'].value,
-      audit_ID: this.currentAuditId
-    }
-
-    console.log(newScore);
-
-    try {
-      this.scoreService.UpsertScores(newScore);
-
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  public validateScore() {
-    let score = this.parentFormGroup.controls['scoreControl'].value
-    if (score == null) {
-      return false;
-    }
-
-    if (isNaN(score)) {
-      return false;
-    }
-
-    if (score < 0 || score > 5) {
-      return false;
-    }
-
-    return true;
+  public removeSelectionStyle(id: string){
+    let selection = document.getElementById(id);
+    selection.classList.remove("is-invalid")
   }
 
   public updateZoneCategory(){
-    this.selectedZoneCategoryId = this.parentFormGroup.controls['zoneCategoryControl'].value;
-    console.log(this.selectedZoneCategoryId);
-
-    this.matchingZones = this.zones.filter(zone => zone.zoneCategory_ID == this.selectedZoneCategoryId);
+    this.matchingZones = this.zones.filter(x => x.zoneCategory_ID == this.parentFormGroup.controls['zoneCategoryControl'].value);
     this.parentFormGroup.controls['zoneControl'].enable();
+  }
+
+  public initializeNewScore(): Scores{
+    let score: Scores = {
+      audit_ID: this.audit.id!,
+      comments: null,
+      id: 0,
+      score: 0,
+      scoreCategory_ID: this.scoringCategories[this.index].id
+    };
+    return score
   }
 
 
   public async startAudit() {
-
-    if (this.parentFormGroup.controls['zoneControl'].value) {
-
-      let auditForm: Audits = {
-        id: 1, //This doesn't matter because it auto generates a new id on the backend anyway
-        auditStatus_ID: 0, //Fix later once auditstatus table has data
-        employeeId: 0, //Update this once employee login is implemented
+    console.log(this.parentFormGroup.controls['zoneControl'].value)
+    if (this.parentFormGroup.controls['zoneControl'].value != '') {
+      let audit: Audits = {
+        id: 0,
+        auditStatus_ID: 1, 
+        employee_ID: 999,
         dateStarted: new Date(),
-        department_ID: this.parentFormGroup.controls['zoneControl'].value,
-        dateCompleted: new Date(),
-        notes: '',
+        zone_ID: parseInt(this.parentFormGroup.controls['zoneControl'].value),
+        dateCompleted: null,
+        notes: null,
         overallScore: 0
       }
 
-      try {
-        const response = await this.auditService.UpsertAudits(auditForm);
-        this.currentAuditId = response;
+      console.log(audit)
 
+      try {
+        const response = await this.auditService.UpsertAudits(audit);
+        audit.id = response;
+        this.audit = audit;
         this.auditStarted = false;
         this.formReady = true;
-        this.toastr.success("Item Saved!");
+        this.toastr.success("Audit Started");
+        return;
       } catch (error) {
         this.toastr.error("There was an error starting the audit.");
         console.log(error);
       }
     }
+
+    this.toastr.error("Please select a zone to proceed")
+  }
+
+  public proceedToScores(){
+    this.auditStarted = false;
+    this.formReady = true;
   }
 
   public async submitAudit() {
-    //This method definitely needs to be fleshed out more, just putting something temp in to make it work...
-    if (this.validateScore()) {
+    await this.saveScores();
 
-      // Need to update audit to have the finished date and overallScore
-      this.saveScores();
-      this.toastr.success("Item Saved!");
 
-      this.router.navigate(['home']);
-    }
+    this.toastr.success("Audit successfully updated");
+    this.router.navigate(['home']);
   }
 }

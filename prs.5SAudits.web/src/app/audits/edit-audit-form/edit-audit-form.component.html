@@ -1,8 +1,11 @@
 <app-navbar></app-navbar>
-<form [formGroup]="auditForm" *ngIf="scoringCategories.length && checkItem.length && zones.length && zoneCategories.length">
+<form [formGroup]="auditForm">
     <app-audit-form 
     [scoringCategories]="scoringCategories" 
     [checkItem]="checkItem"
-    [zones]="zones"
-    [zoneCategories]="zoneCategories"></app-audit-form>
+    [matchingZones]="zones"
+    [zoneCategories]="zoneCategories"
+    [audit]="audit"
+    [editMode]="true"
+    [scores]="scores"></app-audit-form>
 </form>

@@ -1,10 +1,11 @@
 export interface Audits {
     id: number | null;
     dateStarted: Date;
-    employeeId: number;
+    employee_ID: number;
     dateCompleted: Date | null;
-    department_ID: number;
+    zone_ID: number;
     overallScore: number;
     auditStatus_ID: number;
     notes: string | null;
+    zoneName?: string;
 }

@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <ng-container>
-    <div class="container bg-dark rounded-1">
+    <div class="container bg-dark p-2 rounded-1 vh-100 overflow-auto">
 
         <!--Desktop Display - Search Fields / Audit Buttons -->
         <div class="d-none d-lg-block customBorder1 rounded-1 container">
@@ -25,17 +25,17 @@
             <!--Desktop Display - Search Fields -->
             <div class="d-flex m-2 ">
                 <div class="input-group m-3">
-                    <span class="input-group-text">Department</span>
+                    <span class="input-group-text">Zone</span>
                     <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Department">
+                    <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Zone" #zoneValDesktop (keyup)="filterByZone(zoneValDesktop.value)">
                     <label for="floatingInputGroup1">Search Here...</label>
                     </div>
                 </div>
                     
                 <div class="input-group m-3">
-                    <span class="input-group-text">Month</span>
+                    <span class="input-group-text">Audit Number</span>
                     <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Month">
+                    <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Audit Number" #auditNumValDesktop (keyup)="filterByAuditNumber(auditNumValDesktop.value)">
                     <label for="floatingInputGroup1">Search Here...</label>
                     </div>
                 </div>
@@ -55,37 +55,54 @@
         <!--Phone Display - Search Fields -->
         <div class="m-2 d-lg-none">
             <div class="input-group m-1">
-                <span class="input-group-text">Department</span>
+                <span class="input-group-text">Zone</span>
                 <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Department">
+                  <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Zone" #zoneVal (keyup)="filterByZone(zoneVal.value)">
                   <label for="floatingInputGroup1">Search Here...</label>
                 </div>
             </div>
                 
             <div class="input-group m-1">
-                <span class="input-group-text">Month</span>
+                <span class="input-group-text">Audit Number</span>
                 <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Month">
+                  <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Audit Number" #auditNumVal (keyup)="filterByAuditNumber(auditNumVal.value)">
                   <label for="floatingInputGroup1">Search Here...</label>
                 </div>
             </div>
         </div>
 
 
-        <div *ngIf="settings != [] && this.viewReady">
-            <div *ngFor="let setting of settings">
-                <div class="card m-2 p-2 customBorder2">
+        <div *ngIf="filteredAudits != [] && this.viewReady">
+            <div *ngFor="let audit of filteredAudits; index as i">
+                <!--Desktop View-->
+                <div class="card m-2 p-2 customBorder2 d-none d-lg-block">
                     <div class="card-header display-6 fs-5 d-flex justify-content-between">
                         <div class="pt-1">
-                            Audit Number: {{setting.settingKey}}
+                            Audit Number: {{audit.id}}
                         </div>
                         <div >
-                            <a href="#" class="btn btn-primary">Edit</a>
+                            <a [routerLink]="'/audit/edit/' + audit.id" class="btn btn-primary">Edit</a>
                         </div>
                     </div>
                     <div class="card-body">
-                        <p class="card-title display-6 fs-6">Audit Date: {{setting.settingValue}} <span class="float-end">Total Score: {{setting.isReadOnly}}</span></p>
-                        <p class="card-text display-6 fs-6">Department: {{setting.id}} <span class="float-end">Submitted By: {{setting.isReadOnly}}</span></p>
+                        <p class="card-title display-6 fs-6">Audit Date: {{dateFormatter(audit.dateStarted)}} <span class="float-end">Total Score: {{audit.overallScore}}</span></p>
+                        <p class="card-text display-6 fs-6">Zone: {{audit.zoneName}} <span class="float-end">Submitted By: {{audit.employee_ID}}</span></p>
+                    </div>
+                </div>
+                <!--Mobile View-->
+                <div class="card m-2 p-2 customBorder2 d-lg-none">
+                    <div class="card-header display-6 fs-5 d-flex justify-content-between">
+                        <div class="pt-1">
+                            Audit Number: {{audit.id}}
+                        </div>
+                        <div >
+                            <a [routerLink]="'/audit/edit/' + audit.id" class="btn btn-primary">Edit</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text display-6 fs-6">Audit Date: {{dateFormatter(audit.dateStarted)}} <span class="float-end">Total Score: {{audit.overallScore}}</span></p>
+                        <p class="card-text display-6 fs-6">Zone: {{audit.zoneName}}</p>
+                        <p class="card-text display-6 fs-6">Submitted By: {{audit.employee_ID}}</p>
                     </div>
                 </div>
             </div>
