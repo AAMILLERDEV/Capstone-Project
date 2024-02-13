@@ -18,4 +18,88 @@ public class UnitTestsIteration1
         var audits = await db.GetAudits();
         Assert.NotNull(audits);
     }
+
+    [Fact]
+    public async void GetActions()
+    {
+        var actions = await db.GetActions();
+        Assert.NotNull(actions);
+    }
+
+    [Fact]
+    public async void GetAuditLog()
+    {
+        var auditLogs = await db.GetAuditLog();
+        Assert.NotNull(auditLogs);
+    }
+
+    [Fact]
+    public async void GetAuditStatus()
+    {
+        var auditStatus = await db.GetAuditStatus();
+        Assert.NotNull(auditStatus);
+    }
+
+    [Fact]
+    public async void GetCheckItem()
+    {
+        var checkItem = await db.GetCheckItem();
+        Assert.NotNull(checkItem);
+    }
+
+    [Fact]
+    public async void GetDeductions()
+    {
+        var deductions = await db.GetDeductions();
+        Assert.NotNull(deductions);
+    }
+
+    [Fact]
+    public async void GetResources()
+    {
+        var resources = await db.GetResources();
+        Assert.NotNull(resources);
+    }
+
+    [Fact]
+    public async void GetScores()
+    {
+        var scores = await db.GetScores();
+        Assert.NotNull(scores);
+    }
+
+    [Fact]
+    public async void GetScoringCategories()
+    {
+        var scoringCategories = await db.GetScoringCategories();
+        Assert.NotNull(scoringCategories);
+    }
+
+    [Fact]
+    public async void GetScoringCriteria()
+    {
+        var scoringCategories = await db.GetScoringCriteria();
+        Assert.NotNull(scoringCategories);
+    }
+    
+    [Fact]
+    public async void GetSettings()
+    {
+        var settings = await db.GetSettings();
+        Assert.NotNull(settings);
+    }
+
+    [Fact]
+    public async void GetZoneCategories()
+    {
+        var zoneCategories = await db.GetZoneCategories);
+        Assert.NotNull(zoneCategories);
+    }
+
+    [Fact]
+    public async void GetZones()
+    {
+        var zones = await db.GetZones();
+        Assert.NotNull(zones);
+    }
 }
