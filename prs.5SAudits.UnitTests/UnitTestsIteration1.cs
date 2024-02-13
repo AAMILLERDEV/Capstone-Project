@@ -78,8 +78,8 @@ public class UnitTestsIteration1
     [Fact]
     public async void GetScoringCriteria()
     {
-        var scoringCategories = await db.GetScoringCriteria();
-        Assert.NotNull(scoringCategories);
+        var scoringCriteria = await db.GetScoringCriteria();
+        Assert.NotNull(scoringCriteria);
     }
     
     [Fact]
