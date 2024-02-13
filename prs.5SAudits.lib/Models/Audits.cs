@@ -6,7 +6,7 @@
 		public DateTime DateStarted { set; get; }
 		public int Employee_ID { set; get; }
 		public DateTime? DateCompleted { set; get; }
-		public int Department_ID { set; get; }
+		public int Zone_ID { set; get; }
 		public double OverallScore { set; get; }
 		public int AuditStatus_ID { set; get; }
 		public string? Notes { set; get; }

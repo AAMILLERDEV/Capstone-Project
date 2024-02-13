@@ -181,7 +181,7 @@ public class DBSQLRepository : IDBSQLRepository
 			{ "@dateStarted", ins.DateStarted },
 			{ "@employee_ID", ins.Employee_ID },
 			{ "@dateCompleted", ins.DateCompleted },
-			{ "@department_ID", ins.Department_ID },
+			{ "@Zone_ID", ins.Zone_ID },
 			{ "@overallScore", ins.OverallScore },
 			{ "@auditStatus_ID", ins.AuditStatus_ID },
 			{ "@notes", ins.Notes }
