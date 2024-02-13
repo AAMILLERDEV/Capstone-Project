@@ -92,7 +92,7 @@ public class UnitTestsIteration1
     [Fact]
     public async void GetZoneCategories()
     {
-        var zoneCategories = await db.GetZoneCategories);
+        var zoneCategories = await db.GetZoneCategories();
         Assert.NotNull(zoneCategories);
     }
 
