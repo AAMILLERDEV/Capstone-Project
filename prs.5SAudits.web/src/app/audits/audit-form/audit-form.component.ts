@@ -4,15 +4,10 @@ import { Router } from '@angular/router';
 import { Audits } from 'src/models/Audits';
 import { ScoringCategories } from 'src/models/ScoringCategories';
 import { CheckItem } from 'src/models/CheckItem';
-import { CheckItemService } from 'src/services/checkItem.service';
 import { ToastrService } from 'ngx-toastr';
 import { Zones } from 'src/models/Zones';
-import { ZonesService } from 'src/services/zones.service';
 import { ZoneCategories } from 'src/models/ZoneCategories';
-import { ZoneCategoriesService } from 'src/services/zoneCategories.service';
-import { AuditStatus } from 'src/models/AuditStatus';
 import { AuditService } from 'src/services/audits.service';
-import { audit } from 'rxjs';
 import { ScoresService } from 'src/services/scores.service';
 import { Scores } from 'src/models/Scores';
 import { clearScoreForm, returnNumArray } from 'src/app/sharedUtils';
@@ -41,12 +36,10 @@ export class AuditFormComponent implements OnInit {
   @Input() public matchingZones: Zones[] = [];
 
   public numberArray: Number[] = returnNumArray()
-
   public date: Date | string = new Date().toLocaleString();
   public index: number = 0;
   public comments: string[] = [];
   public selectedZoneCategory_ID!: number;
-
 
   constructor(private controlContainer: ControlContainer,
     private auditService: AuditService,
@@ -153,7 +146,7 @@ export class AuditFormComponent implements OnInit {
         notes: null,
         overallScore: 0
       }
-      
+
       try {
         const response = await this.auditService.UpsertAudits(audit);
         audit.id = response;

@@ -23,7 +23,7 @@
             </div>
 
             <!--Desktop Display - Search Fields -->
-            <div class="d-flex m-2 ">
+            <div class="d-flex m-2">
                 <div class="input-group m-3">
                     <span class="input-group-text">Zone</span>
                     <div class="form-floating">
@@ -43,33 +43,65 @@
         </div>
 
         <!--Phone Display - Search Fields -->
-        <div class="d-flex row text-center d-lg-none pt-3">
-            <div class="col-6">
-                <button class="btn btn-success" [routerLink]="'/audit/new'">New Audit</button>
+        <div class="d-lg-none">
+
+            <div class="m-2 d-flex justify-content-between">
+                <div class="float-start">
+                    <button class="btn btn-outline-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"> Menu <i class="bi bi-arrow-bar-right"></i></button>
+                </div>
+                <div class="">
+                    <p class="display-6 fst-italic text-white">Welcome, Aaron</p>
+                </div>
+                <div>
+                </div>
             </div>
-            <div class="col-6">
-                <button class="btn btn-warning">Continue Audit</button>
+
+            <div class="offcanvas offcanvas-start w-75 border-light border-top" style="margin-top: 3.9rem;" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+                <div class="offcanvas-header bg-dark">
+                    <h5 class="offcanvas-title display-6 fst-italic text-white" id="offcanvasScrollingLabel">Menu Options</h5>
+                    <button class="btn btn-outline-light"><i class="bi bi-arrow-bar-left" data-bs-dismiss="offcanvas" aria-label="Close"></i></button>
+                </div>
+                <div class="offcanvas-body bg-dark">
+
+                    <!--Phone Display - Search Fields -->
+                    <div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item bg-dark"><button class="btn btn-success" [routerLink]="'/audit/new'">New Audit</button></li>
+                            <li class="list-group-item bg-dark"><button class="btn btn-warning">Continue Audit</button></li>
+                            <li class="list-group-item bg-dark">       
+                                <div class="input-group">
+                                    <span class="input-group-text">Zone</span>
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Zone" #zoneVal (keyup)="filterByZone(zoneVal.value)">
+                                        <label for="floatingInputGroup1">Search Here...</label>
+                                </div>
+                            </div></li>
+                            <li class="list-group-item bg-dark">          
+                                <div class="input-group">
+                                    <span class="input-group-text">Audit Number</span>
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Audit Number" #auditNumVal (keyup)="filterByAuditNumber(auditNumVal.value)">
+                                        <label for="floatingInputGroup1">Search Here...</label>
+                                    </div>
+                                </div>
+                            </li>
+                          </ul>
+                        <div>
+                            
+                        </div>
+                        <div>
+                            
+                        </div>
+                 
+                            
+              
+                    </div>
+
+                </div>
             </div>
+
         </div>
 
-        <!--Phone Display - Search Fields -->
-        <div class="m-2 d-lg-none">
-            <div class="input-group m-1">
-                <span class="input-group-text">Zone</span>
-                <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Zone" #zoneVal (keyup)="filterByZone(zoneVal.value)">
-                  <label for="floatingInputGroup1">Search Here...</label>
-                </div>
-            </div>
-                
-            <div class="input-group m-1">
-                <span class="input-group-text">Audit Number</span>
-                <div class="form-floating">
-                  <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Audit Number" #auditNumVal (keyup)="filterByAuditNumber(auditNumVal.value)">
-                  <label for="floatingInputGroup1">Search Here...</label>
-                </div>
-            </div>
-        </div>
 
 
         <div *ngIf="filteredAudits != [] && this.viewReady">
