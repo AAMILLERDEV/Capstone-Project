@@ -3,6 +3,8 @@
     public interface IDBSQLRepository
     {
         //Settings Methods
+
+		//Add get settings method for a particular setting -> get the setting by settingKey in the stored proc
         public Task<IEnumerable<Settings>> GetSettings();
         public Task<int?> UpsertSettings(Settings settings);
 

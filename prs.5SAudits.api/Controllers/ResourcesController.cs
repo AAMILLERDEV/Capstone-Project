@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using prs_5SAudits.lib.Interfaces;
 using prs_5SAudits.lib.Models;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace prs_5SAudits.api.Controllers
 {
@@ -22,5 +24,10 @@ namespace prs_5SAudits.api.Controllers
         [HttpPost]
         [Route("[controller]/UpsertResources")]
         public Task<int?> UpsertScores(Resources resources) => db.UpsertResources(resources);
+
+        [HttpPost, DisableRequestSizeLimit]
+        [Route("[controller]/CreateResource")]
+        public async Task<bool> CreateResource(Resources res) => db.CreateResource(res);
+
     }
 }
