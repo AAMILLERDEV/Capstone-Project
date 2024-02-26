@@ -4,6 +4,8 @@ import { AuditService } from 'src/services/audits.service';
 import { formatDate } from '../sharedUtils';
 import { ZonesService } from 'src/services/zones.service';
 import { Zones } from 'src/models/Zones';
+import { Scores } from 'src/models/Scores';
+import { ScoresService } from 'src/services/scores.service';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +19,7 @@ export class HomeComponent implements OnInit {
   public viewReady: boolean = false;
 
   constructor(private auditService: AuditService,
+    private scoresServices: ScoresService,
     private zonesSerivce: ZonesService) {
 
   }
@@ -26,14 +29,31 @@ export class HomeComponent implements OnInit {
     this.auditsListing = await this.auditService.GetAudits();
     let zones: Zones[] = await this.zonesSerivce.GetZones();
 
-    this.auditsListing.map(x => {
+    this.auditsListing.map(async x => {
       x.zoneName = zones.find(y => y.id == x.zone_ID)?.zoneName
+
+      if (x.id != null) {
+        x.overallScore = await this.sumAuditScores(x.id);
+      }
+
     });
 
     this.filteredAudits = this.auditsListing;
 
     this.viewReady = true;
 
+  }
+
+  async sumAuditScores(id: number) {
+    let overallScore = 0;
+
+    let thisAuditScores = await this.scoresServices.GetScoresByAudit(id);
+
+    for (let score of thisAuditScores) {
+       overallScore += score.score;
+    }
+
+    return overallScore;
   }
 
   dateFormatter(val: string | Date){
