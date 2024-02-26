@@ -128,8 +128,12 @@
 
             <div *ngIf="currentTab === 'criteria'">
               <div>
-                <h3 class="card-title">Criteria Content</h3>
-                <p class="card-text">This is the content for Tab 3.</p>
+                <h3 class="card-title">Scoring Criteria</h3>
+                <ul class="list-group">
+                <div *ngFor="let criteria of scoringCriteria; let lastItem = last" [ngClass]="lastItem ? 'fw-light' : 'list-group-item'">
+                  {{criteria.description}}
+                </div>
+              </ul>
               </div>
             </div>
           </div>

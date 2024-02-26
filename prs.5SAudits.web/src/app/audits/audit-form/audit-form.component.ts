@@ -12,6 +12,7 @@ import { ScoresService } from 'src/services/scores.service';
 import { Scores } from 'src/models/Scores';
 import { clearScoreForm, returnNumArray } from 'src/app/sharedUtils';
 import { document } from 'ngx-bootstrap/utils';
+import { ScoringCriteria } from 'src/models/ScoringCriteria';
 
 @Component({
   selector: 'app-audit-form',
@@ -34,6 +35,7 @@ export class AuditFormComponent implements OnInit {
   @Input() public scores: Scores[] = [];
   @Input() public editMode: boolean = false;
   @Input() public matchingZones: Zones[] = [];
+  @Input() public scoringCriteria: ScoringCriteria[] = [];
 
   public numberArray: Number[] = returnNumArray()
   public date: Date | string = new Date().toLocaleString();

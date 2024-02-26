@@ -5,10 +5,12 @@ import { clearAuditForm, clearScoreForm, setFormForNewAudit } from 'src/app/shar
 import { AuditForm } from 'src/form-models/AuditForm';
 import { CheckItem } from 'src/models/CheckItem';
 import { ScoringCategories } from 'src/models/ScoringCategories';
+import { ScoringCriteria } from 'src/models/ScoringCriteria';
 import { ZoneCategories } from 'src/models/ZoneCategories';
 import { Zones } from 'src/models/Zones';
 import { CheckItemService } from 'src/services/checkItem.service';
 import { ScoringCategoriesService } from 'src/services/scoringCategories.service';
+import { ScoringCriteriaService } from 'src/services/scoringCriteria.service';
 import { ZoneCategoriesService } from 'src/services/zoneCategories.service';
 import { ZonesService } from 'src/services/zones.service';
 
@@ -23,6 +25,7 @@ export class NewAuditFormComponent implements OnInit {
   public checkItem: CheckItem[] = [];
   public zones: Zones[] = [];
   public zoneCategories: ZoneCategories[] = [];
+  public scoringCriteria: ScoringCriteria[] = [];
 
   public auditForm: FormGroup;
   public viewReady: boolean = false;
@@ -31,6 +34,7 @@ export class NewAuditFormComponent implements OnInit {
     private checkItemService: CheckItemService,
     private zonesService: ZonesService,
     private zoneCategoriesService: ZoneCategoriesService,
+    private scoringCriteriaService: ScoringCriteriaService,
     private router: Router){
     this.auditForm = AuditForm;
   }
@@ -52,6 +56,7 @@ export class NewAuditFormComponent implements OnInit {
     this.checkItem = await this.checkItemService.getCheckItem();
     this.zones = await this.zonesService.GetZones();
     this.zoneCategories = await this.zoneCategoriesService.GetZoneCategories();
+    this.scoringCriteria = await this.scoringCriteriaService.GetScoringCriteria();
   }
 
   public setForm(){
