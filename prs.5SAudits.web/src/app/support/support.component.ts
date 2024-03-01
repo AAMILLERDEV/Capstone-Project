@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { SupportForm } from 'src/form-models/SupportForm';
 
 @Component({
   selector: 'app-support',
@@ -7,4 +9,13 @@ import { Component } from '@angular/core';
 })
 export class SupportComponent {
 
+  public supportForm: FormGroup;
+
+  constructor(){
+    this.supportForm = SupportForm;
+  }
+
+  public sendEmail(): void {
+
+  }
 }

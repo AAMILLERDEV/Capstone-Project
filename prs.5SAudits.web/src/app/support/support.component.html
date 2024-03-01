@@ -1,2 +1,26 @@
 <app-navbar></app-navbar>
-<div></div>
+<div class="container">
+    <form [formGroup]="supportForm">
+            <div class="form-group text-center customBorder2 p-2">
+            <h3 class="card-title ">Contact Support</h3>
+
+            <div class="input-group p-3">
+                <span class="input-group-text">Email Address</span>
+                <div class="form-floating">
+                <input type="email" class="form-control" id="email" formControlName="emailControl">
+                </div>
+            </div>
+
+            <div class="input-group p-3">
+                <span class="input-group-text">Message</span>
+                <div class="form-floating" style="height:200px;">
+                <textarea class="form-control" style="height:200px;" id="message" formControlName="messageControl" rows="5"></textarea>
+                </div>
+            </div>
+            
+                <div class="text-center">
+                <button class="btn btn-primary" (click)="sendEmail()">Send Email</button>
+                </div>
+        </div>
+    </form>
+</div>
