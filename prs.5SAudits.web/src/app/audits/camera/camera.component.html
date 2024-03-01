@@ -1,0 +1,9 @@
+<ng-container>
+    <div>
+        <webcam (initError)="handleInitError($event)" [allowCameraSwitch]="false" [trigger]="triggerObservable" (imageCapture)="stashPhoto($event)"></webcam>
+    </div>
+
+    <div class="p-5">
+        <button class="btn btn-success" (click)="triggerSnapshot()">Take Photo</button>
+    </div>
+</ng-container>

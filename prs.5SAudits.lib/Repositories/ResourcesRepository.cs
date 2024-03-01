@@ -31,8 +31,8 @@ namespace prs_5SAudits.lib.Repositories
 
                 string documentsDestPath = "\\\\prsfs\\Presstran\\PressNet Apps\\Sandbox\\Photos";
                 using var memStream = new MemoryStream(Convert.FromBase64String(res.ResourceData));
-                using var fileStream = System.IO.File.OpenWrite(documentsDestPath + $"/{ID}_photo.jpeg");
-                await memStream.CopyToAsync(fileStream);
+               // using var fileStream = System.IO.File.OpenWrite(documentsDestPath + $"/{ID}_photo.jpeg");
+               // await memStream.CopyToAsync(fileStream);
                 return true;
             }
             catch (Exception ex)

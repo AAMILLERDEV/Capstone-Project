@@ -15,6 +15,8 @@ import { EditAuditFormComponent } from './audits/edit-audit-form/edit-audit-form
 import { SupportComponent } from './support/support.component';
 import { AdminComponent } from './admin/admin.component';
 import { ToastrModule } from 'ngx-toastr';
+import { WebcamModule } from 'ngx-webcam';
+import { CameraComponent } from './audits/camera/camera.component';
 
 @NgModule({
   declarations: [
@@ -25,13 +27,15 @@ import { ToastrModule } from 'ngx-toastr';
     NewAuditFormComponent,
     EditAuditFormComponent,
     AdminComponent,
-    SupportComponent
+    SupportComponent,
+    CameraComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    WebcamModule,
     FormsModule,
     BrowserAnimationsModule,
     TooltipModule.forRoot(),
