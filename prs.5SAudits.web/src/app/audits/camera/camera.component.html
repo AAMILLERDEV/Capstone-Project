@@ -1,9 +1,40 @@
 <ng-container>
-    <div>
-        <webcam (initError)="handleInitError($event)" [allowCameraSwitch]="false" [trigger]="triggerObservable" (imageCapture)="stashPhoto($event)"></webcam>
+    <div *ngIf="photoCollection.length < 5">
+        <div>
+            <webcam (initError)="handleInitError($event)" [allowCameraSwitch]="false" [trigger]="triggerObservable" (imageCapture)="stashPhoto($event)"></webcam>
+        </div>
+
+        <div class="p-2" >
+            <button class="btn btn-success" (click)="triggerSnapshot()">Take Photo</button>
+        </div>
     </div>
 
-    <div class="p-5">
-        <button class="btn btn-success" (click)="triggerSnapshot()">Take Photo</button>
+    <div class="row p-2">
+        <div class="col-2 mx-auto cursor-pointer" *ngFor="let photo of photoCollection; index as i;" (click)="openPhotoPopup(photo, i)">
+            <img class="img-fluid" [src]="'data:image/jpg;base64, ' + photo.resourceData" />
+        </div>
+    </div>
+
+    <div class="p-2" *ngIf="photoCollection.length > 0">
+        <p class="fw-light">Click photos to view or modify</p>
+        <button class="btn btn-success" (click)="savePhotos()">Save Photos</button>
+    </div>
+
+    <div class="modal" id="photoPopup">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Preview Photo</h5>
+                </div>
+                <div class="modal-body">
+                    <img *ngIf="openedPhoto != null" [src]="'data:image/jpg;base64, ' + openedPhoto.resourceData" class="img-fluid" />
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="deletePhoto()">Delete Photo</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 </ng-container>

@@ -5,6 +5,8 @@ import { Observable, Subject } from 'rxjs';
 import { Resources } from 'src/models/Resources';
 import { ResourcesService } from 'src/services/resource.service';
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-camera',
   templateUrl: './camera.component.html',
@@ -15,6 +17,9 @@ export class CameraComponent implements OnInit {
   @Input() audit_ID: number = 0;
   @Input() scoreCategory_ID: number = 0;
   @Input() public photoCollection: Resources[] = [];
+  
+  openedPhoto: Resources | null = null;
+  openedIndex: number = 0;
 
   public trigger: Subject<void> = new Subject<void>();
 
@@ -60,6 +65,23 @@ export class CameraComponent implements OnInit {
     return this.trigger.asObservable();
   }
 
+  public openPhotoPopup (photo: Resources, index: number) {
+    this.openedPhoto = photo;
+    this.openedIndex = index;
 
+    const photoModalTemplate = document.getElementById('photoPopup');
+    const photoModal = new bootstrap.Modal(photoModalTemplate);
+    photoModal.show();
+  }
+
+
+  public deletePhoto() {
+    this.photoCollection.splice(this.openedIndex, 1);
+
+    const photoModalTemplate = document.getElementById('photoPopup');
+    const photoModal = bootstrap.Modal.getInstance(photoModalTemplate);
+
+    photoModal.hide();
+  }
 
 }
