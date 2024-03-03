@@ -6,5 +6,6 @@ namespace prs_5SAudits.lib.Interfaces
 	{
 		public Task<IEnumerable<Resources>> GetResources();
 		public Task<int?> UpsertResources(Resources resources);
-	}
+        public Task<Resources> DeleteResource(int id);
+    }
 }

@@ -15,5 +15,7 @@ namespace prs_5SAudits.lib.Repositories
         
         public Task<IEnumerable<Zones>> GetZones() => db.GetZones();
         public Task<int?> UpsertZones(Zones ins) => db.UpsertZones(ins);
+        public Task<Zones> DeleteZone(int id) => db.DeleteZone(id);
+
     }
 }

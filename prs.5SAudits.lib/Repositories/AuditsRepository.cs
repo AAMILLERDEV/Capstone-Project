@@ -17,6 +17,7 @@ namespace prs_5SAudits.lib.Repositories
         public Task<IEnumerable<Audits>> GetAudits() => db.GetAudits();
         public Task<Audits> GetAuditByID(int id) => db.GetAuditByID(id);
         public Task<int?> UpsertAudits(Audits audits) => db.UpsertAudits(audits);
+        public Task<Audits> DeleteAudit(int id) => db.DeleteAudit(id);
 
         //public async Task<int> SetKeyProjectNumber(int value)
         //{
@@ -41,7 +42,7 @@ namespace prs_5SAudits.lib.Repositories
         //        return -1;
 
         //    }
-       // }
+        // }
 
         //Create a method to get a specific setting from the database
     }

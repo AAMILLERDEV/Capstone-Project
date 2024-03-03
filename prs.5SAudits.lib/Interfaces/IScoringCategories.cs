@@ -6,5 +6,6 @@ namespace prs_5SAudits.lib.Interfaces
 	{
 		public Task<IEnumerable<ScoringCategories>> GetScoringCategories();
 		public Task<int?> UpsertScoringCategories(ScoringCategories ins);
-	}
+        public Task<ScoringCategories> DeleteScoringCategory(int id);
+    }
 }

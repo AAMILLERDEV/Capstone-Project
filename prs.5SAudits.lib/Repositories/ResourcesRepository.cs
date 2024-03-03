@@ -20,6 +20,10 @@ namespace prs_5SAudits.lib.Repositories
         {
             try
             {
+                //UpsertResources(res);
+
+                //int id = res.id
+
 
                 //First upsert a resource record
 
@@ -43,5 +47,9 @@ namespace prs_5SAudits.lib.Repositories
 
 
         }
+
+        public Task<Resources> DeleteResource(int id) => db.DeleteResource(id);
+
+
     }
 }

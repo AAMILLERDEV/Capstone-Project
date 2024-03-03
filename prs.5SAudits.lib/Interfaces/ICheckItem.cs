@@ -6,5 +6,6 @@ namespace prs_5SAudits.lib.Interfaces
 	{
 		public Task<IEnumerable<CheckItem>> GetCheckItem();
 		public Task<int?> UpsertCheckItem(CheckItem checkItem);
-	}
+        public Task<CheckItem> DeleteCheckItem(int id);
+    }
 }

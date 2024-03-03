@@ -6,5 +6,6 @@ namespace prs_5SAudits.lib.Interfaces
 	{
 		public Task<IEnumerable<ScoringCriteria>> GetScoringCriteria();
 		public Task<int?> UpsertScoringCriteria(ScoringCriteria scoringCriteria);
-	}
+        public Task<ScoringCriteria> DeleteScoringCriteria(int id);
+    }
 }
