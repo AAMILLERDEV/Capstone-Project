@@ -48,7 +48,7 @@ namespace prs_5SAudits.lib.Repositories
 
         }
 
-        public Task<Resources> DeleteResource(int id) => db.DeleteResource(id);
+        //public Task<Resources> DeleteResource(int id) => db.DeleteResource(id);
 
 
     }

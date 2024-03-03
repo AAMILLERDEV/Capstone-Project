@@ -7,6 +7,6 @@ namespace prs_5SAudits.lib.Interfaces
         public Task<Audits> GetAuditByID(int id);
         public Task<IEnumerable<Audits>> GetAudits();
 		public Task<int?> UpsertAudits(Audits audits);
-        public Task<Audits> DeleteAudit(int id);
+        //public Task<Audits> DeleteAudit(int id);
     }
 }

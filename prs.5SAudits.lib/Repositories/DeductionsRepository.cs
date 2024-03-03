@@ -15,6 +15,6 @@ namespace prs_5SAudits.lib.Repositories
         
         public Task<IEnumerable<Deductions>> GetDeductions() => db.GetDeductions();
         public Task<int?> UpsertDeductions(Deductions deductions) => db.UpsertDeductions(deductions);
-        public Task<Deductions> DeleteDeductions(int id) => db.DeleteDeductions(id);
+        //public Task<Deductions> DeleteDeductions(int id) => db.DeleteDeductions(id);
     }
 }

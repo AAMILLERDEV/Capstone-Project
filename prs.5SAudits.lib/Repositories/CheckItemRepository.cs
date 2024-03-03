@@ -15,6 +15,6 @@ namespace prs_5SAudits.lib.Repositories
         
         public Task<IEnumerable<CheckItem>> GetCheckItem() => db.GetCheckItem();
         public Task<int?> UpsertCheckItem(CheckItem checkItem) => db.UpsertCheckItem(checkItem);
-        public Task<CheckItem> DeleteCheckItem(int id) => db.DeleteCheckItem(id);
+        //public Task<CheckItem> DeleteCheckItem(int id) => db.DeleteCheckItem(id);
     }
 }

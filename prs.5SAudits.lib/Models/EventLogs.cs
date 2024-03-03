@@ -1,6 +1,6 @@
 ﻿namespace prs_5SAudits.lib.Models
 {
-	public record struct Actions
+	public record struct EventLogs
 	{
 		public int ID { set; get; }
 		public int Audit_ID { set; get; }
