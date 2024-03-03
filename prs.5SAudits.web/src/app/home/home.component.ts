@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   public viewReady: boolean = false;
 
   constructor(private auditService: AuditService,
-    private scoresServices: ScoresService,
+    private scoresService: ScoresService,
     private zonesSerivce: ZonesService) {
 
   }
@@ -32,9 +32,9 @@ export class HomeComponent implements OnInit {
     this.auditsListing.map(async x => {
       x.zoneName = zones.find(y => y.id == x.zone_ID)?.zoneName
 
-      if (x.id != null) {
-        x.overallScore = await this.sumAuditScores(x.id);
-      }
+      // if (x.id != null) {
+      //   x.overallScore = await this.sumAuditScores(x.id);
+      // }
 
     });
 
@@ -44,17 +44,17 @@ export class HomeComponent implements OnInit {
 
   }
 
-  async sumAuditScores(id: number) {
-    let overallScore = 0;
+  // async sumAuditScores(id: number) {
+  //   let overallScore = 0;
 
-    let thisAuditScores = await this.scoresServices.GetScoresByAudit(id);
+  //   let thisAuditScores = await this.scoresServices.GetScoresByAudit(id);
 
-    for (let score of thisAuditScores) {
-       overallScore += score.score;
-    }
+  //   for (let score of thisAuditScores) {
+  //      overallScore += score.score;
+  //   }
 
-    return overallScore;
-  }
+  //   return overallScore;
+  // }
 
   dateFormatter(val: string | Date){
     return formatDate(val)

@@ -4,4 +4,5 @@ export interface Scores {
     comments: string | null;
     audit_ID: number;
     score: number;
+    isDeleted: boolean;
 }

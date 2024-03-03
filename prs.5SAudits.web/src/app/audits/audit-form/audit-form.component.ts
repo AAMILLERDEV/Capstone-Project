@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ControlContainer, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Audits } from 'src/models/Audits';
@@ -129,7 +129,8 @@ export class AuditFormComponent implements OnInit {
       comments: null,
       id: 0,
       score: 0,
-      scoreCategory_ID: this.scoringCategories[this.index].id
+      scoreCategory_ID: this.scoringCategories[this.index].id,
+      isDeleted: false
     };
     return score
   }
@@ -146,7 +147,8 @@ export class AuditFormComponent implements OnInit {
         zone_ID: parseInt(this.parentFormGroup.controls['zoneControl'].value),
         dateCompleted: null,
         notes: null,
-        overallScore: 0
+        overallScore: 0,
+        isDeleted: false
       }
 
       try {
@@ -177,4 +179,20 @@ export class AuditFormComponent implements OnInit {
     this.toastr.success("Audit successfully updated");
     this.router.navigate(['home']);
   }
+
+  public ngOnDestroy() {
+    this.audit.overallScore = this.sumAuditScores();
+    this.auditService.UpsertAudits(this.audit);
+  }
+
+  public sumAuditScores() {
+    let overallScore = 0;
+
+    for (let score of this.scores) {
+      overallScore += score.score;
+    }
+
+    return overallScore;
+  }
+
 }

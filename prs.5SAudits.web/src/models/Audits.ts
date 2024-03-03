@@ -8,4 +8,5 @@ export interface Audits {
     auditStatus_ID: number;
     notes: string | null;
     zoneName?: string;
+    isDeleted: boolean;
 }
