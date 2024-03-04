@@ -22,5 +22,9 @@ namespace prs_5SAudits.api.Controllers
         [HttpPost]
         [Route("[controller]/UpsertScoringCategories")]
         public Task<int?> UpsertScoringCategories(ScoringCategories ins) => db.UpsertScoringCategories(ins);
-    }
+
+		[HttpPost]
+		[Route("[controller]/DeleteScoringCategories")]
+		public Task<bool> DeleteScoringCategories(int id) => db.DeleteScoringCategory(id);
+	}
 }

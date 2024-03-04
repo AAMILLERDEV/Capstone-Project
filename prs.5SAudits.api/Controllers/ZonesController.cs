@@ -25,5 +25,9 @@ namespace prs_5SAudits.api.Controllers
         [HttpPost]
         [Route("[controller]/UpsertZones")]
         public Task<int?> UpsertZones(Zones ins) => db.UpsertZones(ins);
-    }
+
+		[HttpPost]
+		[Route("[controller]/DeleteZone")]
+		public Task<bool> DeleteZone(int id) => db.DeleteZone(id);
+	}
 }

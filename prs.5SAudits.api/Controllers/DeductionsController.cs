@@ -17,14 +17,18 @@ namespace prs_5SAudits.api.Controllers
 
 
 
-        
-     
+
+
         [HttpGet]
         [Route("[controller]/GetDeductions")]
         public Task<IEnumerable<Deductions>> GetDeductions() => db.GetDeductions();
-        
+
         [HttpPost]
         [Route("[controller]/UpsertDeductions")]
         public Task<int?> UpsertDeductions(Deductions deductions) => db.UpsertDeductions(deductions);
+
+        [HttpPost]
+        [Route("[controller]/DeleteDeduction")]
+        public Task<bool> DeleteDeduction(int id) => db.DeleteDeduction(id);
     }
 }

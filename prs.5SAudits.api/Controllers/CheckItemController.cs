@@ -26,5 +26,9 @@ namespace prs_5SAudits.api.Controllers
         [HttpPost]
         [Route("[controller]/UpsertCheckItem")]
         public Task<int?> UpsertCheckItem(CheckItem checkItem) => db.UpsertCheckItem(checkItem);
-    }
+
+        [HttpPost]
+        [Route("[controller]/DeleteCheckItem")]
+        public Task<bool> DeleteCheckItem(int id) => db.DeleteCheckItem(id);
+	}
 }
