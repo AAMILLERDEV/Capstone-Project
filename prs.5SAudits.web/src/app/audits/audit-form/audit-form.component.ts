@@ -91,6 +91,7 @@ export class AuditFormComponent implements OnInit {
     }
 
     if (score.score != null){
+      console.log(score);
       let res = await this.scoreService.UpsertScores(score);
       if (res > 0){
         score.id = res;
@@ -157,6 +158,7 @@ export class AuditFormComponent implements OnInit {
         this.audit = audit;
         this.proceedToScores();
         this.toastr.success("Audit Started");
+        console.log(this.audit);
         return;
       } catch (error) {
         this.toastr.error("There was an error starting the audit.");
@@ -176,23 +178,25 @@ export class AuditFormComponent implements OnInit {
   //Simple audit score submission, notifier and navigator
   public async submitAudit() {
     await this.saveScores();
+    this.sumAuditScores();
     this.toastr.success("Audit successfully updated");
     this.router.navigate(['home']);
   }
 
   public ngOnDestroy() {
-    this.audit.overallScore = this.sumAuditScores();
-    this.auditService.UpsertAudits(this.audit);
+    this.sumAuditScores();
   }
 
-  public sumAuditScores() {
+  public async sumAuditScores() {
     let overallScore = 0;
 
     for (let score of this.scores) {
-      overallScore += score.score;
+      overallScore += Number(score.score);
     }
 
-    return overallScore;
+    console.log(overallScore);
+    this.audit.overallScore = overallScore;
+    await this.auditService.UpsertAudits(this.audit);
   }
 
 }

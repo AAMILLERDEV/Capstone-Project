@@ -7,5 +7,6 @@
 		public string? Comments { set; get; }
 		public int Audit_ID { set; get; }
 		public double Score { set; get; }
+		public bool? isDeleted { set; get; }
 	}
 }

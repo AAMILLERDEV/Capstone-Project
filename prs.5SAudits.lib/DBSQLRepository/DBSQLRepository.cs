@@ -185,7 +185,8 @@ public class DBSQLRepository : IDBSQLRepository
 			{ "@Zone_ID", ins.Zone_ID },
 			{ "@overallScore", ins.OverallScore },
 			{ "@auditStatus_ID", ins.AuditStatus_ID },
-			{ "@notes", ins.Notes }
+			{ "@notes", ins.Notes },
+			{ "@isDeleted", ins.IsDeleted }
 		});
 
 		parameters.Add("@insertedID", 0, direction: ParameterDirection.Output);
@@ -498,7 +499,8 @@ public class DBSQLRepository : IDBSQLRepository
 			{ "@id", ins.ID },
 			{ "@audit_ID", ins.Audit_ID },
 			{ "@dateAdded", ins.DateAdded },
-			{ "@score_ID", ins.Score_ID }
+			{ "@score_ID", ins.Score_ID },
+			{ "@isDeleted", ins.IsDeleted }
 		});
 
 		parameters.Add("@insertedID", 0, direction: ParameterDirection.Output);
@@ -572,7 +574,8 @@ public class DBSQLRepository : IDBSQLRepository
 			{ "@scoreCategory_ID", ins.ScoreCategory_ID },
 			{ "@comments", ins.Comments },
 			{ "@audit_ID", ins.Audit_ID },
-			{ "@score", ins.Score }
+			{ "@score", ins.Score },
+			{ "@isDeleted", ins.isDeleted }
 		});
 
 		parameters.Add("@insertedID", 0, direction: ParameterDirection.Output);

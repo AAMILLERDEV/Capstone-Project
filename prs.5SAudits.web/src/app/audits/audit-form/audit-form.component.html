@@ -122,7 +122,9 @@
             <div *ngIf="currentTab === 'photos'">
               <div>
                 <h3 class="card-title">Photo Content</h3>
-                <app-camera></app-camera>
+                <app-camera
+                [scoreCategory_ID]="scoringCategories[index].id"
+                [audit_ID]="this.audit.id"></app-camera>
               </div>
             </div>
 
