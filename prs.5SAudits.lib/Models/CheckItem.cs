@@ -6,5 +6,6 @@
 		public string ItemName { set; get; }
 		public int Category_ID { set; get; }
 		public string Question { set; get; }
-	}
+        public bool? IsDeleted { set; get; }
+    }
 }

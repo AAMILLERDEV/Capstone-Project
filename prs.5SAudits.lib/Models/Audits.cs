@@ -10,5 +10,6 @@
 		public double OverallScore { set; get; }
 		public int AuditStatus_ID { set; get; }
 		public string? Notes { set; get; }
+		public bool? IsDeleted { set; get; }
 	}
 }

@@ -4,5 +4,6 @@
 	{
 		public int ID { set; get; }
 		public string Description { set; get; }
-	}
+        public bool? IsDeleted { set; get; }
+    }
 }

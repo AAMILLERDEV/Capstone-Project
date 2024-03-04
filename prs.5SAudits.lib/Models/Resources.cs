@@ -7,5 +7,6 @@
 		public DateTime DateAdded { set; get; }
 		public int Score_ID { set; get; }
 		public string ResourceData { set; get; }
-	}
+        public bool? IsDeleted { set; get; }
+    }
 }

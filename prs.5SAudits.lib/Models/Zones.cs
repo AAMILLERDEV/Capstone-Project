@@ -5,5 +5,6 @@
 		public int ID { set; get; }
 		public string ZoneName { set; get; }
 		public int ZoneCategory_ID { set; get; }
-	}
+        public bool? IsDeleted { set; get; }
+    }
 }

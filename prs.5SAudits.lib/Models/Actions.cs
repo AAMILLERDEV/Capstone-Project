@@ -6,5 +6,6 @@
 		public int Audit_ID { set; get; }
 		public int Score_ID { set; get; }
 		public string Message { set; get; }
+
 	}
 }
