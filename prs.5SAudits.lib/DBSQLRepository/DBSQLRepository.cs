@@ -690,18 +690,154 @@ public class DBSQLRepository : IDBSQLRepository
 
         return insertedID ?? ins.ID;
     }
+	public async Task<bool> DeleteScoringCategory(int scoringCategory_ID)
 
-    public async Task<bool> DeleteScoringCategory(int scoringCategory_ID)
-    {
-        try
-        {
-            using IDbConnection connection = new SqlConnection(connectionString);
-            await connection.ExecuteAsync("hist.ScoringCategories_DELETE", new { scoringCategory_ID }, commandType: CommandType.StoredProcedure);
-            return true;
-        }
-        catch (Exception ex)
-        {
-            return false;
-        }
-    }
+	{
+
+		try
+
+		{
+
+			using IDbConnection connection = new SqlConnection(connectionString);
+
+			await connection.ExecuteAsync("hist.ScoringCategories_DELETE", new { scoringCategory_ID }, commandType: CommandType.StoredProcedure);
+
+			return true;
+
+		}
+
+		catch (Exception ex)
+
+		{
+
+			return false;
+
+		}
+
+	}
+
+	//Event Types
+	public async Task<IEnumerable<EventTypes>> GetEventTypes()
+	{
+		try
+		{
+			using IDbConnection connection = new SqlConnection(connectionString);
+			return await connection.QueryAsync<EventTypes>("ref.eventTypes_GET", commandType: CommandType.StoredProcedure);
+
+		}
+		catch (Exception ex)
+		{
+			return default;
+		}
+	}
+
+	public async Task<int?> InsertEventTypes(EventTypes ins)
+	{
+		int? insertedID = 0;
+
+		var parameters = new DynamicParameters(new Dictionary<string, object>
+		{
+			{ "@EventName", ins.EventName }
+		});
+
+		parameters.Add("@insertedID", 0, direction: ParameterDirection.Output);
+
+		try
+		{
+			using IDbConnection connection = new SqlConnection(connectionString);
+			await connection.ExecuteAsync("ref.eventTypes_INSERT", parameters, commandType: CommandType.StoredProcedure);
+			insertedID = parameters.Get<int?>("@insertedID");
+		}
+		catch (Exception ex)
+		{
+			return default;
+		}
+
+		return insertedID ?? ins.ID;
+	}
+
+	//Event Logs
+	public async Task<IEnumerable<EventLogs>> GetEventLogs()
+	{
+		try
+		{
+			using IDbConnection connection = new SqlConnection(connectionString);
+			return await connection.QueryAsync<EventLogs>("hist.eventLogs_GET", commandType: CommandType.StoredProcedure);
+
+		}
+		catch (Exception ex)
+		{
+			return default;
+		}
+	}
+
+	public async Task<bool> InsertEventLogs(EventLogs ins)
+	{
+		int? insertedID = 0;
+
+		var parameters = new DynamicParameters(new Dictionary<string, object>
+		{
+			{ "@EventType_ID", ins.EventType_ID },
+			{ "@ShortMessage", ins.ShortMessage },
+			{ "@LongMessage", ins.LongMessage },
+			{ "@DateTime", ins.DateTime }
+		});
+
+		parameters.Add("@insertedID", 0, direction: ParameterDirection.Output);
+
+		try
+		{
+			using IDbConnection connection = new SqlConnection(connectionString);
+			await connection.ExecuteAsync("hist.eventLogs_INSERT", parameters, commandType: CommandType.StoredProcedure);
+			insertedID = parameters.Get<int?>("@insertedID");
+		}
+		catch (Exception ex)
+		{
+			return default;
+		}
+
+		return insertedID ?? ins.ID;
+	}
+
+	//Deleted Audits
+	public async Task<IEnumerable<DeletedAudits>> GetDeletedAudits()
+	{
+		try
+		{
+			using IDbConnection connection = new SqlConnection(connectionString);
+			return await connection.QueryAsync<DeletedAudits>("hist.deletedAudits_GET", commandType: CommandType.StoredProcedure);
+
+		}
+		catch (Exception ex)
+		{
+			return default;
+		}
+	}
+
+	public async Task<int?> InsertDeletedAudits(DeletedAudits ins)
+	{
+		int? insertedID = 0;
+
+		var parameters = new DynamicParameters(new Dictionary<string, object>
+		{
+			{ "@Employee_ID", ins.Employee_ID },
+			{ "@Reason", ins.Reason },
+			{ "@Audit_ID", ins.Audit_ID }
+		});
+
+		parameters.Add("@insertedID", 0, direction: ParameterDirection.Output);
+
+		try
+		{
+			using IDbConnection connection = new SqlConnection(connectionString);
+			await connection.ExecuteAsync("hist.deletedAudits_INSERT", parameters, commandType: CommandType.StoredProcedure);
+			insertedID = parameters.Get<int?>("@insertedID");
+		}
+		catch (Exception ex)
+		{
+			return default;
+		}
+
+		return insertedID ?? ins.ID;
+	}
 }

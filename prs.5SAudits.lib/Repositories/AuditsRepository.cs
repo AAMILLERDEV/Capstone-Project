@@ -17,7 +17,7 @@ namespace prs_5SAudits.lib.Repositories
         public Task<IEnumerable<Audits>> GetAudits() => db.GetAudits();
         public Task<Audits> GetAuditByID(int id) => db.GetAuditByID(id);
         public Task<int?> UpsertAudits(Audits audits) => db.UpsertAudits(audits);
-        public Task<bool> DeleteAudit(int id) => db.DeleteAudit(id);
+        public Task<bool> DeleteAudits(int id) => db.DeleteAudit(id);
 
         //public async Task<int> setkeyprojectnumber(int value)
         //{

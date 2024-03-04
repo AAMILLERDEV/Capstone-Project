@@ -2,9 +2,9 @@
 
 namespace prs_5SAudits.lib.Interfaces
 {
-	public interface IEventLog
+	public interface IEventLogs
 	{
         public Task<IEnumerable<EventLogs>> GetEventLogs();
-        public Task<bool> CreateEventLog(EventLogs eventLog);
+        public Task<bool> InsertEventLogs(EventLogs eventLog);
     }
 }

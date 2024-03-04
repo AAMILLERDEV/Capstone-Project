@@ -26,5 +26,9 @@ namespace prs_5SAudits.api.Controllers
         [HttpPost]
         [Route("[controller]/UpsertAudits")]
         public Task<int?> UpsertAudits(Audits audits) => db.UpsertAudits(audits);
-    }
+
+        [HttpPost]
+        [Route("[controller]/DeleteAudits")]
+        public Task<bool> DeleteAudits(int id) => db.DeleteAudits(id);
+	}
 }

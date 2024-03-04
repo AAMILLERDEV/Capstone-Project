@@ -64,6 +64,18 @@
         //Scoring Categories
         public Task<IEnumerable<ScoringCategories>> GetScoringCategories();
         public Task<int?> UpsertScoringCategories(ScoringCategories ins);
-        public Task<bool> DeleteScoringCategory(int id);
-    }
+		public Task<bool> DeleteScoringCategory(int id);
+
+		//Event Types
+		public Task<IEnumerable<EventTypes>> GetEventTypes();
+		public Task<int?> InsertEventTypes(EventTypes ins);
+
+		//Event Logs
+		public Task<IEnumerable<EventLogs>> GetEventLogs();
+		public Task<bool> InsertEventLogs(EventLogs ins);
+
+		//Deleted Audits
+		public Task<IEnumerable<DeletedAudits>> GetDeletedAudits();
+		public Task<int?> InsertDeletedAudits(DeletedAudits ins);
+	}
 }
