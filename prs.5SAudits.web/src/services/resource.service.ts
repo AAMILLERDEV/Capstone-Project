@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { SharedService } from './shared.service';
-import { CheckItem } from 'src/models/CheckItem';
 import { Resources } from 'src/models/Resources';
 
 @Injectable({
@@ -17,8 +16,8 @@ export class ResourcesService {
     return this.sharedService.get(`Resources/GetResources/${audit_ID}`);
   }
 
-  public upsertResource(resource: Resources){
-    return this.sharedService.upsert(`Resources/UpsertResource`, resource);
+  public upsertResources(resource: Resources){
+    return this.sharedService.upsert(`Resources/UpsertResources`, resource);
   }
-  
+
 }

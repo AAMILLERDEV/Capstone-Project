@@ -4,4 +4,5 @@ export interface Resources {
     dateAdded: Date;
     score_ID: number;
     resourceData?: string;
+    isDeleted: boolean;
 }

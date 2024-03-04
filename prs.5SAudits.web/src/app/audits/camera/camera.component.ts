@@ -14,7 +14,7 @@ declare var bootstrap: any;
 })
 export class CameraComponent implements OnInit {
 
-  @Input() audit_ID: number = 0;
+  @Input() audit_ID: number | null = null;
   @Input() scoreCategory_ID: number = 0;
   @Input() public photoCollection: Resources[] = [];
   
@@ -41,11 +41,12 @@ export class CameraComponent implements OnInit {
 
   public async stashPhoto(image: WebcamImage){
     let resource: Resources = {
-      audit_ID: this.audit_ID,
+      audit_ID: this.audit_ID!,
       dateAdded: new Date(),
       id: 0,
       score_ID: this.scoreCategory_ID,
-      resourceData: image.imageAsBase64
+      resourceData: image.imageAsBase64,
+      isDeleted: false
     };
 
     this.photoCollection.push(resource);
@@ -57,7 +58,13 @@ export class CameraComponent implements OnInit {
 
   public async savePhotos(){
     for (let x of this.photoCollection){
-      await this.resourceService.upsertResource(x);
+      console.log(x);
+      let response = await this.resourceService.upsertResources(x);
+      console.log(response);
+
+      if (response > 0) {
+        this.toastr.success("Images Saved Successfully");
+      }
     }
   }
 
@@ -76,6 +83,7 @@ export class CameraComponent implements OnInit {
 
 
   public deletePhoto() {
+    // this.resourceService.deleteResource(this.photoCollection[this.openedIndex]);
     this.photoCollection.splice(this.openedIndex, 1);
 
     const photoModalTemplate = document.getElementById('photoPopup');
