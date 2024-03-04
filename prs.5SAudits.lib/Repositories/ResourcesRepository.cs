@@ -38,7 +38,11 @@ namespace prs_5SAudits.lib.Repositories
 
                 //Get the path from the setting case (get PhotoDestPath)
 
-                string documentsDestPath = "..\\Assets\\PhotosRepository";
+                string documentsDestPath = "..\\prs.5SAudits.lib\\Assets\\PhotosRepository";
+
+                string absolutePath = Path.GetFullPath(documentsDestPath);
+
+                Console.WriteLine("Absolute Path: " + absolutePath);
 
                 using var memStream = new MemoryStream(Convert.FromBase64String(resource.ResourceData));
                 using var fileStream = System.IO.File.OpenWrite(documentsDestPath + $"/{ID}_photo.jpeg");
