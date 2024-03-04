@@ -16,8 +16,16 @@ namespace prs_5SAudits.lib.Repositories
         }
         
         public Task<IEnumerable<Resources>> GetResourcesByAuditId(int audit_ID) => db.GetResourcesByAuditId(audit_ID);
-        public Task<int?> UpsertResources(Resources resources) => db.UpsertResources(resources);
-        public async Task<bool> CreateResource(Resources resource)
+        public async Task<int?> UpsertResources(Resources resources)
+        {
+            int? ID = await db.UpsertResources(resources);
+            if (ID.HasValue)
+            {
+                CreateResource(resources, ID.Value);
+            }
+            return ID;
+        }
+        public async Task<bool> CreateResource(Resources resource, int ID)
         {
             try
             {
@@ -30,10 +38,8 @@ namespace prs_5SAudits.lib.Repositories
 
                 //Get the path from the setting case (get PhotoDestPath)
 
-                int? ID = await UpsertResources(resource);
-                
                 string documentsDestPath = "..\\Assets\\PhotosRepository";
-                
+
                 using var memStream = new MemoryStream(Convert.FromBase64String(resource.ResourceData));
                 using var fileStream = System.IO.File.OpenWrite(documentsDestPath + $"/{ID}_photo.jpeg");
                 await memStream.CopyToAsync(fileStream);
