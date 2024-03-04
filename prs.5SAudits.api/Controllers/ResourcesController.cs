@@ -18,16 +18,12 @@ namespace prs_5SAudits.api.Controllers
         }
 
         [HttpGet]
-        [Route("[controller]/GetResources")]
-        public Task<IEnumerable<Resources>> GetResources() => db.GetResources();
+        [Route("[controller]/GetResourcesByAuditId/{id}")]
+        public Task<IEnumerable<Resources>> GetResourcesByAuditId(int id) => db.GetResourcesByAuditId(id);
         
         [HttpPost]
         [Route("[controller]/UpsertResources")]
         public Task<int?> UpsertScores(Resources resources) => db.UpsertResources(resources);
-
-        //[HttpPost, DisableRequestSizeLimit]
-        //[Route("[controller]/CreateResource")]
-        //public async Task<bool> CreateResource(Resources res) => db.CreateResource(res);
 
     }
 }

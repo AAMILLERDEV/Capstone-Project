@@ -2,6 +2,7 @@ using Dapper;
 using prs_5SAudits.lib.Models;
 using System.Data;
 using System.Data.SqlClient;
+using System.Net;
 
 namespace prs_5SAudits.lib;
 
@@ -163,7 +164,7 @@ public class DBSQLRepository : IDBSQLRepository
         try
         {
             using IDbConnection connection = new SqlConnection(connectionString);
-            return await connection.QueryFirstOrDefaultAsync<Audits>("hist.auditByID_GET", new { id }, commandType: CommandType.StoredProcedure);
+            return await connection.QueryFirstOrDefaultAsync<Audits>("hist.audit_GET", new { id }, commandType: CommandType.StoredProcedure);
         }
         catch (Exception ex)
         {
@@ -203,8 +204,8 @@ public class DBSQLRepository : IDBSQLRepository
 		return insertedID ?? ins.ID;
 	}
 
-	// DB methods for the AuditStatus object
-	public async Task<IEnumerable<AuditStatus>> GetAuditStatus()
+    // DB methods for the AuditStatus object
+    public async Task<IEnumerable<AuditStatus>> GetAuditStatus()
 	{
 		try
 		{
@@ -243,6 +244,21 @@ public class DBSQLRepository : IDBSQLRepository
 
 		return insertedID ?? ins.ID;
 	}
+
+	public async Task<bool> DeleteAudit(int audit_ID)
+	{
+        try
+        {
+            using IDbConnection connection = new SqlConnection(connectionString);
+            await connection.QueryAsync<Resources>("hist.Audits_DELETE", new { audit_ID }, commandType: CommandType.StoredProcedure);
+			return true;
+
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+    }
 
 	// DB methods for the CheckItem object
 	public async Task<IEnumerable<CheckItem>> GetCheckItem()
@@ -287,8 +303,23 @@ public class DBSQLRepository : IDBSQLRepository
 		return insertedID ?? ins.ID;
 	}
 
-	// DB methods for the Deductions object
-	public async Task<IEnumerable<Deductions>> GetDeductions()
+    public async Task<bool> DeleteCheckItem(int CheckItem_ID)
+    {
+        try
+        {
+            using IDbConnection connection = new SqlConnection(connectionString);
+            await connection.QueryAsync<Resources>("hist.CheckItem_DELETE", new { CheckItem_ID }, commandType: CommandType.StoredProcedure);
+            return true;
+
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+    }
+
+    // DB methods for the Deductions object
+    public async Task<IEnumerable<Deductions>> GetDeductions()
 	{
 		try
 		{
@@ -327,6 +358,21 @@ public class DBSQLRepository : IDBSQLRepository
 
 		return insertedID ?? ins.ID;
 	}
+
+    public async Task<bool> DeleteDeduction(int Deduction_ID)
+    {
+        try
+        {
+            using IDbConnection connection = new SqlConnection(connectionString);
+            await connection.QueryAsync<Resources>("hist.CheckItem_DELETE", new { Deduction_ID }, commandType: CommandType.StoredProcedure);
+            return true;
+
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+    }
 
     // DB methods for the Zones object
     public async Task<IEnumerable<Zones>> GetZones()
@@ -369,6 +415,21 @@ public class DBSQLRepository : IDBSQLRepository
 
 		return insertedID ?? ins.ID;
 	}
+
+    public async Task<bool> DeleteZone(int Zone_ID)
+    {
+        try
+        {
+            using IDbConnection connection = new SqlConnection(connectionString);
+            await connection.ExecuteAsync("hist.Zones_DELETE", new { Zone_ID }, commandType: CommandType.StoredProcedure);
+            return true;
+
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+    }
 
     //Zone Categories
 
@@ -414,12 +475,12 @@ public class DBSQLRepository : IDBSQLRepository
     }
 
     // DB methods for the Resources object
-    public async Task<IEnumerable<Resources>> GetResources()
+    public async Task<IEnumerable<Resources>> GetResourcesByAuditId(int audit_ID)
 	{
 		try
 		{
 			using IDbConnection connection = new SqlConnection(connectionString);
-			return await connection.QueryAsync<Resources>("hist.resources_GET", commandType: CommandType.StoredProcedure);
+			return await connection.QueryAsync<Resources>("hist.resourcesByAuditID_GET",new { audit_ID }, commandType: CommandType.StoredProcedure);
 
 		}
 		catch (Exception ex)
@@ -455,6 +516,21 @@ public class DBSQLRepository : IDBSQLRepository
 
 		return insertedID ?? ins.ID;
 	}
+
+    public async Task<bool> DeleteResource(int Resource_ID)
+    {
+        try
+        {
+            using IDbConnection connection = new SqlConnection(connectionString);
+            await connection.ExecuteAsync("hist.CheckItem_DELETE", new { Resource_ID }, commandType: CommandType.StoredProcedure);
+            return true;
+
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+    }
 
     // DB methods for the Scores object
 
@@ -556,6 +632,20 @@ public class DBSQLRepository : IDBSQLRepository
 		return insertedID ?? ins.ID;
 	}
 
+    public async Task<bool> DeleteScoringCriteria(int ScoringCriteria_ID)
+    {
+        try
+        {
+            using IDbConnection connection = new SqlConnection(connectionString);
+            await connection.ExecuteAsync("hist.CheckItem_DELETE", new { ScoringCriteria_ID }, commandType: CommandType.StoredProcedure);
+            return true;
+
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+    }
     //Scoring Categories
 
     public async Task<IEnumerable<ScoringCategories>> GetScoringCategories()
@@ -596,5 +686,19 @@ public class DBSQLRepository : IDBSQLRepository
         }
 
         return insertedID ?? ins.ID;
+    }
+
+    public async Task<bool> DeleteScoringCategory(int scoringCategory_ID)
+    {
+        try
+        {
+            using IDbConnection connection = new SqlConnection(connectionString);
+            await connection.ExecuteAsync("hist.ScoringCategories_DELETE", new { scoringCategory_ID }, commandType: CommandType.StoredProcedure);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
     }
 }

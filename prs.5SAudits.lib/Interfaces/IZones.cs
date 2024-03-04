@@ -6,6 +6,6 @@ namespace prs_5SAudits.lib.Interfaces
 	{
 		public Task<IEnumerable<Zones>> GetZones();
 		public Task<int?> UpsertZones(Zones ins);
-        //public Task<Zones> DeleteZone(int id);
+        public Task<bool> DeleteZone(int id);
     }
 }

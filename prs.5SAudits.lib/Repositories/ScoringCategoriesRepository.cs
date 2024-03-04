@@ -15,6 +15,6 @@ namespace prs_5SAudits.lib.Repositories
         
         public Task<IEnumerable<ScoringCategories>> GetScoringCategories() => db.GetScoringCategories();
         public Task<int?> UpsertScoringCategories(ScoringCategories ins) => db.UpsertScoringCategories(ins);
-        //public Task<ScoringCategories> DeleteScoringCategories(int id) => db.DeleteScoringCategories(id);
+        public Task<bool> DeleteScoringCategory(int id) => db.DeleteScoringCategory(id);
     }
 }

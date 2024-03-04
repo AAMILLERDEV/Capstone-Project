@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using prs_5SAudits.lib.Interfaces;
 using prs_5SAudits.lib.Models;
+using System.Numerics;
 using System.Runtime.InteropServices;
 
 namespace prs_5SAudits.lib.Repositories
@@ -14,16 +15,12 @@ namespace prs_5SAudits.lib.Repositories
             db = new DBSQLRepository(options.CurrentValue.DbConn);
         }
         
-        public Task<IEnumerable<Resources>> GetResources() => db.GetResources();
+        public Task<IEnumerable<Resources>> GetResourcesByAuditId(int audit_ID) => db.GetResourcesByAuditId(audit_ID);
         public Task<int?> UpsertResources(Resources resources) => db.UpsertResources(resources);
-        public async Task<bool> CreateResource(Resources res)
+        public async Task<bool> CreateResource(Resources resource)
         {
             try
             {
-                //UpsertResources(res);
-
-                //int id = res.id
-
 
                 //First upsert a resource record
 
@@ -33,10 +30,13 @@ namespace prs_5SAudits.lib.Repositories
 
                 //Get the path from the setting case (get PhotoDestPath)
 
-                string documentsDestPath = "\\\\prsfs\\Presstran\\PressNet Apps\\Sandbox\\Photos";
-                using var memStream = new MemoryStream(Convert.FromBase64String(res.ResourceData));
-               // using var fileStream = System.IO.File.OpenWrite(documentsDestPath + $"/{ID}_photo.jpeg");
-               // await memStream.CopyToAsync(fileStream);
+                int? ID = await UpsertResources(resource);
+                
+                string documentsDestPath = "..\\Assets\\PhotosRepository";
+                
+                using var memStream = new MemoryStream(Convert.FromBase64String(resource.ResourceData));
+                using var fileStream = System.IO.File.OpenWrite(documentsDestPath + $"/{ID}_photo.jpeg");
+                await memStream.CopyToAsync(fileStream);
                 return true;
             }
             catch (Exception ex)
@@ -48,7 +48,8 @@ namespace prs_5SAudits.lib.Repositories
 
         }
 
-        //public Task<Resources> DeleteResource(int id) => db.DeleteResource(id);
+        
+        public Task<bool> DeleteResource(int id) => db.DeleteResource(id);
 
 
     }
