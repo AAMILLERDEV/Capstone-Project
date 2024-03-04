@@ -23,7 +23,7 @@ namespace prs_5SAudits.api.Controllers
         
         [HttpPost]
         [Route("[controller]/UpsertResources")]
-        public Task<int?> UpsertScores(Resources resources) => db.UpsertResources(resources);
+        public Task<int?> UpsertResources(Resources resources) => db.UpsertResources(resources);
 
     }
 }
