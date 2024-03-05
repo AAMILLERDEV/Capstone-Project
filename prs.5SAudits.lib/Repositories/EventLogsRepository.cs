@@ -16,49 +16,48 @@ namespace prs_5SAudits.lib.Repositories
 		public Task<IEnumerable<EventLogs>> GetEventLogs() => db.GetEventLogs();
 		public Task<bool> InsertEventLogs(EventLogs eventLog) => db.InsertEventLogs(eventLog);
 
-		public Task<bool> LogEmailEvent (Email email)
+		public async Task<bool> LogEmailEvent (Email email)
 		{
 			try
 			{
 				EventLogs log = new EventLogs()
 				{
-					EventType_ID = 2,
+					EventType_ID = ((await db.GetEventTypes()).FirstOrDefault(x => x.EventName == "information").ID),
 					ShortMessage = email.Subject,
 					LongMessage = email.Body,
 					DateTime = System.DateTime.Now
 				};
 
-				InsertEventLogs(log);
+				await InsertEventLogs(log);
 
-				return Task.FromResult(true);
+				return true;
 			}
 			catch (Exception)
 			{
-				return Task.FromResult(false);
+				return false;
 				throw;
 			}
 		}
 
-		public Task<bool> LogErrorEvent(Exception ex)
+		public async Task<bool> LogErrorEvent(Exception ex)
 		{
 			try
 			{
 				EventLogs eventLogs = new EventLogs()
 				{
-					EventType_ID = 1,
-					ShortMessage = ex.Message,
-					LongMessage = "Source: " +ex.Source + " \n" + "StackTrace: " + ex.StackTrace + " \n" + 
-						"TargetSite: " + ex.TargetSite,
+					EventType_ID = ((await db.GetEventTypes()).FirstOrDefault(x => x.EventName == "critical").ID),
+				    ShortMessage = ex.Source,
+					LongMessage = "innermessage: " + ex.Message + "\nstacktrace: " + ex.StackTrace,
 					DateTime = System.DateTime.Now
 				};
 
-				InsertEventLogs(eventLogs);
+				await InsertEventLogs(eventLogs);
 
-				return Task.FromResult(true);
+				return true;
 			}
 			catch (Exception)
 			{
-				return Task.FromResult(false);
+				return false;
 				throw;
 			}
 		}
