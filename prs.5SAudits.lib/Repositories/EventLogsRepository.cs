@@ -22,13 +22,37 @@ namespace prs_5SAudits.lib.Repositories
 			{
 				EventLogs log = new EventLogs()
 				{
-					EventType_ID = 1,
+					EventType_ID = 2,
 					ShortMessage = email.Subject,
 					LongMessage = email.Body,
 					DateTime = System.DateTime.Now
 				};
 
 				InsertEventLogs(log);
+
+				return Task.FromResult(true);
+			}
+			catch (Exception)
+			{
+				return Task.FromResult(false);
+				throw;
+			}
+		}
+
+		public Task<bool> LogErrorEvent(Exception ex)
+		{
+			try
+			{
+				EventLogs eventLogs = new EventLogs()
+				{
+					EventType_ID = 1,
+					ShortMessage = ex.Message,
+					LongMessage = "Source: " +ex.Source + " \n" + "StackTrace: " + ex.StackTrace + " \n" + 
+						"TargetSite: " + ex.TargetSite,
+					DateTime = System.DateTime.Now
+				};
+
+				InsertEventLogs(eventLogs);
 
 				return Task.FromResult(true);
 			}

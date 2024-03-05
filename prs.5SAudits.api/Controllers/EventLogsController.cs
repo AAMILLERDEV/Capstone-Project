@@ -30,5 +30,9 @@ namespace prs_5SAudits.api.Controllers
 		[HttpPost]
 		[Route("[controller]/LogEmailEvent")]
 		public Task<bool> LogEmailEvent(Email email) => db.LogEmailEvent(email);
+
+		[HttpPost]
+		[Route("[controller]/LogErrorEvent")]
+		public Task<bool> LogErrorEvent(Exception ex) => db.LogErrorEvent(ex);
 	}
 }

@@ -7,6 +7,7 @@ namespace prs_5SAudits.lib.Interfaces
         public Task<IEnumerable<EventLogs>> GetEventLogs();
         public Task<bool> InsertEventLogs(EventLogs eventLog);
 		public Task<bool> LogEmailEvent(Email email);
+		public Task<bool> LogErrorEvent(Exception ex);
 
 	}
 }
