@@ -5,6 +5,7 @@ import { clearAuditForm, clearScoreForm, setFormForEditAudit } from 'src/app/sha
 import { AuditForm } from 'src/form-models/AuditForm';
 import { Audits } from 'src/models/Audits';
 import { CheckItem } from 'src/models/CheckItem';
+import { Resources } from 'src/models/Resources';
 import { Scores } from 'src/models/Scores';
 import { ScoringCategories } from 'src/models/ScoringCategories';
 import { ScoringCriteria } from 'src/models/ScoringCriteria';
@@ -12,6 +13,7 @@ import { ZoneCategories } from 'src/models/ZoneCategories';
 import { Zones } from 'src/models/Zones';
 import { AuditService } from 'src/services/audits.service';
 import { CheckItemService } from 'src/services/checkItem.service';
+import { ResourcesService } from 'src/services/resource.service';
 import { ScoresService } from 'src/services/scores.service';
 import { ScoringCategoriesService } from 'src/services/scoringCategories.service';
 import { ScoringCriteriaService } from 'src/services/scoringCriteria.service';
@@ -44,7 +46,8 @@ export class EditAuditFormComponent implements OnInit {
     private actRoute: ActivatedRoute,
     private auditService: AuditService,
     private scoringCriteriaService: ScoringCriteriaService,
-    private scoreService: ScoresService){
+    private scoreService: ScoresService,
+    private resourcesService: ResourcesService){
     this.auditForm = AuditForm;
   }
   
@@ -77,6 +80,7 @@ export class EditAuditFormComponent implements OnInit {
     })
 
     this.scoringCriteria = await this.scoringCriteriaService.GetScoringCriteria();
+
   }
 
   public setForm(){

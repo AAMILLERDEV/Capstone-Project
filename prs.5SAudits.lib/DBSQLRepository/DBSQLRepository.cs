@@ -60,8 +60,23 @@ public class DBSQLRepository : IDBSQLRepository
         return insertedID ?? ins.ID;
     }
 
-	// DB methods for the Actions object
-	public async Task<IEnumerable<Actions>> GetActions()
+ //   public async Task<Settings> GetSettingBySettingKey(string SettingKey)
+	//{
+
+ //       try
+ //       {
+ //           using IDbConnection connection = new SqlConnection(connectionString);
+ //           return await connection.QueryFirstOrDefaultAsync<Settings>("hist.settingBySettingKey_GET", new { SettingKey }, commandType: CommandType.StoredProcedure)
+
+ //       }
+ //       catch (Exception ex)
+ //       {
+ //           return default;
+ //       }
+ //   }
+
+    // DB methods for the Actions object
+    public async Task<IEnumerable<Actions>> GetActions()
 	{
 		try
 		{
@@ -519,12 +534,12 @@ public class DBSQLRepository : IDBSQLRepository
 		return insertedID ?? ins.ID;
 	}
 
-    public async Task<bool> DeleteResource(int Resource_ID)
+    public async Task<bool> DeleteResource(int id)
     {
         try
         {
             using IDbConnection connection = new SqlConnection(connectionString);
-            await connection.ExecuteAsync("hist.resources_DELETE", new { Resource_ID }, commandType: CommandType.StoredProcedure);
+            await connection.ExecuteAsync("hist.resources_DELETE", new { id }, commandType: CommandType.StoredProcedure);
             return true;
 
         }

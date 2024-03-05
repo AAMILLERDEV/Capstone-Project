@@ -6,5 +6,6 @@ namespace prs_5SAudits.lib.Interfaces
     {
         public Task<IEnumerable<Settings>> GetSettings();
         public Task<int?> UpsertSettings(Settings settings);
+        //public Task<Settings> GetSettingBySettingKey(string SettingKey);
     }
 }

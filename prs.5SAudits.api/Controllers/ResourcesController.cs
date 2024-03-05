@@ -25,5 +25,8 @@ namespace prs_5SAudits.api.Controllers
         [Route("[controller]/UpsertResources")]
         public Task<int?> UpsertResources(Resources resources) => db.UpsertResources(resources);
 
+        [HttpPost]
+        [Route("[controller]/DeleteResource/{id}")]
+        public Task<bool> DeleteResource(int id) => db.DeleteResource(id);
     }
 }

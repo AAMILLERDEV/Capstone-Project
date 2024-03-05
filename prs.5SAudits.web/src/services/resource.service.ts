@@ -13,11 +13,15 @@ export class ResourcesService {
   }
 
   public getResources(audit_ID: number){
-    return this.sharedService.get(`Resources/GetResources/${audit_ID}`);
+    return this.sharedService.get(`Resources/GetResourcesByAuditId/${audit_ID}`);
   }
 
   public upsertResources(resource: Resources){
     return this.sharedService.upsert(`Resources/UpsertResources`, resource);
+  }
+
+  public deleteResources(resource_ID: number){
+    return this.sharedService.delete(`Resources/DeleteResource/${resource_ID}`);
   }
 
 }
