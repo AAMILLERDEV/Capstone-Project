@@ -67,8 +67,8 @@ public class EmailRepository //: IEmailRepository
 
             smtpClient.EnableSsl = true;
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtpClient.Credentials = new System.Net.NetworkCredential("conestoga_CVGS_Mgmt@outlook.com", "aaronmiller8096");
-
+            smtpClient.Credentials = new System.Net.NetworkCredential("prs5SAudits@outlook.com", "5saudits99!");
+            
             smtpClient.Send(message);
 
             smtpClient.Dispose();
