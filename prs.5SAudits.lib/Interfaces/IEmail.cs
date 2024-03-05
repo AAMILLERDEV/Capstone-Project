@@ -2,7 +2,7 @@
 
 namespace prs_5SAudits.lib.Interfaces
 {
-	public interface IEmailRepository
+	public interface IEmail
 	{
 		public Task<bool> CreateEmail(EventLogs eventLogs);
 

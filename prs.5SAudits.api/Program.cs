@@ -30,7 +30,7 @@ try
 	builder.Services.AddSingleton<IEventLogs, EventLogsRepository>(x => new EventLogsRepository(x.GetRequiredService<IOptionsMonitor<AppSettings>>()));
 	builder.Services.AddSingleton<IEventTypes, EventTypesRepository>(x => new EventTypesRepository(x.GetRequiredService<IOptionsMonitor<AppSettings>>()));
 	builder.Services.AddSingleton<IDeletedAudits, DeletedAuditsRepository>(x => new DeletedAuditsRepository(x.GetRequiredService<IOptionsMonitor<AppSettings>>()));
-	builder.Services.AddSingleton<IEmailRepository, EmailRepository>(x => new EmailRepository(x.GetRequiredService<IOptionsMonitor<AppSettings>>()));
+	builder.Services.AddSingleton<IEmail, EmailRepository>(x => new EmailRepository(x.GetRequiredService<IOptionsMonitor<AppSettings>>()));
 
 
 

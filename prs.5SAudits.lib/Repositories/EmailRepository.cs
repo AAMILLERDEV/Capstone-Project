@@ -5,7 +5,7 @@ using System.Net.Mail;
 
 namespace prs_5SAudits.lib.Repositories;
 
-public class EmailRepository : IEmailRepository
+public class EmailRepository : IEmail
 {
     private readonly IDBSQLRepository db;
     
