@@ -47,7 +47,7 @@ public class EmailRepository : IEmail
                 Subject = email.Subject,
                 Body = email.Body,
                 IsBodyHtml = email.IsHTML,
-                From = email.From
+                From = new MailAddress(email.From)
             };
             SendMail(message);
             return Task.FromResult(true);
