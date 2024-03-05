@@ -21,7 +21,7 @@ namespace prs_5SAudits.lib.Repositories
 
         //public async Task<int> SetkeyProjectNumber(int value)
         //{
-        //    var currentvalue = await GetKeyProjectNumberSetting();  
+        //    var currentvalue = await GetKeyProjectNumberSetting();
         //    currentvalue.settingvalue = value.ToString();
         //    return await db.UpsertSettings(currentvalue);
         //}
@@ -46,7 +46,7 @@ namespace prs_5SAudits.lib.Repositories
         //}
 
         //Create a method to get a specific setting from the database
-        
-  
+
+
     }
 }

@@ -8,8 +8,10 @@
         public Task<IEnumerable<Settings>> GetSettings();
         public Task<int?> UpsertSettings(Settings settings);
 
-		//Actions Methods
-		public Task<IEnumerable<Actions>> GetActions();
+        //public Task<Settings> GetSettingBySettingKey(string SettingKey);
+
+        //Actions Methods
+        public Task<IEnumerable<Actions>> GetActions();
 		public Task<int?> UpsertActions(Actions actions);
 
 		//AuditLog Methods

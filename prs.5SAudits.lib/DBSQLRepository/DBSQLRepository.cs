@@ -60,8 +60,23 @@ public class DBSQLRepository : IDBSQLRepository
         return insertedID ?? ins.ID;
     }
 
-	// DB methods for the Actions object
-	public async Task<IEnumerable<Actions>> GetActions()
+ //   public async Task<Settings> GetSettingBySettingKey(string SettingKey)
+	//{
+
+ //       try
+ //       {
+ //           using IDbConnection connection = new SqlConnection(connectionString);
+ //           return await connection.QueryFirstOrDefaultAsync<Settings>("hist.settingBySettingKey_GET", new { SettingKey }, commandType: CommandType.StoredProcedure)
+
+ //       }
+ //       catch (Exception ex)
+ //       {
+ //           return default;
+ //       }
+ //   }
+
+    // DB methods for the Actions object
+    public async Task<IEnumerable<Actions>> GetActions()
 	{
 		try
 		{
