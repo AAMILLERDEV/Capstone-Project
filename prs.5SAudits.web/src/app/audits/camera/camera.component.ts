@@ -24,12 +24,24 @@ export class CameraComponent implements OnInit {
   public trigger: Subject<void> = new Subject<void>();
 
   constructor(private toastr: ToastrService,
-    private resourceService: ResourcesService){
+    private resourcesService: ResourcesService){
 
   }
 
   ngOnInit() {
-    
+    this.fetchResources();
+  }
+
+  public async fetchResources() {
+    let resources = await this.resourcesService.getResources(this.audit_ID!);
+    for (let x of resources) {
+      if (x.score_ID == this.scoreCategory_ID) {
+        if (!x.isDeleted) {
+          this.photoCollection.push(x);
+          }
+      }
+    }
+    console.log(this.photoCollection);
   }
 
   public handleInitError(error: WebcamInitError){
@@ -59,7 +71,7 @@ export class CameraComponent implements OnInit {
   public async savePhotos(){
     for (let x of this.photoCollection){
       console.log(x);
-      let response = await this.resourceService.upsertResources(x);
+      let response = await this.resourcesService.upsertResources(x);
       console.log(response);
 
       if (response > 0) {
@@ -83,7 +95,7 @@ export class CameraComponent implements OnInit {
 
 
   public deletePhoto() {
-    // this.resourceService.deleteResource(this.photoCollection[this.openedIndex]);
+    this.resourcesService.deleteResources(this.photoCollection[this.openedIndex].id);
     this.photoCollection.splice(this.openedIndex, 1);
 
     const photoModalTemplate = document.getElementById('photoPopup');

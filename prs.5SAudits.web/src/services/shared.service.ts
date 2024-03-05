@@ -24,4 +24,8 @@ export class SharedService {
   public upsert(endpoint: string, obj: any): any {
     return lastValueFrom(this.http.post<any | any[]>(this.baseURL + endpoint, obj, PostRequestOptions));
   }
+
+  public delete(endpoint: string): any {
+    return lastValueFrom(this.http.post<any | any[]>(this.baseURL + endpoint, PostRequestOptions));
+  }
 }

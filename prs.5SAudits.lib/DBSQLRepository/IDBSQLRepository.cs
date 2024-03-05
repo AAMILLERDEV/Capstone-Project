@@ -49,7 +49,7 @@
 		//Resources Methods
 		public Task<IEnumerable<Resources>> GetResourcesByAuditId(int audit_ID);
         public Task<int?> UpsertResources(Resources resources);
-        public Task<bool> DeleteResource(int Resource_ID);
+        public Task<bool> DeleteResource(int id);
 
         //Scores Methods
         public Task<IEnumerable<Scores>> GetScores();

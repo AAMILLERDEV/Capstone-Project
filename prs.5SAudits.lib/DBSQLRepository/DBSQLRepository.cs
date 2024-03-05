@@ -519,12 +519,12 @@ public class DBSQLRepository : IDBSQLRepository
 		return insertedID ?? ins.ID;
 	}
 
-    public async Task<bool> DeleteResource(int Resource_ID)
+    public async Task<bool> DeleteResource(int id)
     {
         try
         {
             using IDbConnection connection = new SqlConnection(connectionString);
-            await connection.ExecuteAsync("hist.resources_DELETE", new { Resource_ID }, commandType: CommandType.StoredProcedure);
+            await connection.ExecuteAsync("hist.resources_DELETE", new { id }, commandType: CommandType.StoredProcedure);
             return true;
 
         }
