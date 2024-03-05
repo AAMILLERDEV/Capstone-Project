@@ -19,7 +19,11 @@ namespace prs_5SAudits.api.Controllers
 
 
 		[HttpPost]
+		[Route("[controller]/EventLogEmail")]
+		public Task<bool> EventLogEmail(EventLogs eventLogs) => db.EventLogEmail(eventLogs);
+
+		[HttpPost]
 		[Route("[controller]/CreateEmail")]
-		public Task<bool> CreateEmail(EventLogs eventLogs) => db.CreateEmail(eventLogs);
+		public Task<bool> CreateEmail(Email email) => db.CreateEmail(email);
 	}
 }

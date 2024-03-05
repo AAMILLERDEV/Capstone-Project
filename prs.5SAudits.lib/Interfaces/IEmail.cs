@@ -4,7 +4,8 @@ namespace prs_5SAudits.lib.Interfaces
 {
 	public interface IEmail
 	{
-		public Task<bool> CreateEmail(EventLogs eventLogs);
+		public Task<bool> EventLogEmail(EventLogs eventLogs);
+		public Task<bool> CreateEmail(Email email);
 
 	}
 }

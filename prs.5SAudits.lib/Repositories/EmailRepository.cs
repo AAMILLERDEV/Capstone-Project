@@ -15,7 +15,7 @@ public class EmailRepository : IEmail
         db = new DBSQLRepository(options.CurrentValue.DbConn);
     }
 
-    public Task<bool> CreateEmail(EventLogs eventLogs)
+    public Task<bool> EventLogEmail(EventLogs eventLogs)
     {
         try
         {
@@ -35,6 +35,27 @@ public class EmailRepository : IEmail
         {
 
             return Task.FromResult((false));
+        }
+    }
+
+    public Task <bool> CreateEmail(Email email)
+    {
+        try
+        {
+            MailMessage message = new MailMessage()
+            {
+                Subject = email.Subject,
+                Body = email.Body,
+                IsBodyHtml = email.IsHTML,
+                From = email.From
+            };
+            SendMail(message);
+            return Task.FromResult(true);
+        }
+        catch (Exception)
+        {
+            return Task.FromResult(false);
+            throw;
         }
     }
 
