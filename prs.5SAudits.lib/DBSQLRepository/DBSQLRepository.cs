@@ -164,7 +164,7 @@ public class DBSQLRepository : IDBSQLRepository
         try
         {
             using IDbConnection connection = new SqlConnection(connectionString);
-            return await connection.QueryFirstOrDefaultAsync<Audits>("hist.audit_GET", new { id }, commandType: CommandType.StoredProcedure);
+            return await connection.QueryFirstOrDefaultAsync<Audits>("hist.auditByID_GET", new { id }, commandType: CommandType.StoredProcedure);
         }
         catch (Exception ex)
         {
@@ -796,7 +796,8 @@ public class DBSQLRepository : IDBSQLRepository
 			return default;
 		}
 
-		return insertedID ?? ins.ID;
+		/*return insertedID ?? ins.ID;*/
+		return true;
 	}
 
 	//Deleted Audits
