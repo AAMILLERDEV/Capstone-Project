@@ -19,24 +19,24 @@ namespace prs_5SAudits.lib.Repositories
         public Task<int?> UpsertAudits(Audits audits) => db.UpsertAudits(audits);
         public Task<bool> DeleteAudits(int id) => db.DeleteAudit(id);
 
-        //public async Task<int> setkeyprojectnumber(int value)
+        //public async Task<int> SetkeyProjectNumber(int value)
         //{
-        //    var currentvalue = await getkeyprojectnumbersetting();
-        //    currentvalue.settingvalue = value.tostring();
-        //    return await db.sqlupsertsettings(currentvalue);
+        //    var currentvalue = await GetKeyProjectNumberSetting();  
+        //    currentvalue.settingvalue = value.ToString();
+        //    return await db.UpsertSettings(currentvalue);
         //}
 
-        //public async Task<int> Getkeyprojectnumber()
+        //public async Task<int> GetkeyProjectNumber()
         //{
         //    var currentvalue = await GetKeyProjectNumberSetting();
 
         //    try
         //    {
-        //        return int.Parse(currentvalue.settingvalue);
+        //        return int.Parse(currentvalue.settingValue);
         //    }
         //    catch (Exception e)
         //    {
-        //        var eventype_id = (await db.getalleventtypes).firstordefault(x => x.eventName == "critical").id;
+        //        var eventype_id = (await db.GetEventTypes()).FirstOrDefault(x => x.EventName == "critical").ID;
 
         //        //short message -> e.source, long message -> "innermessage: {e.innermessage}, stacktrace: {e.stacktrace}, 
         //        //event log
@@ -45,10 +45,8 @@ namespace prs_5SAudits.lib.Repositories
         //    }
         //}
 
-        ////Create a method to get a specific setting from the database
-        //public async Task<string> GetKeyProjectNumberSetting()
-        //{
-
-        //}
+        //Create a method to get a specific setting from the database
+        
+  
     }
 }

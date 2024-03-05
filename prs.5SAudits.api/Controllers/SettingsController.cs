@@ -22,5 +22,9 @@ namespace prs_5SAudits.api.Controllers
         [HttpPost]
         [Route("[controller]/UpsertSettings")]
         public Task<int?> UpsertSettings(Settings settings) => db.UpsertSettings(settings);
+
+        //[HttpGet]
+        //[Route("[controller]/GetSettingsBySettingKey/{id}")]
+        //public Task<Settings> GetSettingBySettingKey(string SettingKey) => db.GetSettingBySettingKey(SettingKey);
     }
 }

@@ -15,5 +15,6 @@ namespace prs_5SAudits.lib.Repositories
 
         public Task<IEnumerable<Settings>> GetSettings() => db.GetSettings();
         public Task<int?> UpsertSettings(Settings settings) => db.UpsertSettings(settings);
+        //public Task<Settings> GetSettingBySettingKey(string SettingKey) => db.GetSettingBySettingKey(SettingKey);
     }
 }
