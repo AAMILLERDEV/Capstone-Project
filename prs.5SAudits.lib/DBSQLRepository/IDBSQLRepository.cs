@@ -79,5 +79,8 @@
 		//Deleted Audits
 		public Task<IEnumerable<DeletedAudits>> GetDeletedAudits();
 		public Task<int?> InsertDeletedAudits(DeletedAudits ins);
+
+		//Email
+		//public Task<bool> CreateEmail(EventLogs eventLogs);
 	}
 }

@@ -25,6 +25,6 @@ namespace prs_5SAudits.api.Controllers
 
 		[HttpPost]
 		[Route("[controller]/InsertEventLogs")]
-		public Task<int?> InsertDeletedAudits(DeletedAudits deleted) => db.InsertDeletedAudits(deleted);	
+		public Task<int?> InsertDeletedAudits(DeletedAudits deletedAudits) => db.InsertDeletedAudits(deletedAudits);	
 	}
 }

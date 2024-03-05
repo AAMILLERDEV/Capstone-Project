@@ -15,5 +15,7 @@ namespace prs_5SAudits.lib.Repositories
 
 		public Task<IEnumerable<EventLogs>> GetEventLogs() => db.GetEventLogs();
 		public Task<bool> InsertEventLogs(EventLogs eventLog) => db.InsertEventLogs(eventLog);
+
+		//public LogEmailEvent ()
 	}
 }

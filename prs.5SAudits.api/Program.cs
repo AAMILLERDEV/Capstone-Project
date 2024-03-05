@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using prs_5SAudits.lib;
 using prs_5SAudits.lib.Interfaces;
+using prs_5SAudits.lib.Models;
 using prs_5SAudits.lib.Repositories;
 
 try
@@ -26,8 +27,15 @@ try
     builder.Services.AddSingleton<IActions, ActionsRepository>(x => new ActionsRepository(x.GetRequiredService<IOptionsMonitor<AppSettings>>()));
     builder.Services.AddSingleton<IZoneCategories, ZoneCategoriesRepository>(x => new ZoneCategoriesRepository(x.GetRequiredService<IOptionsMonitor<AppSettings>>()));
     builder.Services.AddSingleton<IScoringCategories, ScoringCategoriesRepository>(x => new ScoringCategoriesRepository(x.GetRequiredService<IOptionsMonitor<AppSettings>>()));
+	builder.Services.AddSingleton<IEventLogs, EventLogsRepository>(x => new EventLogsRepository(x.GetRequiredService<IOptionsMonitor<AppSettings>>()));
+	builder.Services.AddSingleton<IEventTypes, EventTypesRepository>(x => new EventTypesRepository(x.GetRequiredService<IOptionsMonitor<AppSettings>>()));
+	builder.Services.AddSingleton<IDeletedAudits, DeletedAuditsRepository>(x => new DeletedAuditsRepository(x.GetRequiredService<IOptionsMonitor<AppSettings>>()));
+	builder.Services.AddSingleton<IEmailRepository, EmailRepository>(x => new EmailRepository(x.GetRequiredService<IOptionsMonitor<AppSettings>>()));
 
-    builder.Services.AddCors(o => o.AddDefaultPolicy(builder =>
+
+
+
+	builder.Services.AddCors(o => o.AddDefaultPolicy(builder =>
     {
         builder.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
     }));

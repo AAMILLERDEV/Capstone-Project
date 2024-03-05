@@ -1,10 +1,11 @@
 ﻿using Microsoft.Extensions.Options;
+using prs_5SAudits.lib.Interfaces;
 using prs_5SAudits.lib.Models;
 using System.Net.Mail;
 
 namespace prs_5SAudits.lib.Repositories;
 
-public class EmailRepository //: IEmailRepository
+public class EmailRepository : IEmail
 {
     private readonly IDBSQLRepository db;
     
@@ -12,6 +13,29 @@ public class EmailRepository //: IEmailRepository
     public EmailRepository(IOptionsMonitor<AppSettings> options)
     {
         db = new DBSQLRepository(options.CurrentValue.DbConn);
+    }
+
+    public Task<bool> CreateEmail(EventLogs eventLogs)
+    {
+        try
+        {
+            MailMessage message = new MailMessage()
+            {
+                Subject = eventLogs.EventType_ID + " " + eventLogs.ShortMessage,
+                Body = eventLogs.LongMessage,
+                IsBodyHtml = true,
+                From = new MailAddress("prs5sAuditsLogs@outlook.com")
+            };
+
+            SendMail(message);
+
+            return Task.FromResult((true));
+        }
+        catch (Exception)
+        {
+
+            return Task.FromResult((false));
+        }
     }
 
     //public async Task<bool> SendResetPasswordEmail(User user)

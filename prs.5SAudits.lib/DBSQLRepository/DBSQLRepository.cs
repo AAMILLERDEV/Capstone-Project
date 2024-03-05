@@ -805,14 +805,12 @@ public class DBSQLRepository : IDBSQLRepository
 			using IDbConnection connection = new SqlConnection(connectionString);
 			await connection.ExecuteAsync("hist.eventLogs_INSERT", parameters, commandType: CommandType.StoredProcedure);
 			insertedID = parameters.Get<int?>("@insertedID");
+			return true;
 		}
 		catch (Exception ex)
 		{
-			return default;
+			return false;
 		}
-
-		/*return insertedID ?? ins.ID;*/
-		return true;
 	}
 
 	//Deleted Audits
