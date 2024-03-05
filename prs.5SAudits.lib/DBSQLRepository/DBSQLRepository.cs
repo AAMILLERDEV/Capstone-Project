@@ -251,7 +251,7 @@ public class DBSQLRepository : IDBSQLRepository
         try
         {
             using IDbConnection connection = new SqlConnection(connectionString);
-            await connection.QueryAsync<Resources>("hist.Audits_DELETE", new { audit_ID }, commandType: CommandType.StoredProcedure);
+            await connection.QueryAsync<Audits>("hist.audits_DELETE", new { audit_ID }, commandType: CommandType.StoredProcedure);
 			return true;
 
         }
@@ -309,7 +309,7 @@ public class DBSQLRepository : IDBSQLRepository
         try
         {
             using IDbConnection connection = new SqlConnection(connectionString);
-            await connection.QueryAsync<Resources>("hist.CheckItem_DELETE", new { CheckItem_ID }, commandType: CommandType.StoredProcedure);
+            await connection.ExecuteAsync("hist.CheckItem_DELETE", new { CheckItem_ID }, commandType: CommandType.StoredProcedure);
             return true;
 
         }
@@ -365,7 +365,7 @@ public class DBSQLRepository : IDBSQLRepository
         try
         {
             using IDbConnection connection = new SqlConnection(connectionString);
-            await connection.QueryAsync<Resources>("hist.CheckItem_DELETE", new { Deduction_ID }, commandType: CommandType.StoredProcedure);
+            await connection.QueryAsync<Resources>("hist.deductions_DELETE", new { Deduction_ID }, commandType: CommandType.StoredProcedure);
             return true;
 
         }
@@ -381,7 +381,7 @@ public class DBSQLRepository : IDBSQLRepository
 		try
 		{
 			using IDbConnection connection = new SqlConnection(connectionString);
-			return await connection.QueryAsync<Zones>("ref.Zones_GET", commandType: CommandType.StoredProcedure);
+			return await connection.QueryAsync<Zones>("ref.zones_GET", commandType: CommandType.StoredProcedure);
 
 		}
 		catch (Exception ex)
@@ -422,7 +422,7 @@ public class DBSQLRepository : IDBSQLRepository
         try
         {
             using IDbConnection connection = new SqlConnection(connectionString);
-            await connection.ExecuteAsync("hist.Zones_DELETE", new { Zone_ID }, commandType: CommandType.StoredProcedure);
+            await connection.ExecuteAsync("hist.zones_DELETE", new { Zone_ID }, commandType: CommandType.StoredProcedure);
             return true;
 
         }
@@ -524,7 +524,7 @@ public class DBSQLRepository : IDBSQLRepository
         try
         {
             using IDbConnection connection = new SqlConnection(connectionString);
-            await connection.ExecuteAsync("hist.CheckItem_DELETE", new { Resource_ID }, commandType: CommandType.StoredProcedure);
+            await connection.ExecuteAsync("hist.resources_DELETE", new { Resource_ID }, commandType: CommandType.StoredProcedure);
             return true;
 
         }
@@ -640,7 +640,7 @@ public class DBSQLRepository : IDBSQLRepository
         try
         {
             using IDbConnection connection = new SqlConnection(connectionString);
-            await connection.ExecuteAsync("hist.CheckItem_DELETE", new { ScoringCriteria_ID }, commandType: CommandType.StoredProcedure);
+            await connection.ExecuteAsync("hist.scoringCriteria_DELETE", new { ScoringCriteria_ID }, commandType: CommandType.StoredProcedure);
             return true;
 
         }
