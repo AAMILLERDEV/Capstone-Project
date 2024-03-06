@@ -1,6 +1,6 @@
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormControl, FormGroup } from "@angular/forms";
 
 export const SupportForm = new FormGroup ({
-  emailControl: new FormControl(),
-  messageControl: new FormControl(),
+  bodyControl: new FormControl(),
+  subjectControl: new FormControl()
 })

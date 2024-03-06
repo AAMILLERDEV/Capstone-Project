@@ -87,6 +87,7 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item bg-dark"><button class="btn btn-success" [routerLink]="'/audit/new'">New Audit</button></li>
                             <li class="list-group-item bg-dark"><button class="btn btn-warning">Continue Audit</button></li>
+                            
                             <li class="list-group-item bg-dark">       
                                 <div class="input-group">
                                     <span class="input-group-text">Zone</span>
@@ -140,8 +141,8 @@
                     </div>
                     <div class="card-body">
                         <p class="card-title display-6 fs-6">Audit Date: {{dateFormatter(audit.dateStarted)}} <span class="float-end">Total Score: {{audit.overallScore}}</span></p>
+                        <p class="card-text display-6 fs-6">Zone: {{audit.zoneCategoryName}} <span class="float-end">Target Score: {{audit.targetScore}}</span></p>
                         <p class="card-text display-6 fs-6">Zone: {{audit.zoneName}} <span class="float-end">Submitted By: {{audit.employee_ID}}</span></p>
-                        <p class="card-text display-6 fs-6">Zone: {{audit.zoneCategoryName}}</p>
                     </div>
                 </div>
                 <!--Mobile View-->

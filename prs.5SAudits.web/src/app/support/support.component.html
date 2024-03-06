@@ -2,25 +2,25 @@
 <div class="container">
     <form [formGroup]="supportForm">
             <div class="form-group text-center customBorder2 p-2">
-            <h3 class="card-title ">Contact Support</h3>
-
+            <h3 class="card-title display-6 fs-4">Send a ticket into Matrix42</h3>
+            <hr>
+            <h3 class="card-title display-6 fs-6">Please be as descriptive as possible in the message field</h3>
             <div class="input-group p-3">
-                <span class="input-group-text">Email Address</span>
+                <span class="input-group-text">Email Subject</span>
                 <div class="form-floating">
-                <input type="email" class="form-control" id="email" formControlName="emailControl">
-                </div>
+                <input type="email" class="form-control" id="subject" formControlName="subjectControl" required>
+            </div>
             </div>
 
             <div class="input-group p-3">
                 <span class="input-group-text">Message</span>
-                <div class="form-floating" style="height:200px;">
-                <textarea class="form-control" style="height:200px;" id="message" formControlName="messageControl" rows="5"></textarea>
+                <div class="form-floating">
+                <textarea class="form-control" id="message" formControlName="bodyControl" col="3" required></textarea>
                 </div>
             </div>
-            
                 <div class="text-center">
-                <button class="btn btn-primary" (click)="sendEmail()">Send Email</button>
-                </div>
+                <button class="btn btn-primary" (click)="sendEmail()" [disabled]="requestInProgress">Send Email</button>
+            </div>
         </div>
     </form>
 </div>
