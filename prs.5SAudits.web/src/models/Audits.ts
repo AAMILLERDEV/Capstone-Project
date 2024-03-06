@@ -10,4 +10,6 @@ export interface Audits {
     zoneName?: string;
     isDeleted: boolean;
     auditNumber: string;
+    zoneCategoryName?: string;
+    targetScore?: number;
 }

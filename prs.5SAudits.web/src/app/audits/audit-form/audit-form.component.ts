@@ -204,6 +204,9 @@ export class AuditFormComponent implements OnInit {
       overallScore += Number(score.score);
     }
 
+    if (this.scores.length == 5){
+      this.audit.auditStatus_ID = 3;
+    }
 
     this.audit.overallScore = overallScore;
     await this.auditService.UpsertAudits(this.audit);

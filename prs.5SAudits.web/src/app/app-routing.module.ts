@@ -5,13 +5,15 @@ import { EditAuditFormComponent } from './audits/edit-audit-form/edit-audit-form
 import { NewAuditFormComponent } from './audits/new-audit-form/new-audit-form.component';
 import { SupportComponent } from './support/support.component';
 import { AdminComponent } from './admin/admin.component';
+import { DtViewerComponent } from './admin/dt-viewer/dt-viewer.component';
 
 const routes: Routes = [{path: "", component: HomeComponent},
 {path: "home", component: HomeComponent},
 {path: "audit/edit/:id", component: EditAuditFormComponent},
 {path: "audit/new", component: NewAuditFormComponent},
 {path: "support", component: SupportComponent},
-{path: "admin", component: AdminComponent}];
+{path: "admin", component: AdminComponent},
+{path: "admin/data/:view", component: DtViewerComponent}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

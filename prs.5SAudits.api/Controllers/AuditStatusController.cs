@@ -20,7 +20,7 @@ namespace prs_5SAudits.api.Controllers
         
      
         [HttpGet]
-        [Route("[controller]/GetAuditStatus")]
+        [Route("[controller]/GetAuditStatuses")]
         public Task<IEnumerable<AuditStatus>> GetAuditStatus() => db.GetAuditStatus();
         
         [HttpPost]

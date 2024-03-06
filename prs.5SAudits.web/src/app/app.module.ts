@@ -17,6 +17,8 @@ import { AdminComponent } from './admin/admin.component';
 import { ToastrModule } from 'ngx-toastr';
 import { WebcamModule } from 'ngx-webcam';
 import { CameraComponent } from './audits/camera/camera.component';
+import { DtViewerComponent } from './admin/dt-viewer/dt-viewer.component';
+import { DatatableComponent } from './admin/datatable/datatable.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { CameraComponent } from './audits/camera/camera.component';
     EditAuditFormComponent,
     AdminComponent,
     SupportComponent,
-    CameraComponent
+    CameraComponent,
+    DtViewerComponent,
+    DatatableComponent
   ],
   imports: [
     BrowserModule,
