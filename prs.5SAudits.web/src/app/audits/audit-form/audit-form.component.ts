@@ -142,6 +142,10 @@ export class AuditFormComponent implements OnInit {
   public async startAudit() {
     console.log(this.parentFormGroup.controls['zoneControl'].value)
     if (this.parentFormGroup.controls['zoneControl'].value != '') {
+
+      let auditNumber: number = await this.auditService.GetAuditNumber();
+      const currentDate = new Date().getFullYear().toString().slice(-2);
+
       let audit: Audits = {
         id: 0,
         auditStatus_ID: 1, 
@@ -151,7 +155,8 @@ export class AuditFormComponent implements OnInit {
         dateCompleted: null,
         notes: null,
         overallScore: 0,
-        isDeleted: false
+        isDeleted: false,
+        auditNumber: `${currentDate}-${auditNumber}`
       }
 
       try {
@@ -160,7 +165,7 @@ export class AuditFormComponent implements OnInit {
         this.audit = audit;
         this.proceedToScores();
         this.toastr.success("Audit Started");
-        console.log(this.audit);
+        await this.auditService.SetAuditNumber(auditNumber + 1);
         return;
       } catch (error) {
         this.toastr.error("There was an error starting the audit.");

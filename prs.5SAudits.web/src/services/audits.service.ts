@@ -23,5 +23,13 @@ export class AuditService {
   public UpsertAudits(audit: Audits){
     return this.sharedService.upsert(`Audits/UpsertAudits`, audit);
   }
+
+  public GetAuditNumber(): Promise<number> {
+    return this.sharedService.get(`Audits/GetAuditNumber`);
+  }
+
+  public SetAuditNumber(value: number){
+    return this.sharedService.upsert(`Audits/SetAuditNumber/${value}`, null);
+  }
   
 }

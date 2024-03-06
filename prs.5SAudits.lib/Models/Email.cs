@@ -6,7 +6,5 @@ namespace prs_5SAudits.lib.Models
 	{
 		public string Subject { set; get; }
 		public string Body { set; get; }
-		public bool IsHTML { set; get; }
-		public String From { set; get; }
 	}
 }

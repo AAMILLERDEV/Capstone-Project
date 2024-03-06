@@ -9,4 +9,5 @@ export interface Audits {
     notes: string | null;
     zoneName?: string;
     isDeleted: boolean;
+    auditNumber: string;
 }

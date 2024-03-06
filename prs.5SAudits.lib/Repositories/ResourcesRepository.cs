@@ -14,52 +14,36 @@ namespace prs_5SAudits.lib.Repositories
         {
             db = new DBSQLRepository(options.CurrentValue.DbConn);
         }
-        
+
         public Task<IEnumerable<Resources>> GetResourcesByAuditId(int audit_ID) => db.GetResourcesByAuditId(audit_ID);
+        public Task<bool> DeleteResource(int id) => db.DeleteResource(id);
         public async Task<int?> UpsertResources(Resources resources)
         {
-            int? ID = await db.UpsertResources(resources);
-            if (ID.HasValue)
+            var id = await db.UpsertResources(resources);
+
+            if (id != null)
             {
-                CreateResource(resources, ID.Value);
+                CreateResource(resources, (int)id);
             }
-            return ID;
+
+            return id;
         }
 
-        public async Task<bool> CreateResource(Resources resource, int ID)
+        public async Task<bool> CreateResource(Resources resource, int id)
         {
             try
             {
 
-                //First upsert a resource record
-
-                //Grab the ID of the added record
-
-                //Use the ID to create a name for the photo to be used in the path
-
-                //Get the path from the setting case (get PhotoDestPath)
-
-                string documentsDestPath = "..\\prs.5SAudits.lib\\Assets\\PhotosRepository";
-
-                string absolutePath = Path.GetFullPath(documentsDestPath);
-
-                Console.WriteLine("Absolute Path: " + absolutePath);
-
+                string documentsDestPath = "..\\prs.5SAudits.lib\\Assets\\PhotosRepository\\";
                 using var memStream = new MemoryStream(Convert.FromBase64String(resource.ResourceData));
-                using var fileStream = System.IO.File.OpenWrite(documentsDestPath + $"/{ID}_photo.jpeg");
+                using var fileStream = File.OpenWrite(documentsDestPath + $"{id}_photo.jpeg");
                 await memStream.CopyToAsync(fileStream);
                 return true;
             }
             catch (Exception ex)
             {
-                //Add event log
                 return false;
             }
-
-
         }
-
-        
-        public Task<bool> DeleteResource(int id) => db.DeleteResource(id);
     }
 }

@@ -69,7 +69,7 @@ export class EditAuditFormComponent implements OnInit {
 
   public async getData(id: number){
     this.audit = await this.auditService.GetAuditByID(id);
-    this.scores = await this.scoreService.GetScoresByAudit(this.audit.id!);
+    this.scores = await this.scoreService.GetScoresByAudit(id);
     this.scoringCategories = await this.scoringCategoriesService.getScoringCategories();
     this.checkItem = await this.checkItemService.getCheckItem();
     this.zoneCategories = await this.zoneCategoriesService.GetZoneCategories();
@@ -87,10 +87,11 @@ export class EditAuditFormComponent implements OnInit {
     setFormForEditAudit(this.auditForm)
     clearScoreForm(this.auditForm)
     clearAuditForm(this.auditForm)
-    this.auditForm.controls['auditNumberControl'].setValue(this.audit.id)
+    this.auditForm.controls['auditNumberControl'].setValue(this.audit.auditNumber)
     this.auditForm.controls['employeeNameControl'].setValue("Miller, Aaron")
     this.auditForm.controls['zoneCategoryControl'].setValue(this.zoneCategories.find(x => x.id == this.zones.find(y => y.id == this.audit.zone_ID)?.zoneCategory_ID)?.id)
     this.auditForm.controls['zoneControl'].setValue(this.audit.zone_ID)
+    console.log(this.audit)
     if (this.scores.find(x => x.scoreCategory_ID == 1) != null){
       this.auditForm.controls['scoreControl'].setValue(this.scores.find(x => x.scoreCategory_ID == 1)?.score)
       this.auditForm.controls['commentsControl'].setValue(this.scores.find(x => x.scoreCategory_ID == 1)?.comments)

@@ -19,34 +19,25 @@ namespace prs_5SAudits.lib.Repositories
         public Task<int?> UpsertAudits(Audits audits) => db.UpsertAudits(audits);
         public Task<bool> DeleteAudits(int id) => db.DeleteAudit(id);
 
-        //public async Task<int> SetkeyProjectNumber(int value)
-        //{
-        //    var currentvalue = await GetKeyProjectNumberSetting();
-        //    currentvalue.settingvalue = value.ToString();
-        //    return await db.UpsertSettings(currentvalue);
-        //}
+        public async Task<int?> SetAuditNumber(int value)
+        {
+            var auditNumber = (await db.GetSettings()).FirstOrDefault(x => x.SettingKey == "AuditNumber");
+            auditNumber.SettingValue = value.ToString();
+            return await db.UpsertSettings(auditNumber);
+        }
 
-        //public async Task<int> GetkeyProjectNumber()
-        //{
-        //    var currentvalue = await GetKeyProjectNumberSetting();
+        public async Task<int?> GetAuditNumber()
+        {
+            var auditNumber = (await db.GetSettings()).FirstOrDefault(x => x.SettingKey == "AuditNumber");
 
-        //    try
-        //    {
-        //        return int.Parse(currentvalue.settingValue);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        var eventype_id = (await db.GetEventTypes()).FirstOrDefault(x => x.EventName == "critical").ID;
-
-        //        //short message -> e.source, long message -> "innermessage: {e.innermessage}, stacktrace: {e.stacktrace}, 
-        //        //event log
-        //        return -1;
-
-        //    }
-        //}
-
-        //Create a method to get a specific setting from the database
-
-
+            try
+            {
+                return int.Parse(auditNumber.SettingValue);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }

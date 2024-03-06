@@ -8,6 +8,7 @@ import { ScoringCategories } from 'src/models/ScoringCategories';
 import { ScoringCriteria } from 'src/models/ScoringCriteria';
 import { ZoneCategories } from 'src/models/ZoneCategories';
 import { Zones } from 'src/models/Zones';
+import { AuditService } from 'src/services/audits.service';
 import { CheckItemService } from 'src/services/checkItem.service';
 import { ScoringCategoriesService } from 'src/services/scoringCategories.service';
 import { ScoringCriteriaService } from 'src/services/scoringCriteria.service';
@@ -26,6 +27,7 @@ export class NewAuditFormComponent implements OnInit {
   public zones: Zones[] = [];
   public zoneCategories: ZoneCategories[] = [];
   public scoringCriteria: ScoringCriteria[] = [];
+  public auditNumber!: number;
 
   public auditForm: FormGroup;
   public viewReady: boolean = false;
@@ -35,14 +37,15 @@ export class NewAuditFormComponent implements OnInit {
     private zonesService: ZonesService,
     private zoneCategoriesService: ZoneCategoriesService,
     private scoringCriteriaService: ScoringCriteriaService,
+    private auditService: AuditService,
     private router: Router){
     this.auditForm = AuditForm;
   }
 
   async ngOnInit() {
     try {
-      this.setForm();
       await this.getData();
+      this.setForm();
       this.viewReady = true;
     } catch (error){
       console.log(error)
@@ -57,13 +60,16 @@ export class NewAuditFormComponent implements OnInit {
     this.zones = await this.zonesService.GetZones();
     this.zoneCategories = await this.zoneCategoriesService.GetZoneCategories();
     this.scoringCriteria = await this.scoringCriteriaService.GetScoringCriteria();
+    this.auditNumber = await this.auditService.GetAuditNumber();
+    console.log(this.auditNumber)
   }
 
   public setForm(){
     clearScoreForm(this.auditForm)
     clearAuditForm(this.auditForm)
     setFormForNewAudit(this.auditForm)
-    this.auditForm.controls['auditNumberControl'].setValue("TEST")
+    const currentDate = new Date().getFullYear().toString().slice(-2);
+    this.auditForm.controls['auditNumberControl'].setValue(`${currentDate}-${this.auditNumber}`)
     this.auditForm.controls['employeeNameControl'].setValue("Miller, Aaron")
   }
 
