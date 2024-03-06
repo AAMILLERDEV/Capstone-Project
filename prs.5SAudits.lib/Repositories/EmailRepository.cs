@@ -28,7 +28,7 @@ public class EmailRepository : IEmails
                 From = new MailAddress("prs5SAudits@outlook.com"),
             };
 
-            message.To.Add("amiller8096@conestogac.on.ca");
+            message.To.Add("amiller8096@conestogac.on.ca, qgardin2932@conestogac.on.ca, bpower0195@conestogac.on.ca, jdelahunty5276@conestogac.on.ca");
 
             return await SendMail(message);
 
