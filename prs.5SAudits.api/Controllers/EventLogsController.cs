@@ -15,17 +15,13 @@ namespace prs_5SAudits.api.Controllers
 			this.db = db;
 		}
 
-
-
-
-
 		[HttpGet]
 		[Route("[controller]/GetEventLogs")]
 		public Task<IEnumerable<EventLogs>> GetEventLogs() => db.GetEventLogs();	
 
 		[HttpPost]
 		[Route("[controller]/InsertEventLogs")]
-		public Task<bool> InsertEventLogs(EventLogs eventLogs) => db.InsertEventLogs(eventLogs);
+		public Task<int?> InsertEventLogs(EventLogs eventLogs) => db.InsertEventLogs(eventLogs);
 
 		[HttpPost]
 		[Route("[controller]/LogEmailEvent")]

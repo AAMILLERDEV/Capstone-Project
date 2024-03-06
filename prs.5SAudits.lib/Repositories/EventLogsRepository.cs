@@ -14,7 +14,7 @@ namespace prs_5SAudits.lib.Repositories
 		}
 
 		public Task<IEnumerable<EventLogs>> GetEventLogs() => db.GetEventLogs();
-		public Task<bool> InsertEventLogs(EventLogs eventLog) => db.InsertEventLogs(eventLog);
+		public Task<int?> InsertEventLogs(EventLogs eventLog) => db.InsertEventLogs(eventLog);
 
 		public async Task<bool> LogEmailEvent (Email email)
 		{
@@ -22,7 +22,7 @@ namespace prs_5SAudits.lib.Repositories
 			{
 				EventLogs log = new EventLogs()
 				{
-					EventType_ID = ((await db.GetEventTypes()).FirstOrDefault(x => x.EventName == "information").ID),
+					EventType_ID = ((await db.GetEventTypes()).FirstOrDefault(x => x.EventName == "Information").ID),
 					ShortMessage = email.Subject,
 					LongMessage = email.Body,
 					DateTime = System.DateTime.Now
@@ -45,9 +45,9 @@ namespace prs_5SAudits.lib.Repositories
 			{
 				EventLogs eventLogs = new EventLogs()
 				{
-					EventType_ID = ((await db.GetEventTypes()).FirstOrDefault(x => x.EventName == "critical").ID),
+					EventType_ID = ((await db.GetEventTypes()).FirstOrDefault(x => x.EventName == "Error").ID),
 				    ShortMessage = ex.Source,
-					LongMessage = "innermessage: " + ex.Message + "\nstacktrace: " + ex.StackTrace,
+					LongMessage = "Inner Message: " + ex.Message +  " : Stack Trace: " + ex.StackTrace,
 					DateTime = System.DateTime.Now
 				};
 

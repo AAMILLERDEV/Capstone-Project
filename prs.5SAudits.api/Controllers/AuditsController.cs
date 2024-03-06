@@ -22,7 +22,7 @@ namespace prs_5SAudits.api.Controllers
         [HttpGet]
         [Route("[controller]/GetAudits")]
         public Task<IEnumerable<Audits>> GetAudits() => db.GetAudits();
-        
+
         [HttpPost]
         [Route("[controller]/UpsertAudits")]
         public Task<int?> UpsertAudits(Audits audits) => db.UpsertAudits(audits);
@@ -30,5 +30,13 @@ namespace prs_5SAudits.api.Controllers
         [HttpPost]
         [Route("[controller]/DeleteAudits")]
         public Task<bool> DeleteAudits(int id) => db.DeleteAudits(id);
-	}
+
+        [HttpGet]
+        [Route("[controller]/GetAuditNumber")]
+        public Task<int?> GetAuditNumber() => db.GetAuditNumber();
+
+        [HttpPost]
+        [Route("[controller]/SetAuditNumber/{value}")]
+        public Task<int?> SetAuditNumber(int value) => db.SetAuditNumber(value);
+    }
 }

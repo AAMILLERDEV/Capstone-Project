@@ -97,7 +97,9 @@ export class AuditFormComponent implements OnInit {
       let res = await this.scoreService.UpsertScores(score);
       if (res > 0){
         score.id = res;
-        this.scores.push(score)
+        if (this.scores.find(x => x.id == score.id) == null){
+          this.scores.push(score)
+        }
       }
     }
   }
@@ -190,18 +192,19 @@ export class AuditFormComponent implements OnInit {
     this.router.navigate(['home']);
   }
 
-  public ngOnDestroy() {
-    this.sumAuditScores();
+  public async ngOnDestroy() {
+    await this.sumAuditScores();
   }
 
   public async sumAuditScores() {
     let overallScore = 0;
-
+    console.log(this.scores);
     for (let score of this.scores) {
+
       overallScore += Number(score.score);
     }
 
-    console.log(overallScore);
+
     this.audit.overallScore = overallScore;
     await this.auditService.UpsertAudits(this.audit);
   }
