@@ -19,6 +19,7 @@ import { WebcamModule } from 'ngx-webcam';
 import { CameraComponent } from './audits/camera/camera.component';
 import { DtViewerComponent } from './admin/dt-viewer/dt-viewer.component';
 import { DatatableComponent } from './admin/datatable/datatable.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { DatatableComponent } from './admin/datatable/datatable.component';
     BrowserAnimationsModule,
     TooltipModule.forRoot(),
     ToastrModule.forRoot(),
-    NgbModule
+    NgbModule,
+    CarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent]
