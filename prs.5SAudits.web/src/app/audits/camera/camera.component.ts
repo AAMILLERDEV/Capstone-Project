@@ -100,7 +100,7 @@ export class CameraComponent implements OnInit {
 
 
   public deletePhoto() {
-    this.resourcesService.deleteResources(this.photoCollection[this.openedIndex].id);
+    this.resourcesService.deleteResource(this.photoCollection[this.openedIndex].id);
     this.photoCollection.splice(this.openedIndex, 1);
 
     const photoModalTemplate = document.getElementById('photoPopup');

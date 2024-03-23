@@ -15,7 +15,40 @@ namespace prs_5SAudits.lib.Repositories
             db = new DBSQLRepository(options.CurrentValue.DbConn);
         }
 
-        public Task<IEnumerable<Resources>> GetResourcesByAuditId(int audit_ID) => db.GetResourcesByAuditId(audit_ID);
+        public async Task<IEnumerable<Resources>> GetResourcesByAuditId(int audit_ID)
+        {
+            var resources = await FetchResources(audit_ID);
+            
+            var updatedResources = new List<Resources>();
+
+            foreach (var resource in resources)
+            {
+                string documentsDestPath = "..\\prs.5SAudits.lib\\Assets\\PhotosRepository\\" + resource.ID + "_photo.jpeg"; ;
+
+                if (File.Exists(documentsDestPath))
+                {
+                    byte[] image = await File.ReadAllBytesAsync(documentsDestPath);
+                    string imageBase64 = Convert.ToBase64String(image);
+
+                    var newResource = new Resources
+                    {
+                        ID = resource.ID,
+                        Audit_ID = resource.Audit_ID,
+                        DateAdded = resource.DateAdded,
+                        Score_ID = resource.Score_ID,
+                        IsDeleted = resource.IsDeleted,
+                        ResourceData = imageBase64
+                    };
+
+                    updatedResources.Add(newResource);
+                }
+            }
+
+            return updatedResources;
+        }
+
+        public Task<IEnumerable<Resources>> FetchResources(int audit_ID) => db.GetResourcesByAuditId(audit_ID);
+
         public Task<bool> DeleteResource(int id) => db.DeleteResource(id);
         public async Task<int?> UpsertResources(Resources resources)
         {

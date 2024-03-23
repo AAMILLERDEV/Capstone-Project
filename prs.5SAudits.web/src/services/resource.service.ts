@@ -20,7 +20,7 @@ export class ResourcesService {
     return this.sharedService.upsert(`Resources/UpsertResources`, resource);
   }
 
-  public deleteResources(resource_ID: number){
+  public deleteResource(resource_ID: number){
     return this.sharedService.delete(`Resources/DeleteResource/${resource_ID}`);
   }
 
