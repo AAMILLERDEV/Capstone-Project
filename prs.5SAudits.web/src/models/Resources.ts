@@ -5,5 +5,6 @@ export interface Resources {
     score_ID: number;
     resourceData?: string;
     isDeleted: boolean;
+    isAfter: boolean;
     isNew: boolean;
 }

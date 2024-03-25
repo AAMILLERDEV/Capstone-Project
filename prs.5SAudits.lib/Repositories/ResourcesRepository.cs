@@ -37,6 +37,7 @@ namespace prs_5SAudits.lib.Repositories
                         DateAdded = resource.DateAdded,
                         Score_ID = resource.Score_ID,
                         IsDeleted = resource.IsDeleted,
+                        IsAfter = resource.IsAfter,
                         ResourceData = imageBase64
                     };
 

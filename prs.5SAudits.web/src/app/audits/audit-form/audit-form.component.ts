@@ -14,6 +14,7 @@ import { clearScoreForm, returnNumArray } from 'src/app/sharedUtils';
 import { document } from 'ngx-bootstrap/utils';
 import { ScoringCriteria } from 'src/models/ScoringCriteria';
 import { Resources } from 'src/models/Resources';
+import { ResourcesService} from 'src/services/resource.service';
 
 @Component({
   selector: 'app-audit-form',
@@ -49,6 +50,7 @@ export class AuditFormComponent implements OnInit {
     private auditService: AuditService,
     private scoreService: ScoresService,
     private toastr: ToastrService,
+    private resourcesService: ResourcesService,
     private router: Router
   ) {
     console.log(this.scoringCategories)
@@ -187,13 +189,69 @@ export class AuditFormComponent implements OnInit {
   //Simple audit score submission, notifier and navigator
   public async submitAudit() {
     await this.saveScores();
-    this.sumAuditScores();
+    await this.sumAuditScores();
+    await this.updateAuditStatus();
     this.toastr.success("Audit successfully updated");
     this.router.navigate(['home']);
   }
 
+  //Check the criteria to update the status of the audit
+  public async updateAuditStatus() {
+    //We start with the status being complete and lower it if needed
+    let tempStatus_ID = 3;
+
+    if (this.audit.id) {
+      let resources: Resources[] = await this.resourcesService.getResources(this.audit.id);
+      console.log(resources);
+      console.log(this.scores);
+
+      if (this.scores.length < 5) {
+        //If there isn't 5 scores filled in we know to just exit as incomplete
+        tempStatus_ID = 1;
+      }
+      else {
+        for (let score of this.scores) {
+          //If any score is null it's just automatically incomplete
+          if (score.score == null) {
+            tempStatus_ID = 1;
+            break;
+          }
+          //If score isn't perfect, we check if there's a before photo for it
+          if (score.score < 5) {
+            if (resources.some(resource => resource.score_ID == score.scoreCategory_ID && resource.isDeleted == false && resource.isAfter == false )) {
+              //Then, we check if there's an after photo, and if not, we set the StatusID to 2
+              if (!resources.some(resource => resource.score_ID == score.scoreCategory_ID && resource.isDeleted == false && resource.isAfter == true )) {
+                tempStatus_ID = 2;
+              }
+            }
+            else {
+              //If there's no before photo, StatusID is set to 1 and we exit the loop so it isn't overwritten
+              tempStatus_ID = 1;
+              break;
+            }
+          }
+        }
+      }
+      
+    }
+
+    console.log("Status after checks: " + tempStatus_ID);
+
+    if (tempStatus_ID != this.audit.auditStatus_ID) {
+      this.audit.auditStatus_ID = tempStatus_ID;
+
+      let response = await this.auditService.UpsertAudits(this.audit);
+      
+      if (response > 0) {
+        console.log("Updated Status to: " + tempStatus_ID);
+      }
+    }
+
+  }
+
   public async ngOnDestroy() {
     await this.sumAuditScores();
+    await this.updateAuditStatus();
   }
 
   public async sumAuditScores() {

@@ -520,7 +520,8 @@ public class DBSQLRepository : IDBSQLRepository
             { "@audit_ID", ins.Audit_ID },
             { "@dateAdded", ins.DateAdded },
             { "@score_ID", ins.Score_ID },
-            { "@isDeleted", ins.IsDeleted }
+            { "@isDeleted", ins.IsDeleted },
+            { "@isAfter", ins.IsAfter }
         });
 
         parameters.Add("@insertedID", 0, direction: ParameterDirection.Output);

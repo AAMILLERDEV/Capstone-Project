@@ -1,5 +1,14 @@
 <ng-container>
-    <div *ngIf="photoCollection.length < 5">
+    <div *ngIf="editMode">
+        <h1>{{afterMode ? "After Photos" : "Before Photos"}}</h1>
+        <button *ngIf="editMode" class="btn btn-secondary m-2" (click)="swapModes()">Swap Mode</button>
+    </div>
+
+    <h1 *ngIf="!editMode">
+        <h1>Before Photos</h1>
+    </h1>
+    
+    <div *ngIf="(afterMode ? afterPhotoCollection.length : photoCollection.length) < 5">
         <div>
             <webcam (initError)="handleInitError($event)" [allowCameraSwitch]="false" [trigger]="triggerObservable" (imageCapture)="stashPhoto($event)"></webcam>
         </div>
@@ -10,12 +19,12 @@
     </div>
 
     <div class="row p-2">
-        <div class="col-2 mx-auto cursor-pointer" *ngFor="let photo of photoCollection; index as i;" (click)="openPhotoPopup(photo, i)">
+        <div class="col-2 mx-auto cursor-pointer" *ngFor="let photo of (afterMode ? afterPhotoCollection: photoCollection); index as i;" (click)="openPhotoPopup(photo, i)">
             <img class="img-fluid" [src]="'data:image/jpg;base64, ' + photo.resourceData" />
         </div>
-    </div>
+    </div>     
 
-    <div class="p-2" *ngIf="photoCollection.length > 0">
+    <div class="p-2" *ngIf="(afterMode ? afterPhotoCollection.length : photoCollection.length) > 0">
         <p class="fw-light">Click photos to view or modify</p>
         <button class="btn btn-success" (click)="savePhotos()">Save Photos</button>
     </div>

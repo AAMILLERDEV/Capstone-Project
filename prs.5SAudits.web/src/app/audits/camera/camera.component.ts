@@ -4,6 +4,7 @@ import { WebcamImage, WebcamInitError } from 'ngx-webcam';
 import { Observable, Subject } from 'rxjs';
 import { Resources } from 'src/models/Resources';
 import { ResourcesService } from 'src/services/resource.service';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 
 declare var bootstrap: any;
 
@@ -17,9 +18,15 @@ export class CameraComponent implements OnInit {
   @Input() audit_ID: number | null = null;
   @Input() scoreCategory_ID: number = 0;
   @Input() public photoCollection: Resources[] = [];
+  @Input() public afterPhotoCollection: Resources[] = [];
+  @Input() public editMode: boolean = false;
   
+  public customOptions!: OwlOptions;
+
   openedPhoto: Resources | null = null;
   openedIndex: number = 0;
+
+  afterMode: boolean = false;
 
   public trigger: Subject<void> = new Subject<void>();
 
@@ -30,6 +37,34 @@ export class CameraComponent implements OnInit {
 
   ngOnInit() {
     this.fetchResources();
+
+    if (this.editMode) {
+      this.afterMode = true;
+    }
+
+    // this.customOptions = {
+    //   loop: true,
+    //   mouseDrag: false,
+    //   touchDrag: false,
+    //   pullDrag: false,
+    //   autoWidth: true,
+    //   autoHeight: true,
+    //   dots: false,
+    //   navSpeed: 700,
+    //   navText: [ '<i class="bi bi-arrow-bar-left text-dark"> Previous</i>', '<i class="bi bi-arrow-bar-right text-dark"> Next</i>' ],
+    //   responsive: {
+    //     0: {
+    //       items: 1
+    //     },
+    //     400: {
+    //       items: 2
+    //     },
+    //     740: {
+    //       items: 3
+    //     }
+    //   },
+    //   nav: true
+    // }
   }
 
   public async fetchResources() {
@@ -38,11 +73,18 @@ export class CameraComponent implements OnInit {
       if (x.score_ID == this.scoreCategory_ID) {
         if (!x.isDeleted) {
           x.isNew = false;
-          this.photoCollection.push(x);
+
+          if (x.isAfter) {
+            this.afterPhotoCollection.push(x);
+          }
+          else {
+            this.photoCollection.push(x);
+          }
         }
       }
     }
     console.log(this.photoCollection);
+    console.log(this.afterPhotoCollection);
   }
 
   public handleInitError(error: WebcamInitError){
@@ -60,10 +102,16 @@ export class CameraComponent implements OnInit {
       score_ID: this.scoreCategory_ID,
       resourceData: image.imageAsBase64,
       isDeleted: false,
+      isAfter: this.afterMode,
       isNew: true
     };
-
-    this.photoCollection.push(resource);
+    
+    if (this.afterMode) {
+      this.afterPhotoCollection.push(resource);
+    }
+    else {
+      this.photoCollection.push(resource);
+    }
   }
 
   public triggerSnapshot(): void {
@@ -71,7 +119,9 @@ export class CameraComponent implements OnInit {
   }
 
   public async savePhotos(){
-    for (let x of this.photoCollection){
+    let allPhotos = [...this.photoCollection, ...this.afterPhotoCollection];
+
+    for (let x of allPhotos){
       console.log(x);
       if (x.isNew) {
         x.isNew = false;
@@ -100,13 +150,25 @@ export class CameraComponent implements OnInit {
 
 
   public deletePhoto() {
-    this.resourcesService.deleteResource(this.photoCollection[this.openedIndex].id);
-    this.photoCollection.splice(this.openedIndex, 1);
+
+    if (this.afterMode) {
+      this.resourcesService.deleteResource(this.afterPhotoCollection[this.openedIndex].id);
+      this.afterPhotoCollection.splice(this.openedIndex, 1);
+    }
+
+    else {
+      this.resourcesService.deleteResource(this.photoCollection[this.openedIndex].id);
+      this.photoCollection.splice(this.openedIndex, 1);
+    }
 
     const photoModalTemplate = document.getElementById('photoPopup');
     const photoModal = bootstrap.Modal.getInstance(photoModalTemplate);
 
     photoModal.hide();
+  }
+
+  public swapModes() {
+    this.afterMode = !this.afterMode;
   }
 
 }
