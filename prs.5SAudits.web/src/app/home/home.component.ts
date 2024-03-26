@@ -47,7 +47,6 @@ export class HomeComponent implements OnInit {
     });
 
     this.filteredAudits = this.auditsListing;
-
     this.viewReady = true;
 
   }
