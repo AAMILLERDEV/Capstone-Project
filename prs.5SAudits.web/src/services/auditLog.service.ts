@@ -12,8 +12,8 @@ export class AuditLogService {
 
   }
 
-  public GetAuditLog(){
-    return this.sharedService.get(`AuditLog/GetAuditLog`);
+  public GetAuditLog(employee_ID: number): Promise<AuditLog>{
+    return this.sharedService.get(`AuditLog/GetAuditLog/${employee_ID}`);
   }
 
   public UpsertAuditLog(auditLog: AuditLog){

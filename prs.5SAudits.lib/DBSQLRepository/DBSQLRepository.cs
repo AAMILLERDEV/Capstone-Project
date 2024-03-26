@@ -108,12 +108,12 @@ public class DBSQLRepository : IDBSQLRepository
     }
 
     // DB methods for the AuditLog object
-    public async Task<IEnumerable<AuditLog>> GetAuditLog()
+    public async Task<AuditLog> GetAuditLog(int employee_ID)
     {
         try
         {
             using IDbConnection connection = new SqlConnection(connectionString);
-            return await connection.QueryAsync<AuditLog>("ref.auditLog_GET", commandType: CommandType.StoredProcedure);
+            return await connection.QueryFirstOrDefaultAsync<AuditLog>("ref.auditLog_GET", new { employee_ID }, commandType: CommandType.StoredProcedure);
 
         }
         catch (Exception ex)

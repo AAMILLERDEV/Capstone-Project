@@ -21,8 +21,8 @@ namespace prs_5SAudits.api.Controllers
         
      
         [HttpGet]
-        [Route("[controller]/GetAuditLog")]
-        public Task<IEnumerable<AuditLog>> GetAuditLog() => db.GetAuditLog();
+        [Route("[controller]/GetAuditLog/{employee_ID}")]
+        public Task<AuditLog> GetAuditLog(int employee_ID) => db.GetAuditLog(employee_ID);
         
         [HttpPost]
         [Route("[controller]/UpsertAuditLog")]

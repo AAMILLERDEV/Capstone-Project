@@ -14,7 +14,7 @@
                         <hr class="text-white">
                         <div class="d-flex justify-content-evenly">
                             <button class="btn btn-success" id="newAuditButton" [routerLink]="'/audit/new'">New Audit</button>
-                            <button class="btn btn-warning">Continue Audit</button>
+                            <button class="btn btn-warning" *ngIf="loggedAuditNumber != 0" [routerLink]="'/audit/edit/' + loggedAuditNumber">Continue Audit {{auditNumber}}</button>
                         </div>
                         <hr class="text-white">
                     </div>
@@ -26,7 +26,7 @@
                             <div class="input-group">
                                 <span class="input-group-text">Zone</span>
                                 <div class="form-floating">
-                                <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Zone" formControlName="zoneControl" #zoneValDesktop (keyup)="filterByZone(zoneValDesktop.value)">
+                                <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Zone" formControlName="zoneControl" #zoneValDesktop (keyup)="recordSearch('zoneName', zoneValDesktop.value)">
                                 <label for="floatingInputGroup1">Search Here...</label>
                                 </div>
                             </div>
@@ -36,7 +36,7 @@
                             <div class="input-group">
                                 <span class="input-group-text">Audit Number</span>
                                 <div class="form-floating">
-                                <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Audit Number" formControlName="auditNumberControl" #auditNumValDesktop (keyup)="filterByAuditNumber(auditNumValDesktop.value)">
+                                <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Audit Number" formControlName="auditNumberControl" #auditNumValDesktop (keyup)="recordSearch('auditNumber', auditNumValDesktop.value)">
                                 <label for="floatingInputGroup1">Search Here...</label>
                                 </div>
                             </div>
@@ -46,7 +46,7 @@
                             <div class="input-group">
                                 <span class="input-group-text">Zone Category</span>
                                 <div class="form-floating">
-                                <input type="text" class="form-control" id="floatingInputGroup1" formControlName="zoneCategoryControl" placeholder="Zone" #zoneCategoryValDesktop (keyup)="filterByZoneCategory(zoneCategoryValDesktop.value)">
+                                <input type="text" class="form-control" id="floatingInputGroup1" formControlName="zoneCategoryControl" placeholder="Zone" #zoneCategoryValDesktop (keyup)="recordSearch('zoneCategoryName', zoneCategoryValDesktop.value)">
                                 <label for="floatingInputGroup1">Search Here...</label>
                                 </div>
                             </div>
@@ -54,9 +54,9 @@
                             <hr class="text-white">
                                 
                             <div class="input-group">
-                                <span class="input-group-text">Audit Status</span>
+                                <span class="input-group-text">Audit Status</span> 
                                 <div class="form-floating">
-                                <select class="form-select for-select-lg" id="zoneCategory" formControlName="auditStatusControl" #auditStatusVal (change)="filterByAuditStatus(auditStatusVal.value)">
+                                <select class="form-select for-select-lg" id="zoneCategory" formControlName="auditStatusControl" #auditStatusVal (change)="recordSearch('auditStatus_ID', auditStatusVal.value)">
                                     <option selected [value]="" disabled>Select a Zone Category</option>
                                     <option *ngFor="let status of auditStatuses; index as i" [value]="status.id">{{status.statusName}}</option>
                                 </select>

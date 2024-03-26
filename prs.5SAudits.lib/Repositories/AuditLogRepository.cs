@@ -13,7 +13,7 @@ namespace prs_5SAudits.lib.Repositories
             db = new DBSQLRepository(options.CurrentValue.DbConn);
         }
         
-        public Task<IEnumerable<AuditLog>> GetAuditLog() => db.GetAuditLog();
+        public Task<AuditLog> GetAuditLog(int employee_ID) => db.GetAuditLog(employee_ID);
         public Task<int?> UpsertAuditLog(AuditLog audits) => db.UpsertAuditLog(audits);
     }
 }

@@ -15,7 +15,7 @@
         public Task<int?> UpsertActions(Actions actions);
 
         //AuditLog Methods
-        public Task<IEnumerable<AuditLog>> GetAuditLog();
+        public Task<AuditLog> GetAuditLog(int employee_ID);
         public Task<int?> UpsertAuditLog(AuditLog auditLog);
         public Task<bool> DeleteAudit(int id);
 

@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { clearAuditForm, clearScoreForm, setFormForEditAudit } from 'src/app/sharedUtils';
 import { AuditForm } from 'src/form-models/AuditForm';
+import { AuditLog } from 'src/models/AuditLog';
 import { Audits } from 'src/models/Audits';
 import { CheckItem } from 'src/models/CheckItem';
 import { Resources } from 'src/models/Resources';
@@ -11,6 +12,7 @@ import { ScoringCategories } from 'src/models/ScoringCategories';
 import { ScoringCriteria } from 'src/models/ScoringCriteria';
 import { ZoneCategories } from 'src/models/ZoneCategories';
 import { Zones } from 'src/models/Zones';
+import { AuditLogService } from 'src/services/auditLog.service';
 import { AuditService } from 'src/services/audits.service';
 import { CheckItemService } from 'src/services/checkItem.service';
 import { ResourcesService } from 'src/services/resource.service';
@@ -47,7 +49,8 @@ export class EditAuditFormComponent implements OnInit {
     private auditService: AuditService,
     private scoringCriteriaService: ScoringCriteriaService,
     private scoreService: ScoresService,
-    private resourcesService: ResourcesService){
+    private resourcesService: ResourcesService,
+    private auditLogService: AuditLogService){
     this.auditForm = AuditForm;
   }
   
@@ -80,6 +83,9 @@ export class EditAuditFormComponent implements OnInit {
     })
 
     this.scoringCriteria = await this.scoringCriteriaService.GetScoringCriteria();
+
+    let log = {employee_ID: 999, id: 0, previousAudit_ID: id};
+    await this.auditLogService.UpsertAuditLog(log)
 
   }
 
