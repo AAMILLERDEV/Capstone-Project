@@ -56,7 +56,6 @@ export class DatatableComponent implements OnInit {
 
   private manageSelectionStyle(res: number, remove: boolean){
     let row = document.getElementById(res.toString())!
-    console.log(row);
     if (remove){
       row.classList.remove("table-active")
       return
@@ -79,6 +78,7 @@ export class DatatableComponent implements OnInit {
     this.selectedRow = row
     this.selectedRowIndex = index;
     this.manageSelectionStyle(index, false)
+    this.emitRecord(this.selectedRow)
   }
 
   public emitRecord(selectedRow: any){

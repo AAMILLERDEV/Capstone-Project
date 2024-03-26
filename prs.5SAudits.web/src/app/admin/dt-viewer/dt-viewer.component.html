@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="col-10 ps-1">
-          <app-datatable *ngIf="dtReady" [tableData]="tableData" (emitRecord)="dbRecordHandler($event)"></app-datatable>
+          <app-datatable *ngIf="dtReady" [tableData]="tableData" (recordSelected)="dbRecordHandler($event)"></app-datatable>
         </div>
     </div>
 </div>

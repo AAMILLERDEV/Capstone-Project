@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Audits } from 'src/models/Audits';
 import { AuditService } from 'src/services/audits.service';
 import { EventLogsService } from 'src/services/eventLogs.service';
 import { ZoneCategoriesService } from 'src/services/zoneCategories.service';
@@ -86,9 +87,7 @@ export class DtViewerComponent implements OnInit {
   }
 
   public dbRecordHandler(record: any){
-    if (record){
-      console.log(record)
-    }
+
   }
 
 
