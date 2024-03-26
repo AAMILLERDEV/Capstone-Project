@@ -1,25 +1,33 @@
 <div style="overflow-x: hidden;">
     <app-navbar></app-navbar>
-    
-   <div class="d-flex">
-    <div class="bg-dark col-2 text-white" [style.height]="'75vh'">
-        <div class="text-center display-6 fst-italic p-2">
-          Table Menu
+    <div class="d-flex">
+      <div class="bg-dark col-2 text-white rounded-3 ms-2" [style.height]="'75vh'">
+          <div class="text-center display-6 fst-italic p-2">
+            Table Menu
+          </div>
+          <hr>
+          <div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item bg-dark"><a [href]="'admin/data/audits'" class="text-white text-decoration-none">Audits</a></li>
+              <li class="list-group-item bg-dark"><a [href]="'admin/data/zones'" class="text-white text-decoration-none">Zones</a></li>
+              <li class="list-group-item bg-dark"><a [href]="'admin/data/zoneCategories'" class="text-white text-decoration-none">Zone Categories</a></li>
+              <li class="list-group-item bg-dark"><a [href]="'admin/data/systemEvents'" class="text-white text-decoration-none">System Events</a></li>
+            </ul>
+          </div>
+          <hr>
+          <div class="text-center display-6 fst-italic fs-5 p-2">
+            Record Functions Menu
+          </div>
+          <div class="p-3">
+            <ul class="list-group list-group-flush text-center">
+              <li class="list-group-item bg-dark" *ngIf="allowAdd"><button class="btn btn-outline-success">Add Record</button></li>
+              <li class="list-group-item bg-dark" *ngIf="allowEdit"><button class="btn btn-outline-primary">Edit Record</button></li>
+              <li class="list-group-item bg-dark" *ngIf="allowDelete"><button class="btn btn-outline-danger">Delete Record</button></li>
+            </ul>
+          </div>
         </div>
-        <hr>
-        <div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item bg-dark"><a [href]="'admin/data/audits'" class="text-white text-decoration-none">Audits</a></li>
-            <li class="list-group-item bg-dark"><a [href]="'admin/data/zones'" class="text-white text-decoration-none">Zones</a></li>
-            <li class="list-group-item bg-dark"><a [href]="'admin/data/zoneCategories'" class="text-white text-decoration-none">Zone Categories</a></li>
-          </ul>
+        <div class="col-10 ps-1">
+          <app-datatable *ngIf="dtReady" [tableData]="tableData" (emitRecord)="dbRecordHandler($event)"></app-datatable>
         </div>
-        <hr>
-      </div>
-      <div class="col-10 ps-1">
-        <app-datatable *ngIf="dtReady" [tableData]="tableData"></app-datatable>
-      </div>
-
-   </div>
-
+    </div>
 </div>

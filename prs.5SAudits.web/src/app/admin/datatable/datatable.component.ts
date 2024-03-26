@@ -1,5 +1,5 @@
 import { KeyValuePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-datatable',
@@ -18,6 +18,12 @@ export class DatatableComponent implements OnInit {
   public currentPage: number = 1;
   public itemsPerPage: number = 25;
   public pageList: number[] = [];
+  public filterList: string[][] = [];
+
+  public selectedRow?: any = null;
+  public selectedRowIndex: number | null = null;
+
+  @Output() recordSelected: EventEmitter<any> = new EventEmitter();
 
   constructor() {
 
@@ -48,19 +54,61 @@ export class DatatableComponent implements OnInit {
     }
   }
 
-  recordSearch(col: string, val: string){
-    this.dtData = this.tableData.filter(x => x[col].toString().includes(val.toLowerCase()));
+  private manageSelectionStyle(res: number, remove: boolean){
+    let row = document.getElementById(res.toString())!
+    console.log(row);
+    if (remove){
+      row.classList.remove("table-active")
+      return
+    }
+    row.classList.add("table-active")
+  }
 
-    if (this.dtData.length == 0){
-      this.dtData = [{ Loading: "No results found" }];
+  public selectRow(row: any, index: number){
+    if (this.selectedRow == null){
+      this.selectedRow = row
+      this.selectedRowIndex = index
+    } else if (this.selectedRow == row){
+      this.manageSelectionStyle(this.selectedRowIndex as number, true)
+      this.selectedRow = null
+      this.selectedRowIndex = null
+      return;
     }
 
-    if (val == ""){
+    this.manageSelectionStyle(this.selectedRowIndex as number, true)
+    this.selectedRow = row
+    this.selectedRowIndex = index;
+    this.manageSelectionStyle(index, false)
+  }
+
+  public emitRecord(selectedRow: any){
+    this.recordSelected.emit(selectedRow)
+  }
+
+  public recordSearch(col: string, val: string){
+    this.dtData = [...this.tableData];
+
+    if (this.filterList.find(x => x[0] == col) == null){
+      this.filterList.push([col, val])
+    } else {
+      let i = this.filterList.findIndex(x => x[0] == col)
+      this.filterList[i] = [col, val]
+    }
+
+    for (let x of this.filterList){
+      this.dtData = this.dtData.filter(y => (y[x[0]].toString()).toLowerCase().includes((x[1] as string).toLowerCase()))
+    }
+
+    if (this.dtData.length == 0){
+      this.dtData = [{ Loading: "No results found" }]
+    }
+
+    if (val == "" && !this.filterList.length){
       this.onPageChange(this.currentPage)
     }
   }
 
-   addSpaceBetweenLetters(str: string): string {
+  private addSpaceBetweenLetters(str: string): string {
     return str.replace(/([a-z])([A-Z])/g, '$1 $2');
   }
 

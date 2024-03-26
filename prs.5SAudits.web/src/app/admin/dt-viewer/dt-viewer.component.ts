@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AuditService } from 'src/services/audits.service';
+import { EventLogsService } from 'src/services/eventLogs.service';
 import { ZoneCategoriesService } from 'src/services/zoneCategories.service';
 import { ZonesService } from 'src/services/zones.service';
 
@@ -15,10 +16,15 @@ export class DtViewerComponent implements OnInit {
 
   public dtReady: boolean = false; 
 
+  public allowDelete: boolean = false;
+  public allowEdit: boolean = false;
+  public allowAdd: boolean = false;
+
   constructor(private activatedRoute: ActivatedRoute,
     private auditService: AuditService,
     private zoneService: ZonesService,
-    private zoneCategoryService: ZoneCategoriesService) {
+    private zoneCategoryService: ZoneCategoriesService,
+    private eventLogService: EventLogsService) {
 
   }
 
@@ -46,16 +52,28 @@ export class DtViewerComponent implements OnInit {
     switch(route) {
       case "audits": {
         this.tableData = await this.auditService.GetAudits()
+        this.allowDelete = true
         this.dtReady = true
         break;
       }
       case "zones": {
         this.tableData = await this.zoneService.GetZones()
+        this.allowDelete = true
+        this.allowAdd = true;
+        this.allowEdit = true;
         this.dtReady = true
         break;
       }
       case "zoneCategories": {
         this.tableData = await this.zoneCategoryService.GetZoneCategories()
+        this.allowDelete = true
+        this.allowAdd = true;
+        this.allowEdit = true;
+        this.dtReady = true
+        break;
+      }
+      case "systemEvents": {
+        this.tableData = await this.eventLogService.getEventLogs()
         this.dtReady = true
         break;
       }
@@ -64,6 +82,12 @@ export class DtViewerComponent implements OnInit {
         this.dtReady = true
         break;
       }
+    }
+  }
+
+  public dbRecordHandler(record: any){
+    if (record){
+      console.log(record)
     }
   }
 
