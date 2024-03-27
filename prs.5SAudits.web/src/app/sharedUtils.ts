@@ -32,4 +32,5 @@ export function setFormForEditAudit(formGroup: FormGroup){
     formGroup.controls['employeeNameControl'].disable();
     formGroup.controls['zoneControl'].disable();
     formGroup.controls['zoneCategoryControl'].disable();
+    formGroup.controls['totalScoreControl'].disable();
 }

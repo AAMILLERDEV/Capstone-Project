@@ -44,6 +44,14 @@
             Zone is Required
           </div>
         </div>
+        <!--Total Score-->
+        <div *ngIf="editMode" class="input-group p-3">
+          <span class="input-group-text">Total Score</span>
+          <div class="form-floating">
+            <input type="text" class="form-control" id="totalScore" formControlName="totalScoreControl">
+          </div>
+        </div>
+
       <div class="text-center">
         <button class="btn btn-primary" *ngIf="!editMode" (click)="startAudit()">Start Audit</button>
         <button class="btn btn-primary" *ngIf="editMode" (click)="proceedToScores()">Proceed</button>

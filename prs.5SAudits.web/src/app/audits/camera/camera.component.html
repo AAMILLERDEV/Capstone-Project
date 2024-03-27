@@ -18,11 +18,23 @@
         </div>
     </div>
 
-    <div class="row p-2">
-        <div class="col-2 mx-auto cursor-pointer" *ngFor="let photo of (afterMode ? afterPhotoCollection: photoCollection); index as i;" (click)="openPhotoPopup(photo, i)">
-            <img class="img-fluid" [src]="'data:image/jpg;base64, ' + photo.resourceData" />
-        </div>
-    </div>     
+    <!-- Carousel --> 
+    <div class="container w-75 p-2">
+        <owl-carousel-o [options]="customOptions">
+
+            <ng-container *ngFor="let slide of (afterMode ? afterPhotoCollection: photoCollection); index as i;">
+            <ng-template carouselSlide [id]="slide.id.toString()">
+                <div style="margin-bottom: 1em; padding: 10px" >
+                    <div (click)="openPhotoPopup(slide, i)">
+                        <img class="img-small" style="border-radius: 10px; border: 1px solid black; max-width: 250px;" [src]="'data:image/jpg;base64, ' + slide.resourceData">
+                    </div>
+                </div>
+            </ng-template>
+            </ng-container>
+        
+        </owl-carousel-o>
+    </div>
+
 
     <div class="p-2" *ngIf="(afterMode ? afterPhotoCollection.length : photoCollection.length) > 0">
         <p class="fw-light">Click photos to view or modify</p>

@@ -42,29 +42,29 @@ export class CameraComponent implements OnInit {
       this.afterMode = true;
     }
 
-    // this.customOptions = {
-    //   loop: true,
-    //   mouseDrag: false,
-    //   touchDrag: false,
-    //   pullDrag: false,
-    //   autoWidth: true,
-    //   autoHeight: true,
-    //   dots: false,
-    //   navSpeed: 700,
-    //   navText: [ '<i class="bi bi-arrow-bar-left text-dark"> Previous</i>', '<i class="bi bi-arrow-bar-right text-dark"> Next</i>' ],
-    //   responsive: {
-    //     0: {
-    //       items: 1
-    //     },
-    //     400: {
-    //       items: 2
-    //     },
-    //     740: {
-    //       items: 3
-    //     }
-    //   },
-    //   nav: true
-    // }
+    this.customOptions = {
+      loop: true,
+      mouseDrag: false,
+      touchDrag: false,
+      pullDrag: false,
+      autoWidth: true,
+      autoHeight: true,
+      dots: true,
+      navSpeed: 700,
+      navText: [ '<i class="btn bi bi-arrow-bar-left text-dark"> Previous</i>', '<i class="btn bi bi-arrow-bar-right text-dark"> Next</i>' ],
+      responsive: {
+        0: {
+          items: 1
+        },
+        400: {
+          items: 2
+        },
+        740: {
+          items: 3
+        }
+      },
+      nav: true
+    }
   }
 
   public async fetchResources() {

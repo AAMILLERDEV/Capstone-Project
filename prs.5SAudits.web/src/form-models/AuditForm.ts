@@ -9,7 +9,8 @@ export const AuditForm = new FormGroup ({
   scoreControl: new FormControl(),
   targetScoreControl: new FormControl(),
   employeeNameControl: new FormControl(),
-  commentsControl: new FormControl()
+  commentsControl: new FormControl(),
+  totalScoreControl: new FormControl()
 })
 
 
