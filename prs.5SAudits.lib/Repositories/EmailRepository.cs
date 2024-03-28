@@ -30,6 +30,12 @@ public class EmailRepository : IEmails
 
             message.To.Add("amiller8096@conestogac.on.ca, qgardin2932@conestogac.on.ca, bpower0195@conestogac.on.ca, jdelahunty5276@conestogac.on.ca");
 
+            var eventLog = new {
+                DateTime = DateTime.Now,
+                EventLogType = 2,
+                
+            };
+
             return await SendMail(message);
 
         }
