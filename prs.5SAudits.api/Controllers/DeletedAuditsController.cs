@@ -15,16 +15,12 @@ namespace prs_5SAudits.api.Controllers
 			this.db = db;
 		}
 
-
-
-
-
 		[HttpGet]
 		[Route("[controller]/GetDeletedAudits")]
 		public Task<IEnumerable<DeletedAudits>> GetDeletedAudits() => db.GetDeletedAudits();
 
 		[HttpPost]
-		[Route("[controller]/InsertEventLogs")]
+		[Route("[controller]/InsertDeletedAudit")]
 		public Task<int?> InsertDeletedAudits(DeletedAudits deletedAudits) => db.InsertDeletedAudits(deletedAudits);	
 	}
 }

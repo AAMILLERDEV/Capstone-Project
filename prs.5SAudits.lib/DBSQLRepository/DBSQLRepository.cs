@@ -414,8 +414,9 @@ public class DBSQLRepository : IDBSQLRepository
         var parameters = new DynamicParameters(new Dictionary<string, object>
         {
             { "@id", ins.ID },
-            { "@departmentName", ins.ZoneName },
-            { "@zoneCategory_ID", ins.ZoneCategory_ID }
+            { "@zoneName", ins.ZoneName },
+            { "@zoneCategory_ID", ins.ZoneCategory_ID },
+            { "@isDeleted", ins.IsDeleted }
         });
 
         parameters.Add("@insertedID", 0, direction: ParameterDirection.Output);
@@ -641,7 +642,8 @@ public class DBSQLRepository : IDBSQLRepository
         var parameters = new DynamicParameters(new Dictionary<string, object>
         {
             { "@id", ins.ID },
-            { "@description", ins.Description }
+            { "@description", ins.Description },
+            { "@isDeleted", false }
         });
 
         parameters.Add("@insertedID", 0, direction: ParameterDirection.Output);
