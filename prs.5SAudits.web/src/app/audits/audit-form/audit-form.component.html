@@ -98,11 +98,11 @@
                     </div>
                     <!--Score-->
                     <div class="input-group has-validation p-2">
+                        <span class="input-group-text">Score</span>
                         <div class="form-floating is-invalid">
                           <select class="form-select form-select-lg" [class]="val.value == null ? 'is-invalid' : ''" id="score" #val id="scoreSelection" (change)="removeSelectionStyle(val.id)"  formControlName="scoreControl" required>
                             <option *ngFor="let num of numberArray" selected [value]="num">{{num}}</option>
                           </select>
-                          <label for="auditScore p-2">Score</label>
                         </div>
                         <div class="invalid-feedback" *ngIf="val.classList.contains('is-invalid')">
                           Score is Required
@@ -114,6 +114,9 @@
                     </div>
                 </div>
                 <div>
+                  <div class="float-start mt-2" *ngIf="index == 0">
+                    <button class="btn btn-outline-primary" id="btnAuditForm" (click)="returnToMainForm()">Back to Audit Form</button>
+                  </div>
                   <div class="float-start mt-2" *ngIf="index > 0">
                     <button class="btn btn-primary" id="btnPrevious" (click)="collectionManager(true)">Previous</button>
                   </div>

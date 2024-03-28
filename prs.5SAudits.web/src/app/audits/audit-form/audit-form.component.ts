@@ -186,6 +186,11 @@ export class AuditFormComponent implements OnInit {
     this.formReady = true;
   }
 
+  public returnToMainForm(){
+    this.auditStarted = true;
+    this.formReady = false;
+  }
+
   //Simple audit score submission, notifier and navigator
   public async submitAudit() {
     await this.saveScores();
