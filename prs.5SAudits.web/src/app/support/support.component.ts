@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { SupportForm } from 'src/form-models/SupportForm';
 import { Email } from 'src/models/Email';
 import { EmailService } from 'src/services/email.service';
+import { EventLogsService } from 'src/services/eventLogs.service';
 
 @Component({
   selector: 'app-support',
@@ -17,7 +18,8 @@ export class SupportComponent {
   public requestInProgress: boolean = false;
 
   constructor(private toastr: ToastrService,
-    private emailService: EmailService){
+    private emailService: EmailService,
+    private eventLogService: EventLogsService){
     this.supportForm = SupportForm;
   }
 
@@ -37,6 +39,7 @@ export class SupportComponent {
 
     if (res){
       this.toastr.success("Success, email has been sent to IT")
+      await this.eventLogService.insertEmailEventLog(email);
       this.supportForm.reset();
     }
 
