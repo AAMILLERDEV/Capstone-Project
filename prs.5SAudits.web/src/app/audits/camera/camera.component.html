@@ -1,20 +1,31 @@
 <ng-container>
     <div *ngIf="editMode">
-        <h1>{{afterMode ? "After Photos" : "Before Photos"}}</h1>
-        <button *ngIf="editMode" class="btn btn-secondary m-2" (click)="swapModes()">Swap Mode</button>
+        <ul class="nav nav-tabs">
+            <li class="nav-item w-50">
+                <a class="nav-link href=#" [class.active]="!afterMode" (click)="swapModes()">Before Photos</a>
+            </li>
+            <li class="nav-item w-50">
+                <a class="nav-link href=#" [class.active]="afterMode" (click)="swapModes()">After Photos</a>
+            </li>
+        </ul>
     </div>
 
+        
     <h1 *ngIf="!editMode">
-        <h1>Before Photos</h1>
+       <h1>Before Photos</h1>
     </h1>
-    
-    <div *ngIf="(afterMode ? afterPhotoCollection.length : photoCollection.length) < 5">
-        <div>
-            <webcam (initError)="handleInitError($event)" [allowCameraSwitch]="false" [trigger]="triggerObservable" (imageCapture)="stashPhoto($event)"></webcam>
-        </div>
 
-        <div class="p-2" >
-            <button class="btn btn-success" (click)="triggerSnapshot()">Take Photo</button>
+    <div style="border: 1px solid lightgray; border-radius: 0px 0px 10px 10px;">
+        
+        <div *ngIf="(afterMode ? afterPhotoCollection.length : photoCollection.length) < 5">
+            <div>
+                <webcam (initError)="handleInitError($event)" [allowCameraSwitch]="false"
+                [trigger]="triggerObservable" (imageCapture)="stashPhoto($event)"></webcam>
+            </div>
+
+            <div class="p-2" >
+                <button class="btn btn-success" (click)="triggerSnapshot()">Take Photo</button>
+            </div>
         </div>
     </div>
 
@@ -26,7 +37,7 @@
             <ng-template carouselSlide [id]="slide.id.toString()">
                 <div style="margin-bottom: 1em; padding: 10px" >
                     <div (click)="openPhotoPopup(slide, i)">
-                        <img class="img-small" style="border-radius: 10px; border: 1px solid black; max-width: 250px;" [src]="'data:image/jpg;base64, ' + slide.resourceData">
+                        <img class="img-small" style="border-radius: 10px; border: 1px solid black; max-width: 200px;" [src]="'data:image/jpg;base64, ' + slide.resourceData">
                     </div>
                 </div>
             </ng-template>
