@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SharedService } from './shared.service';
 import { Audits } from 'src/models/Audits';
+import { DeletedAudit } from 'src/models/DeletedAudits';
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +29,16 @@ export class AuditService {
     return this.sharedService.get(`Audits/GetAuditNumber`);
   }
 
+  public GetDeletedAudits(): Promise<DeletedAudit[]> {
+    return this.sharedService.get(`DeletedAudits/GetDeletedAudits`);
+  }
+
   public SetAuditNumber(value: number){
     return this.sharedService.upsert(`Audits/SetAuditNumber/${value}`, null);
+  }
+
+  public DeleteAudit(audit: DeletedAudit){
+    return this.sharedService.upsert(`DeletedAudits/InsertDeletedAudit`, audit)
   }
   
 }

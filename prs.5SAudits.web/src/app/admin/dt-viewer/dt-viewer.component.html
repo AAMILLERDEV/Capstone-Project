@@ -12,17 +12,19 @@
               <li class="list-group-item bg-dark"><a [href]="'admin/data/zones'" class="text-white text-decoration-none">Zones</a></li>
               <li class="list-group-item bg-dark"><a [href]="'admin/data/zoneCategories'" class="text-white text-decoration-none">Zone Categories</a></li>
               <li class="list-group-item bg-dark"><a [href]="'admin/data/systemEvents'" class="text-white text-decoration-none">System Events</a></li>
+              <li class="list-group-item bg-dark"><a [href]="'admin/data/scoringCriteria'" class="text-white text-decoration-none">Scoring Criteria</a></li>
+              <li class="list-group-item bg-dark"><a [href]="'admin/data/deletedAudits'" class="text-white text-decoration-none">Deleted Audits</a></li>
             </ul>
           </div>
           <hr>
-          <div class="text-center display-6 fst-italic fs-5 p-2">
+          <div class="text-center display-6 fst-italic fs-5 p-2" *ngIf="allowEdit || allowAdd || allowDelete">
             Record Functions Menu
           </div>
           <div class="p-3">
             <ul class="list-group list-group-flush text-center">
-              <li class="list-group-item bg-dark" *ngIf="allowAdd"><button class="btn btn-outline-success">Add Record</button></li>
-              <li class="list-group-item bg-dark" *ngIf="allowEdit"><button class="btn btn-outline-primary">Edit Record</button></li>
-              <li class="list-group-item bg-dark" *ngIf="allowDelete"><button class="btn btn-outline-danger">Delete Record</button></li>
+              <li class="list-group-item bg-dark" *ngIf="allowAdd" (click)="openModal(false)"><button class="btn btn-outline-success">Add Record</button></li>
+              <li class="list-group-item bg-dark" *ngIf="allowEdit"><button class="btn btn-outline-primary" (click)="openModal(true)">Edit Record</button></li>
+              <li class="list-group-item bg-dark" *ngIf="allowDelete" (click)="openDeleteModal()"><button class="btn btn-outline-danger">Delete Record</button></li>
             </ul>
           </div>
         </div>
@@ -30,4 +32,122 @@
           <app-datatable *ngIf="dtReady" [tableData]="tableData" (recordSelected)="dbRecordHandler($event)"></app-datatable>
         </div>
     </div>
+</div>
+
+<!--The Delete Modal-->
+<div class="modal fade" #deleteModal id="deleteModal" data-bs-backdrop="static" tabindex="-1" >
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Record</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModals()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex justify-content-evenly">
+          <p>Please confirm you'd like to delete the {{tableKey[0]}} record<span *ngIf="selectedRecord != undefined" class="ps-1"> with an ID of {{selectedRecord.id}}</span></p>
+        </div>
+        <div *ngIf="tableKey[0] == 'Audit'" [formGroup]="deletionForm">
+          <div class="input-group p-3">
+            <span class="input-group-text">Deletion Reason (required)</span>
+            <div class="form-floating">
+              <input type="text" class="form-control" formControlName="reasonControl" required>
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <button class="btn btn-danger" (click)="deleteRecord()">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--The Zone Modal-->
+<div class="modal fade" #zonesModal id="zonesModal" data-bs-backdrop="static" tabindex="-1" >
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add or Update New Zone</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModals()"></button>
+      </div>
+      <div class="modal-body">
+        <div [formGroup]="zoneForm">
+          <div class="input-group p-3">
+            <span class="input-group-text">Zone Name</span>
+            <div class="form-floating">
+              <input type="text" class="form-control" formControlName="zoneNameControl" required>
+            </div>
+          </div>
+          <div class="input-group p-3">
+            <span class="input-group-text">Zone Category</span>
+            <div class="form-floating is-invalid">
+              <select class="form-select for-select-lg" id="zoneCategory" #zoneCategoryVal formControlName="zoneCategoryControl" required>
+                <option selected [value]="" disabled>Select a Zone Category</option>
+                <option *ngFor="let category of zoneCategories; index as i" [value]="category.id">{{category.categoryName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <button class="btn btn-danger" (click)="upsertRecord(true)">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--The Zone Categories Modal-->
+<div class="modal fade" #zoneCategoriesModal id="zoneCategoriesModal" data-bs-backdrop="static" tabindex="-1" >
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add or Update New Zone Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModals()"></button>
+      </div>
+      <div class="modal-body">
+        <div [formGroup]="zoneCategoryForm">
+          <div class="input-group p-3">
+            <span class="input-group-text">Zone Category Name</span>
+            <div class="form-floating">
+              <input type="text" class="form-control" formControlName="categoryNameControl" required>
+            </div>
+          </div>
+          <div class="input-group p-3">
+            <span class="input-group-text">Target</span>
+            <div class="form-floating">
+              <input type="number" class="form-control" formControlName="targetControl" required>
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <button class="btn btn-danger" (click)="upsertRecord(true)">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--The Scoring Criteria Modal-->
+<div class="modal fade" #scoringCriteriaModal id="scoringCriteriaModal" data-bs-backdrop="static" tabindex="-1" >
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Socring Criteria</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModals()"></button>
+      </div>
+      <div class="modal-body">
+        <div [formGroup]="scoringCriteriaForm">
+          <div class="input-group p-3">
+            <span class="input-group-text">Description</span>
+            <div class="form-floating">
+              <input type="text" class="form-control" formControlName="descriptionControl" required>
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <button class="btn btn-danger" (click)="upsertRecord(true)">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

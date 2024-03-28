@@ -22,4 +22,10 @@
 .table-active {
     --bs-table-bg-state: #216394;
 }
+
+@media all and (max-width:769px) {
+   body {
+    background-color: #212529;
+   }
+}
   

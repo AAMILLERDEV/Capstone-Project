@@ -71,6 +71,7 @@ export class DatatableComponent implements OnInit {
       this.manageSelectionStyle(this.selectedRowIndex as number, true)
       this.selectedRow = null
       this.selectedRowIndex = null
+      this.emitRecord(undefined)
       return;
     }
 
