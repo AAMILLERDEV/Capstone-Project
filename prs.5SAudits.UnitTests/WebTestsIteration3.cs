@@ -5,7 +5,7 @@ using Xunit;
 
 namespace prs._5SAudits.UnitTests
 {
-    public class WebTestsIteration3 : IDisposable
+    public class WebTestsIteration3
     {
         public IWebDriver driver { get; private set; }
         public IDictionary<String, Object> Vars { get; private set; }
@@ -89,7 +89,203 @@ namespace prs._5SAudits.UnitTests
                 var dropdown = driver.FindElement(By.Id("scoreSelection"));
                 dropdown.FindElement(By.XPath("//option[. = '3']")).Click();
             }
-            
+
+            Thread.Sleep(timerLength);
+
+            driver.FindElement(By.Id("btnNext")).Click();
+
+            Thread.Sleep(timerLength);
+
+
+            driver.FindElement(By.Id("btnPrevious")).Click();
+            {
+                String value = driver.FindElement(By.Id("scoreSelection")).GetAttribute("value");
+                Assert.Equal(value, "3");
+            }
+        }
+
+        [Fact]
+        public void FilteringAndSortingAudits_TestThree()
+        {
+            driver.Navigate().GoToUrl("http://localhost:4200/home");
+            driver.Manage().Window.Size = new System.Drawing.Size(1936, 1066);
+
+            Thread.Sleep(timerLength);
+
+            driver.FindElement(By.CssSelector(".input-group:nth-child(2) #floatingInputGroup1")).Click();
+            driver.FindElement(By.CssSelector(".input-group:nth-child(2) #floatingInputGroup1")).SendKeys("1");
+
+            Thread.Sleep(timerLength);
+
+
+            driver.FindElement(By.LinkText("Edit")).Click();
+            driver.FindElement(By.CssSelector(".btn")).Click();
+            {
+                var element = driver.FindElement(By.CssSelector(".btn"));
+                Actions builder = new Actions(driver);
+                builder.MoveToElement(element).Perform();
+            }
+
+            Thread.Sleep(timerLength);
+
+            driver.FindElement(By.Id("scoreSelection")).Click();
+            {
+                var dropdown = driver.FindElement(By.Id("scoreSelection"));
+                dropdown.FindElement(By.XPath("//option[. = '3']")).Click();
+            }
+
+            Thread.Sleep(timerLength);
+
+            driver.FindElement(By.Id("btnNext")).Click();
+
+            Thread.Sleep(timerLength);
+
+
+            driver.FindElement(By.Id("btnPrevious")).Click();
+            {
+                String value = driver.FindElement(By.Id("scoreSelection")).GetAttribute("value");
+                Assert.Equal(value, "3");
+            }
+        }
+
+        [Fact]
+        public void AddingPhotosCheckItem_TestFour()
+        {
+
+            driver.Navigate().GoToUrl("http://localhost:4200/");
+            driver.Manage().Window.Size = new System.Drawing.Size(1450, 1050);
+
+            Thread.Sleep(timerLength);
+
+            driver.FindElement(By.Id("newAuditButton")).Click();
+
+            driver.Navigate().GoToUrl("http://localhost:4200/home");
+            driver.Manage().Window.Size = new System.Drawing.Size(1936, 1066);
+
+            Thread.Sleep(timerLength);
+
+            driver.FindElement(By.CssSelector(".input-group:nth-child(2) #floatingInputGroup1")).Click();
+            driver.FindElement(By.CssSelector(".input-group:nth-child(2) #floatingInputGroup1")).SendKeys("1");
+
+            Thread.Sleep(timerLength);
+
+
+            driver.FindElement(By.LinkText("Edit")).Click();
+            driver.FindElement(By.CssSelector(".btn")).Click();
+            {
+                var element = driver.FindElement(By.CssSelector(".btn"));
+                Actions builder = new Actions(driver);
+                builder.MoveToElement(element).Perform();
+            }
+
+            Thread.Sleep(timerLength);
+
+            driver.FindElement(By.Id("scoreSelection")).Click();
+            {
+                var dropdown = driver.FindElement(By.Id("scoreSelection"));
+                dropdown.FindElement(By.XPath("//option[. = '3']")).Click();
+            }
+
+            Thread.Sleep(timerLength);
+
+            driver.FindElement(By.Id("btnNext")).Click();
+
+            Thread.Sleep(timerLength);
+
+
+            driver.FindElement(By.Id("btnPrevious")).Click();
+            {
+                String value = driver.FindElement(By.Id("scoreSelection")).GetAttribute("value");
+                Assert.Equal(value, "3");
+            }
+        }
+
+        [Fact]
+        public void DeletingAnAudit_TestFive()
+        {
+            driver.Navigate().GoToUrl("http://localhost:4200/home");
+            driver.Manage().Window.Size = new System.Drawing.Size(1936, 1066);
+
+            Thread.Sleep(timerLength);
+
+            driver.FindElement(By.CssSelector(".input-group:nth-child(2) #floatingInputGroup1")).Click();
+            driver.FindElement(By.CssSelector(".input-group:nth-child(2) #floatingInputGroup1")).SendKeys("1");
+
+            Thread.Sleep(timerLength);
+
+
+            driver.FindElement(By.LinkText("Edit")).Click();
+            driver.FindElement(By.CssSelector(".btn")).Click();
+            {
+                var element = driver.FindElement(By.CssSelector(".btn"));
+                Actions builder = new Actions(driver);
+                builder.MoveToElement(element).Perform();
+            }
+
+            Thread.Sleep(timerLength);
+
+            driver.FindElement(By.Id("scoreSelection")).Click();
+            {
+                var dropdown = driver.FindElement(By.Id("scoreSelection"));
+                dropdown.FindElement(By.XPath("//option[. = '3']")).Click();
+            }
+
+        }
+
+        [Fact]
+        public void AddingAuditStatus_TestSix()
+        {
+
+            driver.FindElement(By.LinkText("Edit")).Click();
+            driver.FindElement(By.CssSelector(".btn")).Click();
+            {
+                var element = driver.FindElement(By.CssSelector(".btn"));
+                Actions builder = new Actions(driver);
+                builder.MoveToElement(element).Perform();
+            }
+
+            Thread.Sleep(timerLength);
+
+            driver.FindElement(By.Id("scoreSelection")).Click();
+            {
+                var dropdown = driver.FindElement(By.Id("scoreSelection"));
+                dropdown.FindElement(By.XPath("//option[. = '3']")).Click();
+            }
+
+            Thread.Sleep(timerLength);
+
+            driver.FindElement(By.Id("btnNext")).Click();
+
+            Thread.Sleep(timerLength);
+
+
+            driver.FindElement(By.Id("btnPrevious")).Click();
+            {
+                String value = driver.FindElement(By.Id("scoreSelection")).GetAttribute("value");
+                Assert.Equal(value, "3");
+            }
+        }
+
+        [Fact]
+        public void SendingSupportEmail_TestSeven()
+        {
+            driver.Navigate().GoToUrl("http://localhost:4200/home");
+            driver.Manage().Window.Size = new System.Drawing.Size(1936, 1066);
+
+            Thread.Sleep(timerLength);
+
+            driver.FindElement(By.CssSelector(".input-group:nth-child(2) #floatingInputGroup1")).Click();
+            driver.FindElement(By.CssSelector(".input-group:nth-child(2) #floatingInputGroup1")).SendKeys("1");
+
+            Thread.Sleep(timerLength);
+
+
+            driver.FindElement(By.Id("scoreSelection")).Click();
+            {
+                var dropdown = driver.FindElement(By.Id("scoreSelection"));
+                dropdown.FindElement(By.XPath("//option[. = '3']")).Click();
+            }
+
             Thread.Sleep(timerLength);
 
             driver.FindElement(By.Id("btnNext")).Click();
